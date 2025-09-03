@@ -21,17 +21,52 @@ async function sha256(text){
 // Load users from JSON with fallback to localStorage
 export async function loadUsers() {
   try {
-    const response = await fetch('/assets/data/users.json');
+    const response = await fetch('./assets/data/users.json');
     if (response.ok) {
       USERS_DATA = await response.json();
       return USERS_DATA;
     }
   } catch (error) {
+    console.warn('Could not load users.json, using localStorage fallback:', error);
     // Fallback to localStorage
   }
   
-  // Fallback to localStorage
-  USERS_DATA = Storage.get(USERS_KEY, []);
+  // Fallback to localStorage with default demo users
+  const defaultUsers = [
+    {
+      "id": "u-demo001",
+      "email": "somchai@email.com", 
+      "name": "สมชาย วิเศษ",
+      "password": "demo123",
+      "memberSince": "2024-01-15",
+      "addresses": [],
+      "paymentMethods": []
+    },
+    {
+      "id": "u-demo002",
+      "email": "malee@email.com",
+      "name": "มาลี ใจดี", 
+      "password": "demo123",
+      "memberSince": "2024-02-20",
+      "addresses": [],
+      "paymentMethods": []
+    },
+    {
+      "id": "u-demo003",
+      "email": "wichai@email.com",
+      "name": "วิชัย รักษ์ดี",
+      "password": "demo123", 
+      "memberSince": "2024-03-10",
+      "addresses": [],
+      "paymentMethods": []
+    }
+  ];
+  
+  USERS_DATA = Storage.get(USERS_KEY, defaultUsers);
+  // Ensure default users are saved to localStorage
+  if (Storage.get(USERS_KEY, []).length === 0) {
+    Storage.set(USERS_KEY, defaultUsers);
+  }
   return USERS_DATA;
 }
 

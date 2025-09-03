@@ -14,16 +14,20 @@ let PRODUCTS = [
 // Load ice cream products from JSON file
 async function loadIceCreamProducts() {
   try {
-    const response = await fetch('/assets/data/ice-creams.json');
+    const response = await fetch('./assets/data/ice-creams.json');
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    if (data.ice_creams && Array.isArray(data.ice_creams)) {
+    if (Array.isArray(data)) {
+      PRODUCTS = data;
+    } else if (data.ice_creams && Array.isArray(data.ice_creams)) {
       PRODUCTS = data.ice_creams;
     }
+    console.log('✅ Loaded', PRODUCTS.length, 'products from JSON');
     return PRODUCTS;
   } catch (error) {
+    console.warn('Could not load ice-creams.json, using fallback products:', error);
     return PRODUCTS; // Use the fallback products already set above
   }
 }

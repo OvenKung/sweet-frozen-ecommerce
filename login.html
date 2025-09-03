@@ -63,6 +63,7 @@
     }
   </script>
   <script type="module" src="./assets/js/app.js"></script>
+  <script type="module" src="./assets/js/debug.js"></script>
 </head>
 <body class="bg-gradient-to-br from-pastel-blue via-pastel-purple to-pastel-pink min-h-screen">
   <div id="app-header"></div>
@@ -167,13 +168,23 @@
   
   <div id="app-footer"></div>
   <script type="module">
-    import { login, demoLogin } from './assets/js/auth.js';
-    import { updateHeader } from './assets/js/ui.js';
+    import { login, demoLogin, loadUsers } from './assets/js/auth.js';
+    import { updateHeader, renderHeader, renderFooter } from './assets/js/ui.js';
+    
+    // Initialize page
+    renderHeader();
+    renderFooter();
+    
     const form = document.getElementById('loginForm');
     const msg = document.getElementById('msg');
     
+    // Ensure users are loaded before any login attempt
+    await loadUsers();
+    console.log('✅ Users loaded for login page');
+    
     // Demo login buttons
     document.getElementById('demoLogin1').addEventListener('click', async () => {
+      console.log('🔍 Demo login 1 clicked');
       // Show loading state
       const btn = document.getElementById('demoLogin1');
       const originalText = btn.innerHTML;
@@ -181,8 +192,12 @@
       btn.disabled = true;
       
       try {
+        console.log('🔍 Attempting demo login with: somchai@email.com');
         const user = await demoLogin('somchai@email.com');
+        console.log('🔍 Demo login result:', user);
+        
         if (user) {
+          console.log('✅ Login successful, updating header...');
           updateHeader(); // Update navbar immediately
           
           // Add success message
@@ -191,10 +206,17 @@
           msg.classList.remove('hidden');
           
           setTimeout(() => {
+            console.log('🔍 Redirecting to account page...');
             location.href = './account.html';
           }, 1000);
         } else {
-          console.error('❌ Demo login failed');
+          console.error('❌ Demo login failed - no user returned');
+          
+          // Show error message to user
+          msg.textContent = 'เข้าสู่ระบบไม่สำเร็จ กรุณาลองใหม่อีกครั้ง';
+          msg.className='bg-red-100 border border-red-300 text-red-700 p-4 rounded-xl text-center font-medium'; 
+          msg.classList.remove('hidden');
+          
           btn.innerHTML = '❌ เข้าสู่ระบบไม่สำเร็จ';
           setTimeout(() => {
             btn.innerHTML = originalText;
