@@ -51,23 +51,42 @@ class ResponsiveEnhancer {
       grid.style.display = 'grid';
       grid.style.gap = '1rem';
       
+      // Check if this is Hero section
+      const isHeroSection = grid.closest('section')?.innerHTML.includes('ยินดีต้อนรับสู่');
+      
       // Apply responsive columns based on screen width
       const screenWidth = window.innerWidth;
       
-      if (screenWidth < 640) {
-        grid.style.gridTemplateColumns = 'repeat(1, minmax(0, 1fr))';
-      } else if (screenWidth < 768) {
-        grid.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
-        grid.style.gap = '1.5rem';
-      } else if (screenWidth < 1024) {
-        grid.style.gridTemplateColumns = 'repeat(3, minmax(0, 1fr))';
-        grid.style.gap = '1.5rem';
-      } else if (screenWidth < 1280) {
-        grid.style.gridTemplateColumns = 'repeat(4, minmax(0, 1fr))';
-        grid.style.gap = '2rem';
+      if (isHeroSection) {
+        // Special handling for Hero section
+        if (screenWidth < 768) {
+          grid.style.gridTemplateColumns = 'repeat(1, minmax(0, 1fr))';
+        } else if (screenWidth < 1280) {
+          // iPad: 2 columns for Hero section
+          grid.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
+          grid.style.gap = '1.5rem';
+        } else {
+          // Desktop: 5 columns for Hero section
+          grid.style.gridTemplateColumns = 'repeat(5, minmax(0, 1fr))';
+          grid.style.gap = '2rem';
+        }
       } else {
-        grid.style.gridTemplateColumns = 'repeat(5, minmax(0, 1fr))';
-        grid.style.gap = '2rem';
+        // Regular product grids
+        if (screenWidth < 640) {
+          grid.style.gridTemplateColumns = 'repeat(1, minmax(0, 1fr))';
+        } else if (screenWidth < 768) {
+          grid.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
+          grid.style.gap = '1.5rem';
+        } else if (screenWidth < 1024) {
+          grid.style.gridTemplateColumns = 'repeat(3, minmax(0, 1fr))';
+          grid.style.gap = '1.5rem';
+        } else if (screenWidth < 1280) {
+          grid.style.gridTemplateColumns = 'repeat(4, minmax(0, 1fr))';
+          grid.style.gap = '2rem';
+        } else {
+          grid.style.gridTemplateColumns = 'repeat(5, minmax(0, 1fr))';
+          grid.style.gap = '2rem';
+        }
       }
     });
   }
