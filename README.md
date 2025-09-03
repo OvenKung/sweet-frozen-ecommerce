@@ -2,8 +2,8 @@
 
 > ร้านไอศกรีมออนไลน์ชั้นนำ ส่งไอศกรีมคุณภาพสูง สดใหม่ อร่อย ถึงบ้านคุณทุกวัน
 
-[![Deploy Status](https://github.com/YOUR_USERNAME/sweet-frozen-ecommerce/workflows/🚀%20Deploy%20Sweet%20Frozen%20E-commerce/badge.svg)](https://github.com/YOUR_USERNAME/sweet-frozen-ecommerce/actions)
-[![Live Demo](https://img.shields.io/badge/Live-Demo-blue.svg)](https://YOUR_USERNAME.github.io/sweet-frozen-ecommerce)
+[![Deploy Status](https://github.com/OvenKung/sweet-frozen-ecommerce/workflows/🚀%20Deploy%20Sweet%20Frozen%20E-commerce/badge.svg)](https://github.com/OvenKung/sweet-frozen-ecommerce/actions)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue.svg)](https://OvenKung.github.io/sweet-frozen-ecommerce)
 
 ## ✨ Features
 
