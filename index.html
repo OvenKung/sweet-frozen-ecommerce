@@ -67,16 +67,16 @@
 </head>
 <body>
   <div id="app-header"></div>
-  <main class="max-w-7xl mx-auto px-4 py-6 animate-slide-in-up">
+  <main class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 py-4 sm:py-6 animate-slide-in-up">
     <!-- Hero Section -->
-    <section class="mb-10">
-      <div class="grid grid-cols-1 xl:grid-cols-5 gap-6">
+    <section class="mb-6 sm:mb-10">
+      <div class="grid grid-cols-1 xl:grid-cols-5 gap-4 sm:gap-6">
         <!-- Main Welcome Section -->
-        <div class="xl:col-span-3 bg-gradient-to-br from-white to-purple-50 border-2 border-pastel-peach rounded-3xl p-8 shadow-xl">
-          <h1 class="text-4xl lg:text-6xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-6 animate-bounce leading-tight">
-            🍦 ยินดีต้อนรับสู่<br>Sweet Frozen
+        <div class="xl:col-span-3 bg-gradient-to-br from-white to-purple-50 border-2 border-pastel-peach rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-xl">
+          <h1 class="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-4 sm:mb-6 animate-bounce leading-tight">
+            🍦 ยินดีต้อนรับสู่<br class="hidden sm:block">Sweet Frozen
           </h1>
-          <p class="text-xl text-purple-700 mb-6 leading-relaxed">
+          <p class="text-base sm:text-xl text-purple-700 mb-4 sm:mb-6 leading-relaxed">
             ✨ ร้านไอศกรีมออนไลน์ที่มีไอศกรีมหลากหลายรสชาติ สดใหม่ อร่อย เย็นชื่นใจ ส่งถึงบ้านคุณ! ✨
           </p>
           
@@ -105,9 +105,9 @@
         </div>
         
         <!-- Featured Product Section -->
-        <div class="xl:col-span-2 bg-gradient-to-br from-white to-purple-50 border-2 border-pastel-peach rounded-3xl p-6 shadow-xl">
-          <div class="text-center mb-4">
-            <div class="inline-block bg-pastel-yellow px-4 py-2 rounded-full text-lg font-black text-primary border-2 border-yellow-300 animate-bounce">
+        <div class="xl:col-span-2 bg-gradient-to-br from-white to-purple-50 border-2 border-pastel-peach rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl">
+          <div class="text-center mb-3 sm:mb-4">
+            <div class="inline-block bg-pastel-yellow px-3 sm:px-4 py-2 rounded-full text-base sm:text-lg font-black text-primary border-2 border-yellow-300 animate-bounce">
               ⭐ ไอศกรีมแนะนำวันนี้
             </div>
           </div>
@@ -117,14 +117,14 @@
     </section>
     
     <!-- All Products Section -->
-    <div class="text-center mb-8">
-      <h2 class="text-3xl lg:text-4xl font-black text-primary mb-2">🍨 ไอศกรีมทั้งหมด</h2>
-      <p class="text-purple-600">เลือกไอศกรีมโปรดของคุณได้เลย</p>
+    <div class="text-center mb-6 sm:mb-8">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-primary mb-2">🍨 ไอศกรีมทั้งหมด</h2>
+      <p class="text-sm sm:text-base text-purple-600">เลือกไอศกรีมโปรดของคุณได้เลย</p>
     </div>
 
     <!-- Search and Filter Section -->
-    <div class="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-6 mb-8 border border-white/20">
-      <div class="flex flex-col md:flex-row gap-4 items-center">
+    <div class="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-6 mb-6 sm:mb-8 border border-white/20">
+      <div class="flex flex-col lg:flex-row gap-3 sm:gap-4 items-stretch lg:items-center">
         <!-- Search Bar -->
         <div class="flex-1 relative">
           <input 
@@ -139,7 +139,7 @@
         </div>
         
         <!-- Category Filter -->
-        <select id="categoryFilter" class="px-4 py-3 rounded-2xl border-2 border-pastel-purple/30 focus:border-pastel-purple focus:outline-none transition-all duration-300 bg-white min-w-[180px]">
+        <select id="categoryFilter" class="px-3 sm:px-4 py-3 rounded-xl sm:rounded-2xl border-2 border-pastel-purple/30 focus:border-pastel-purple focus:outline-none transition-all duration-300 bg-white min-w-[140px] sm:min-w-[180px] text-sm sm:text-base">
           <option value="">🍦 หมวดหมู่ทั้งหมด</option>
           <option value="Fruit">🍓 ผลไม้</option>
           <option value="Chocolate">🍫 ช็อกโกแลต</option>
@@ -148,7 +148,7 @@
         </select>
         
         <!-- Price Range -->
-        <select id="priceFilter" class="px-4 py-3 rounded-2xl border-2 border-pastel-green/30 focus:border-pastel-green focus:outline-none transition-all duration-300 bg-white min-w-[150px]">
+        <select id="priceFilter" class="px-3 sm:px-4 py-3 rounded-xl sm:rounded-2xl border-2 border-pastel-green/30 focus:border-pastel-green focus:outline-none transition-all duration-300 bg-white min-w-[120px] sm:min-w-[150px] text-sm sm:text-base">
           <option value="">💰 ราคาทั้งหมด</option>
           <option value="0-40">฿0 - ฿40</option>
           <option value="41-55">฿41 - ฿55</option>
@@ -157,7 +157,7 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="productGrid"></div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-6" id="productGrid"></div>
   </main>
   <div id="app-footer"></div>
   
@@ -195,7 +195,7 @@
     
     function card(p){
       const el = document.createElement('div'); 
-      el.className='bg-white border-2 border-pastel-blue rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:border-primary shadow-lg';
+      el.className='product-card bg-white border-2 border-pastel-blue rounded-xl sm:rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:border-primary shadow-lg';
       el.style.animationDelay = Math.random() * 0.5 + 's';
       
       // Get rating data
@@ -204,32 +204,32 @@
       
       el.innerHTML = `
         <a href="./product.html?id=${p.id}" class="block">
-          <img src="${p.image}" alt="${p.name}" class="w-full h-48 object-cover transition-all duration-300 hover:scale-110"/>
+          <img src="${p.image}" alt="${p.name}" class="w-full h-36 sm:h-40 lg:h-48 object-cover transition-all duration-300 hover:scale-110"/>
         </a>
-        <div class="p-4 flex flex-col gap-2">
-          <a href="./product.html?id=${p.id}" class="text-primary font-bold text-lg hover:text-primary-hover transition-colors">
+        <div class="p-3 sm:p-4 flex flex-col gap-1 sm:gap-2 flex-1">
+          <a href="./product.html?id=${p.id}" class="text-primary font-bold text-sm sm:text-base lg:text-lg hover:text-primary-hover transition-colors leading-tight">
             ${p.name}
           </a>
           
           <!-- Rating Display -->
           ${rating > 0 ? `
-            <div class="flex items-center gap-2 mb-1">
+            <div class="flex items-center gap-1 sm:gap-2 mb-1">
               <div class="flex items-center">
-                ${generateStarRating(rating, 'text-sm')}
+                ${generateStarRating(rating, 'text-xs sm:text-sm')}
               </div>
-              <span class="text-sm text-gray-600">${rating}</span>
+              <span class="text-xs sm:text-sm text-gray-600">${rating}</span>
               <span class="text-xs text-gray-500">(${reviewStats.totalReviews})</span>
             </div>
           ` : '<div class="text-xs text-gray-400 mb-1">ยังไม่มีรีวิว</div>'}
           
-          <div class="bg-pastel-peach px-2 py-1 rounded-xl text-sm inline-block w-fit">
+          <div class="bg-pastel-peach px-2 py-1 rounded-lg sm:rounded-xl text-xs sm:text-sm inline-block w-fit">
             🏷️ ${p.category}
           </div>
-          <div class="text-2xl font-black text-primary">
+          <div class="text-lg sm:text-xl lg:text-2xl font-black text-primary">
             ฿${p.price.toLocaleString()}
           </div>
-          <button class="w-full bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-3 px-4 rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-2 border-primary" data-id="${p.id}">
-            🛒 เพิ่มในตะกร้า
+          <button class="w-full bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-2 sm:py-3 px-3 sm:px-4 rounded-xl sm:rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-2 border-primary text-xs sm:text-sm lg:text-base min-h-[44px] mt-auto" data-id="${p.id}">
+            🛒 <span class="hidden sm:inline">เพิ่มในตะกร้า</span><span class="sm:hidden">เพิ่ม</span>
           </button>
         </div>`;
       

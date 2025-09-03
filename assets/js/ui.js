@@ -21,31 +21,63 @@ export function renderHeader(forceRender = false){
   }
   el.innerHTML = `
   <header class="header sticky top-0 bg-white/95 backdrop-blur-lg border-b-2 border-pastel-pink z-50 shadow-lg">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <a href="./index.html" class="flex items-center gap-3 font-black text-xl text-primary animate-float">
-        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center text-2xl animate-pulse shadow-lg">🍦</div> 
-        <span>Sweet Frozen</span>
+    <div class="max-w-6xl mx-auto px-2 sm:px-4 lg:px-6 py-2 sm:py-3 flex items-center justify-between">
+      <a href="./index.html" class="flex items-center gap-2 sm:gap-3 font-black text-base sm:text-lg lg:text-xl text-primary animate-float">
+        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center text-lg sm:text-2xl animate-pulse shadow-lg">🍦</div> 
+        <span class="hidden sm:block">Sweet Frozen</span>
+        <span class="sm:hidden text-sm">SF</span>
       </a>
       
-      <nav class="flex items-center gap-2">
-        <a class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1" href="./index.html">🏠 หน้าแรก</a>
-        <a class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1" href="./reviews.html">⭐ รีวิว</a>
-        <a class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 relative animate-float" href="./cart.html" aria-label="Cart">
-          🛒 <span class="absolute -top-2 -right-2 bg-gradient-to-r from-primary-hover to-primary text-white rounded-full text-xs px-2 py-1 font-bold animate-pulse shadow-lg" id="cartCount">${Cart.count()}</span>
+      <!-- Mobile Menu Button -->
+      <button class="sm:hidden bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-3 rounded-full transition-all duration-300" id="mobileMenuBtn">
+        ☰
+      </button>
+      
+      <!-- Desktop Navigation -->
+      <nav class="hidden sm:flex items-center gap-1 lg:gap-2">
+        <a class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-2 lg:px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 text-xs lg:text-sm" href="./index.html">🏠 <span class="hidden lg:inline">หน้าแรก</span></a>
+        <a class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-2 lg:px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 text-xs lg:text-sm" href="./reviews.html">⭐ <span class="hidden lg:inline">รีวิว</span></a>
+        <a class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-2 lg:px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 relative animate-float text-xs lg:text-sm" href="./cart.html" aria-label="Cart">
+          🛒 <span class="absolute -top-2 -right-2 bg-gradient-to-r from-primary-hover to-primary text-white rounded-full text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 font-bold animate-pulse shadow-lg" id="cartCount">${Cart.count()}</span>
         </a>
         ${u ? `
           <div class="relative">
-            <div class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer" id="userMenuBtn">👤 ${u.name}</div>
-            <div class="hidden absolute top-12 right-0 bg-white border-2 border-gray-200 rounded-2xl p-2 min-w-48 shadow-xl z-50" id="userMenu">
-              <a class="block bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-4 rounded-xl mb-2 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 text-center" href="./account.html">👤 บัญชีผู้ใช้</a>
-              <button class="w-full bg-gradient-to-r from-red-300 to-red-400 border-2 border-red-300 text-white font-bold py-2 px-4 rounded-xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1" id="logoutBtn">🚪 ออกจากระบบ</button>
+            <div class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-2 lg:px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer text-xs lg:text-sm" id="userMenuBtn">👤 <span class="hidden lg:inline">${u.name}</span></div>
+            <div class="hidden absolute top-12 right-0 bg-white border-2 border-gray-200 rounded-2xl p-2 min-w-40 lg:min-w-48 shadow-xl z-50" id="userMenu">
+              <a class="block bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-3 lg:px-4 rounded-xl mb-2 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 text-center text-xs lg:text-sm" href="./account.html">👤 บัญชีผู้ใช้</a>
+              <button class="w-full bg-gradient-to-r from-red-300 to-red-400 border-2 border-red-300 text-white font-bold py-2 px-3 lg:px-4 rounded-xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1 text-xs lg:text-sm" id="logoutBtn">🚪 ออกจากระบบ</button>
             </div>
           </div>
         ` : `
-          <a class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1" href="./login.html">เข้าสู่ระบบ</a>
-          <a class="bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-2 px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-2 border-primary" href="./register.html">สมัครสมาชิก</a>
+          <a class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-2 lg:px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 text-xs lg:text-sm" href="./login.html"><span class="lg:hidden">👤</span><span class="hidden lg:inline">เข้าสู่ระบบ</span></a>
+          <a class="bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-2 px-2 lg:px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-2 border-primary text-xs lg:text-sm" href="./register.html"><span class="lg:hidden">✍️</span><span class="hidden lg:inline">สมัครสมาชิก</span></a>
         `}
       </nav>
+      
+      <!-- Mobile Navigation Menu -->
+      <div class="hidden sm:hidden fixed top-0 left-0 w-full h-full bg-black/50 z-40" id="mobileMenuOverlay"></div>
+      <div class="hidden sm:hidden fixed top-0 right-0 w-64 h-full bg-white shadow-xl z-50 transform translate-x-full transition-transform duration-300" id="mobileMenu">
+        <div class="p-4 border-b border-gray-200">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-primary">Sweet Frozen</span>
+            <button class="text-gray-600 hover:text-gray-800" id="closeMobileMenu">✕</button>
+          </div>
+        </div>
+        <nav class="p-4 space-y-3">
+          <a class="block bg-white border-2 border-pastel-pink text-purple-700 font-bold py-3 px-4 rounded-xl transition-all duration-300 text-center" href="./index.html">🏠 หน้าแรก</a>
+          <a class="block bg-white border-2 border-pastel-pink text-purple-700 font-bold py-3 px-4 rounded-xl transition-all duration-300 text-center" href="./reviews.html">⭐ รีวิว</a>
+          <a class="block bg-white border-2 border-pastel-pink text-purple-700 font-bold py-3 px-4 rounded-xl transition-all duration-300 relative text-center" href="./cart.html">
+            🛒 ตะกร้าสินค้า <span class="absolute top-0 right-2 bg-gradient-to-r from-primary-hover to-primary text-white rounded-full text-xs px-2 py-1 font-bold" id="mobileCartCount">${Cart.count()}</span>
+          </a>
+          ${u ? `
+            <a class="block bg-white border-2 border-pastel-pink text-purple-700 font-bold py-3 px-4 rounded-xl transition-all duration-300 text-center" href="./account.html">👤 ${u.name}</a>
+            <button class="w-full bg-gradient-to-r from-red-300 to-red-400 border-2 border-red-300 text-white font-bold py-3 px-4 rounded-xl transition-all duration-300" id="mobileLogoutBtn">🚪 ออกจากระบบ</button>
+          ` : `
+            <a class="block bg-white border-2 border-pastel-pink text-purple-700 font-bold py-3 px-4 rounded-xl transition-all duration-300 text-center" href="./login.html">👤 เข้าสู่ระบบ</a>
+            <a class="block bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 border-2 border-primary text-center" href="./register.html">✍️ สมัครสมาชิก</a>
+          `}
+        </nav>
+      </div>
     </div>
   </header>
   `;
@@ -92,51 +124,93 @@ function setupHeaderEvents() {
       location.href='./index.html'; 
     }); 
   }
+  
+  // Mobile menu functionality
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+  const closeMobileMenu = document.getElementById('closeMobileMenu');
+  const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
+  
+  if (mobileMenuBtn && mobileMenu && mobileMenuOverlay) {
+    // Open mobile menu
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.remove('hidden');
+      mobileMenuOverlay.classList.remove('hidden');
+      setTimeout(() => {
+        mobileMenu.classList.remove('translate-x-full');
+      }, 10);
+    });
+    
+    // Close mobile menu
+    const closeMobileMenuHandler = () => {
+      mobileMenu.classList.add('translate-x-full');
+      setTimeout(() => {
+        mobileMenu.classList.add('hidden');
+        mobileMenuOverlay.classList.add('hidden');
+      }, 300);
+    };
+    
+    if (closeMobileMenu) {
+      closeMobileMenu.addEventListener('click', closeMobileMenuHandler);
+    }
+    
+    mobileMenuOverlay.addEventListener('click', closeMobileMenuHandler);
+    
+    // Mobile logout
+    if (mobileLogoutBtn) {
+      mobileLogoutBtn.addEventListener('click', () => {
+        logout();
+        updateHeader();
+        location.href = './index.html';
+      });
+    }
+  }
 }
 
 export function renderFooter(){
   const el = document.getElementById('app-footer');
   if(!el) return;
   el.innerHTML = `
-  <footer class="mt-16 border-t-2 border-pastel-pink bg-gradient-to-br from-white to-purple-50 animate-slide-in-up">
+  <footer class="mt-8 sm:mt-12 lg:mt-16 border-t-2 border-pastel-pink bg-gradient-to-br from-white to-purple-50 animate-slide-in-up">
     <!-- Newsletter Section -->
-    <div class="bg-gradient-to-r from-primary to-accent py-12">
-      <div class="max-w-4xl mx-auto px-4 text-center">
-        <h3 class="text-white text-2xl font-black mb-4">📧 รับข่าวสารและโปรโมชันพิเศษ</h3>
-        <p class="text-white/90 mb-6">สมัครรับข้อมูลไอศกรีมใหม่ๆ และส่วนลดพิเศษก่อนใคร</p>
-        <div class="flex flex-col md:flex-row gap-4 max-w-md mx-auto">
+    <div class="bg-gradient-to-r from-primary to-accent py-8 sm:py-10 lg:py-12">
+      <div class="max-w-4xl mx-auto px-2 sm:px-4 lg:px-6 text-center">
+        <h3 class="text-white text-lg sm:text-xl lg:text-2xl font-black mb-3 sm:mb-4">📧 รับข่าวสารและโปรโมชันพิเศษ</h3>
+        <p class="text-white/90 mb-4 sm:mb-6 text-sm sm:text-base">สมัครรับข้อมูลไอศกรีมใหม่ๆ และส่วนลดพิเศษก่อนใคร</p>
+        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 max-w-xs sm:max-w-md mx-auto">
           <input type="email" id="newsletterEmail" placeholder="กรอกอีเมลของคุณ..." 
-                 class="flex-1 px-4 py-3 rounded-full border-0 focus:outline-none focus:ring-4 focus:ring-white/30">
+                 class="flex-1 px-3 sm:px-4 py-2 sm:py-3 rounded-full border-0 focus:outline-none focus:ring-4 focus:ring-white/30 text-sm sm:text-base">
           <button onclick="subscribeNewsletter()" 
-                  class="bg-white text-primary font-bold px-6 py-3 rounded-full hover:bg-gray-100 transition-all duration-300 hover:scale-105">
-            📬 สมัครรับข่าวสาร
+                  class="bg-white text-primary font-bold px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-gray-100 transition-all duration-300 hover:scale-105 text-sm sm:text-base min-h-[44px]">
+            📬 <span class="hidden sm:inline">สมัครรับข่าวสาร</span><span class="sm:hidden">สมัคร</span>
           </button>
         </div>
       </div>
     </div>
     
     <!-- Main Footer -->
-    <div class="max-w-6xl mx-auto px-4 py-8">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <div class="max-w-6xl mx-auto px-2 sm:px-4 lg:px-6 py-6 sm:py-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
         <!-- Company Info -->
-        <div class="md:col-span-2">
-          <strong class="text-primary text-2xl font-black flex items-center gap-2 mb-4">
+        <div class="sm:col-span-2 lg:col-span-2">
+          <strong class="text-primary text-xl sm:text-2xl font-black flex items-center gap-2 mb-3 sm:mb-4">
             🍦 Sweet Frozen
           </strong>
-          <p class="text-purple-600 text-sm mb-4">ร้านไอศกรีมออนไลน์ชั้นนำ ส่งไอศกรีมคุณภาพสูง สดใหม่ อร่อย ถึงบ้านคุณทุกวัน</p>
+          <p class="text-purple-600 text-xs sm:text-sm mb-3 sm:mb-4">ร้านไอศกรีมออนไลน์ชั้นนำ ส่งไอศกรีมคุณภาพสูง สดใหม่ อร่อย ถึงบ้านคุณทุกวัน</p>
           
           <!-- Social Media -->
-          <div class="flex gap-3">
-            <a href="#" class="w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center hover:scale-110 transition-transform">📘</a>
-            <a href="#" class="w-10 h-10 bg-pink-500 text-white rounded-full flex items-center justify-center hover:scale-110 transition-transform">📷</a>
-            <a href="#" class="w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center hover:scale-110 transition-transform">📱</a>
+          <div class="flex gap-2 sm:gap-3 justify-center sm:justify-start">
+            <a href="#" class="w-8 h-8 sm:w-10 sm:h-10 bg-blue-500 text-white rounded-full flex items-center justify-center hover:scale-110 transition-transform text-sm sm:text-base">📘</a>
+            <a href="#" class="w-8 h-8 sm:w-10 sm:h-10 bg-pink-500 text-white rounded-full flex items-center justify-center hover:scale-110 transition-transform text-sm sm:text-base">📷</a>
+            <a href="#" class="w-8 h-8 sm:w-10 sm:h-10 bg-green-500 text-white rounded-full flex items-center justify-center hover:scale-110 transition-transform text-sm sm:text-base">📱</a>
           </div>
         </div>
         
         <!-- Quick Links -->
-        <div>
-          <h4 class="font-bold text-purple-700 mb-4">🔗 ลิงก์ด่วน</h4>
-          <ul class="space-y-2 text-sm">
+        <div class="text-center sm:text-left">
+          <h4 class="font-bold text-purple-700 mb-3 sm:mb-4 text-sm sm:text-base">🔗 ลิงก์ด่วน</h4>
+          <ul class="space-y-1 sm:space-y-2 text-xs sm:text-sm">
             <li><a href="./index.html" class="text-purple-600 hover:text-primary transition-colors">หน้าแรก</a></li>
             <li><a href="./reviews.html" class="text-purple-600 hover:text-primary transition-colors">รีวิวลูกค้า</a></li>
             <li><a href="./cart.html" class="text-purple-600 hover:text-primary transition-colors">ตะกร้าสินค้า</a></li>
@@ -146,9 +220,9 @@ export function renderFooter(){
         </div>
         
         <!-- Customer Service -->
-        <div>
-          <h4 class="font-bold text-purple-700 mb-4">📞 บริการลูกค้า</h4>
-          <ul class="space-y-2 text-sm text-purple-600">
+        <div class="text-center sm:text-left">
+          <h4 class="font-bold text-purple-700 mb-3 sm:mb-4 text-sm sm:text-base">📞 บริการลูกค้า</h4>
+          <ul class="space-y-1 sm:space-y-2 text-xs sm:text-sm text-purple-600">
             <li>📱 โทร: 02-123-4567</li>
             <li>📧 อีเมล: support@sweetfrozen.com</li>
             <li>🕐 เวลาทำการ: 9:00-18:00</li>
@@ -158,12 +232,12 @@ export function renderFooter(){
       </div>
       
       <!-- Copyright -->
-      <div class="border-t border-purple-200 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
-        <div class="text-purple-600 text-sm">
+      <div class="border-t border-purple-200 mt-6 sm:mt-8 pt-4 sm:pt-6 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0">
+        <div class="text-purple-600 text-xs sm:text-sm text-center sm:text-left">
           © 2025 Sweet Frozen. สงวนสิทธิ์ทุกประการ
         </div>
-        <div class="text-purple-600 text-sm mt-2 md:mt-0">
-          กด <kbd class="bg-pastel-yellow border-2 border-pastel-peach rounded px-2 py-1 font-bold">Alt</kbd>+<kbd class="bg-pastel-yellow border-2 border-pastel-peach rounded px-2 py-1 font-bold">Shift</kbd>+<kbd class="bg-pastel-yellow border-2 border-pastel-peach rounded px-2 py-1 font-bold">R</kbd> เพื่อรีเซ็ตข้อมูลสาธิต
+        <div class="text-purple-600 text-xs sm:text-sm text-center">
+          กด <kbd class="bg-pastel-yellow border-2 border-pastel-peach rounded px-1 sm:px-2 py-1 font-bold text-xs">Alt</kbd>+<kbd class="bg-pastel-yellow border-2 border-pastel-peach rounded px-1 sm:px-2 py-1 font-bold text-xs">Shift</kbd>+<kbd class="bg-pastel-yellow border-2 border-pastel-peach rounded px-1 sm:px-2 py-1 font-bold text-xs">R</kbd> เพื่อรีเซ็ตข้อมูลสาธิต
         </div>
       </div>
     </div>

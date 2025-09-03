@@ -466,3 +466,446 @@ table tr:hover {
   transform: scale(1.01);
   transition: all 0.3s ease;
 }
+
+/* ===== RESPONSIVE DESIGN SYSTEM ===== */
+
+/* Mobile First Approach - Base styles for phones */
+/* 320px - 480px: Small phones */
+@media (max-width: 480px) {
+  /* Container adjustments */
+  .max-w-7xl, .max-w-6xl, .max-w-4xl {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Typography scaling */
+  h1 { font-size: 2rem !important; line-height: 1.2 !important; }
+  h2 { font-size: 1.5rem !important; }
+  h3 { font-size: 1.25rem !important; }
+  
+  /* Button sizing */
+  .btn, button {
+    padding: 0.75rem 1rem !important;
+    font-size: 0.875rem !important;
+    min-height: 44px; /* Touch target size */
+  }
+  
+  /* Form inputs */
+  input, select, textarea {
+    padding: 0.875rem !important;
+    font-size: 16px !important; /* Prevent zoom on iOS */
+    min-height: 44px;
+  }
+  
+  /* Grid adjustments */
+  .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)) !important; }
+  .md\\:grid-cols-2 { grid-template-columns: repeat(1, minmax(0, 1fr)) !important; }
+  .lg\\:grid-cols-3 { grid-template-columns: repeat(1, minmax(0, 1fr)) !important; }
+  .xl\\:grid-cols-4 { grid-template-columns: repeat(1, minmax(0, 1fr)) !important; }
+  
+  /* Navigation adjustments */
+  nav .flex {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+  
+  /* Modal adjustments */
+  .quick-view-content {
+    max-width: 95vw !important;
+    max-height: 95vh !important;
+    margin: 1rem !important;
+    border-radius: 16px !important;
+  }
+  
+  /* Toast positioning */
+  .toast {
+    bottom: 10px !important;
+    right: 10px !important;
+    left: 10px !important;
+    max-width: none !important;
+  }
+  
+  /* Back to top button */
+  .back-to-top {
+    bottom: 15px !important;
+    left: 15px !important;
+    width: 45px !important;
+    height: 45px !important;
+    font-size: 18px !important;
+  }
+  
+  /* Card spacing */
+  .product-card {
+    margin-bottom: 1rem !important;
+  }
+  
+  /* Table responsive */
+  table {
+    font-size: 0.875rem !important;
+  }
+  
+  table th, table td {
+    padding: 0.5rem !important;
+  }
+  
+  /* Footer adjustments */
+  footer .grid-cols-1 {
+    gap: 2rem !important;
+  }
+  
+  footer .md\\:grid-cols-4 {
+    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+  }
+  
+  footer .md\\:flex-row {
+    flex-direction: column !important;
+    gap: 1rem !important;
+    text-align: center !important;
+  }
+}
+
+/* Large Mobile Phones */
+/* 481px - 767px: Large phones */
+@media (min-width: 481px) and (max-width: 767px) {
+  /* Grid for larger phones */
+  .md\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .lg\\:grid-cols-3 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .xl\\:grid-cols-4 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  
+  /* Typography */
+  h1 { font-size: 2.5rem !important; }
+  h2 { font-size: 1.75rem !important; }
+  
+  /* Navigation can be horizontal */
+  nav .flex {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+  }
+  
+  /* Cards can have smaller gap */
+  .grid {
+    gap: 1rem !important;
+  }
+}
+
+/* Tablets Portrait */
+/* 768px - 1024px: Tablets */
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* Container padding */
+  .max-w-7xl, .max-w-6xl, .max-w-4xl {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+  
+  /* Grid layouts */
+  .md\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .lg\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+  .xl\\:grid-cols-4 { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+  
+  /* Typography scaling */
+  h1 { font-size: 3rem !important; }
+  h2 { font-size: 2rem !important; }
+  h3 { font-size: 1.5rem !important; }
+  
+  /* Button sizing */
+  .btn, button {
+    padding: 0.875rem 1.5rem !important;
+    font-size: 1rem !important;
+  }
+  
+  /* Modal sizing */
+  .quick-view-content {
+    max-width: 85vw !important;
+    max-height: 85vh !important;
+  }
+  
+  /* Navigation improvements */
+  nav {
+    padding: 1rem 2rem !important;
+  }
+  
+  /* Footer grid */
+  footer .md\\:grid-cols-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  
+  /* Product cards optimization */
+  .product-card {
+    padding: 1.25rem !important;
+  }
+  
+  /* Table improvements */
+  table {
+    font-size: 1rem !important;
+  }
+  
+  /* Hero section adjustments */
+  .xl\\:col-span-3 {
+    grid-column: span 2 / span 2 !important;
+  }
+  
+  .xl\\:col-span-2 {
+    grid-column: span 2 / span 2 !important;
+  }
+}
+
+/* Tablets Landscape & Small Desktops */
+/* 1025px - 1366px: Tablets landscape & small laptops */
+@media (min-width: 1025px) and (max-width: 1366px) {
+  /* Grid layouts */
+  .lg\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+  .xl\\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+  
+  /* Typography */
+  h1 { font-size: 3.5rem !important; }
+  h2 { font-size: 2.25rem !important; }
+  
+  /* Container max-width */
+  .max-w-7xl {
+    max-width: 1200px !important;
+  }
+  
+  /* Footer full layout */
+  footer .md\\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+  
+  /* Modal sizing */
+  .quick-view-content {
+    max-width: 75vw !important;
+    max-height: 80vh !important;
+  }
+  
+  /* Product card spacing */
+  .grid {
+    gap: 1.5rem !important;
+  }
+  
+  /* Navigation spacing */
+  nav {
+    padding: 1.25rem 3rem !important;
+  }
+}
+
+/* Large Desktops */
+/* 1367px - 1920px: Standard desktops */
+@media (min-width: 1367px) and (max-width: 1920px) {
+  /* Full grid layouts */
+  .xl\\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+  .xl\\:grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)) !important; }
+  
+  /* Typography scaling */
+  h1 { font-size: 4rem !important; }
+  h2 { font-size: 2.5rem !important; }
+  
+  /* Container adjustments */
+  .max-w-7xl {
+    max-width: 1400px !important;
+  }
+  
+  /* Modal sizing */
+  .quick-view-content {
+    max-width: 60vw !important;
+    max-height: 75vh !important;
+  }
+  
+  /* Grid spacing */
+  .grid {
+    gap: 2rem !important;
+  }
+  
+  /* Product cards larger */
+  .product-card {
+    padding: 1.5rem !important;
+  }
+}
+
+/* Ultra-wide & 4K Displays */
+/* 1921px+: Large desktops & 4K */
+@media (min-width: 1921px) {
+  /* Maximum container width */
+  .max-w-7xl, .max-w-6xl {
+    max-width: 1600px !important;
+  }
+  
+  /* Ultra-wide grid */
+  .xl\\:grid-cols-4 { grid-template-columns: repeat(5, minmax(0, 1fr)) !important; }
+  
+  /* Scale typography */
+  h1 { font-size: 4.5rem !important; }
+  h2 { font-size: 3rem !important; }
+  h3 { font-size: 2rem !important; }
+  
+  /* Larger buttons */
+  .btn, button {
+    padding: 1rem 2rem !important;
+    font-size: 1.125rem !important;
+  }
+  
+  /* Modal for large screens */
+  .quick-view-content {
+    max-width: 50vw !important;
+    max-height: 70vh !important;
+  }
+  
+  /* Generous spacing */
+  .grid {
+    gap: 2.5rem !important;
+  }
+  
+  /* Larger cards */
+  .product-card {
+    padding: 2rem !important;
+  }
+  
+  /* Navigation scaling */
+  nav {
+    padding: 1.5rem 4rem !important;
+  }
+}
+
+/* ===== ORIENTATION-SPECIFIC STYLES ===== */
+
+/* Landscape orientation optimizations */
+@media (orientation: landscape) and (max-height: 600px) {
+  /* Reduce vertical padding */
+  .py-8 { padding-top: 2rem !important; padding-bottom: 2rem !important; }
+  .py-6 { padding-top: 1.5rem !important; padding-bottom: 1.5rem !important; }
+  .py-4 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
+  
+  /* Compact hero section */
+  h1 { font-size: 2.5rem !important; }
+  
+  /* Reduce modal height */
+  .quick-view-content {
+    max-height: 90vh !important;
+  }
+  
+  /* Compact navigation */
+  nav {
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+  }
+}
+
+/* ===== HIGH DPI & RETINA DISPLAYS ===== */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Sharper borders */
+  .border { border-width: 0.5px !important; }
+  .border-2 { border-width: 1px !important; }
+  
+  /* Enhanced shadows */
+  .shadow-lg { box-shadow: 0 10px 25px rgba(0,0,0,0.15) !important; }
+  .shadow-xl { box-shadow: 0 20px 40px rgba(0,0,0,0.20) !important; }
+}
+
+/* ===== ACCESSIBILITY & MOTION ===== */
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .animate-float,
+  .animate-bounce,
+  .animate-pulse,
+  .animate-sparkle {
+    animation: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  /* Increase contrast */
+  .text-purple-600 { color: #4c1d95 !important; }
+  .text-purple-700 { color: #3730a3 !important; }
+  .border-pastel-pink { border-color: #ec4899 !important; }
+  .border-pastel-peach { border-color: #f97316 !important; }
+  
+  /* Stronger shadows */
+  .shadow-lg { box-shadow: 0 10px 25px rgba(0,0,0,0.3) !important; }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  /* Hide interactive elements */
+  .back-to-top,
+  .toast,
+  .quick-view-modal,
+  button:not(.print-friendly),
+  .animate-float,
+  .animate-bounce {
+    display: none !important;
+  }
+  
+  /* Optimize for print */
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .product-card {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+  
+  /* Ensure readability */
+  .text-white { color: black !important; }
+  .bg-gradient-to-r { background: white !important; }
+}
+
+/* ===== TOUCH DEVICE OPTIMIZATIONS ===== */
+@media (hover: none) and (pointer: coarse) {
+  /* Larger touch targets */
+  button, .btn, a, input, select {
+    min-height: 44px !important;
+    min-width: 44px !important;
+  }
+  
+  /* Remove hover effects on touch devices */
+  .product-card:hover {
+    transform: none !important;
+  }
+  
+  button:hover, .btn:hover {
+    transform: none !important;
+  }
+  
+  /* Increase tap feedback */
+  button:active, .btn:active {
+    transform: scale(0.95) !important;
+    transition: transform 0.1s !important;
+  }
+  
+  /* Easier scrolling */
+  .overflow-x-auto {
+    -webkit-overflow-scrolling: touch !important;
+    overflow-x: scroll !important;
+  }
+}
+
+/* ===== CONTAINER QUERIES (MODERN BROWSERS) ===== */
+@supports (container-type: inline-size) {
+  .product-grid {
+    container-type: inline-size;
+  }
+  
+  @container (max-width: 400px) {
+    .product-card {
+      padding: 0.75rem !important;
+    }
+    
+    .product-card h3 {
+      font-size: 1rem !important;
+    }
+  }
+  
+  @container (min-width: 800px) {
+    .product-card {
+      padding: 1.5rem !important;
+    }
+  }
+}

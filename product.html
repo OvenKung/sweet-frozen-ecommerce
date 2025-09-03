@@ -69,17 +69,17 @@
   <div id="app-header"></div>
   
   <!-- Breadcrumb -->
-  <nav class="max-w-6xl mx-auto px-4 py-2">
-    <div class="flex items-center space-x-2 text-sm">
-      <a href="./index.html" class="text-primary hover:text-primary-hover transition-colors">🏠 หน้าหลัก</a>
-      <span class="text-gray-400">›</span>
-      <span class="text-gray-600" id="breadcrumb-category">สินค้า</span>
-      <span class="text-gray-400">›</span>
-      <span class="text-gray-800 font-medium" id="breadcrumb-product">รายละเอียดสินค้า</span>
+  <nav class="max-w-6xl mx-auto px-2 sm:px-4 lg:px-6 py-2">
+    <div class="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm overflow-x-auto whitespace-nowrap pb-2">
+      <a href="./index.html" class="text-primary hover:text-primary-hover transition-colors flex-shrink-0">🏠 หน้าหลัก</a>
+      <span class="text-gray-400 flex-shrink-0">›</span>
+      <span class="text-gray-600 flex-shrink-0" id="breadcrumb-category">สินค้า</span>
+      <span class="text-gray-400 flex-shrink-0">›</span>
+      <span class="text-gray-800 font-medium truncate" id="breadcrumb-product">รายละเอียดสินค้า</span>
     </div>
   </nav>
 
-  <main class="max-w-6xl mx-auto px-4 py-4" id="content"></main>
+  <main class="max-w-6xl mx-auto px-2 sm:px-4 lg:px-6 py-4" id="content"></main>
   <div id="app-footer"></div>
   <script type="module">
     import { getProduct, PRODUCTS, loadIceCreamProducts } from './assets/js/products.js';
@@ -130,13 +130,13 @@
         const userHasReviewed = currentUserData && reviews.some(r => r.userId === currentUserData.id);
           
         c.innerHTML = `
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 mb-6 sm:mb-8">
             <div>
-              <img src="${p.image}" alt="${p.name}" class="w-full rounded-3xl border-4 border-pastel-pink shadow-xl"/>
+              <img src="${p.image}" alt="${p.name}" class="w-full rounded-2xl sm:rounded-3xl border-2 sm:border-4 border-pastel-pink shadow-xl"/>
             </div>
-            <div class="bg-gradient-to-br from-white to-blue-50 p-8 rounded-3xl border-2 border-pastel-blue shadow-xl">
-              <h2 class="text-4xl font-black text-primary mb-4">🍦 ${p.name}</h2>
-              <div class="bg-pastel-peach px-4 py-2 rounded-2xl text-sm inline-block mb-4">🏷️ หมวด: ${p.category}</div>
+            <div class="bg-gradient-to-br from-white to-blue-50 p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl border-2 border-pastel-blue shadow-xl">
+              <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-primary mb-3 sm:mb-4">🍦 ${p.name}</h2>
+              <div class="bg-pastel-peach px-3 sm:px-4 py-2 rounded-xl sm:rounded-2xl text-xs sm:text-sm inline-block mb-3 sm:mb-4">🏷️ หมวด: ${p.category}</div>
               
               <!-- Rating Section -->
               <div class="flex items-center gap-3 mb-4 p-3 bg-yellow-50 rounded-xl border border-yellow-200">
