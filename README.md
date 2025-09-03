@@ -31,7 +31,7 @@
 
 ## 🚀 Live Demo
 
-เยี่ยมชมเว็บไซต์ได้ที่: [Sweet Frozen E-commerce](https://YOUR_USERNAME.github.io/sweet-frozen-ecommerce)
+เยี่ยมชมเว็บไซต์ได้ที่: [Sweet Frozen E-commerce](https://OvenKung.github.io/sweet-frozen-ecommerce)
 
 ### 🔑 Demo Accounts
 ```
@@ -240,19 +240,19 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Team
 
-- **Developer**: Sweet Frozen Team
-- **Design**: Custom Pastel Theme
-- **Maintainer**: [@YOUR_USERNAME](https://github.com/YOUR_USERNAME)
+- **Developer**: OvenKung
+- **Design**: OvenKung
+- **Maintainer**: OvenKung (https://github.com/OvenKung)
 
 ## 📞 Contact
 
 - 📧 Email: support@sweetfrozen.com
-- 🌐 Website: [Sweet Frozen E-commerce](https://YOUR_USERNAME.github.io/sweet-frozen-ecommerce)
-- 💬 Issues: [GitHub Issues](https://github.com/YOUR_USERNAME/sweet-frozen-ecommerce/issues)
+- 🌐 Website: [Sweet Frozen E-commerce](https://OvenKung.github.io/sweet-frozen-ecommerce)
+- 💬 Issues: [GitHub Issues](https://github.com/OvenKung/sweet-frozen-ecommerce/issues)
 
 ---
 
 <div align="center">
-  <p>Made with ❤️ and 🍦 by Sweet Frozen Team</p>
+  <p>Made with ❤️ and 🍦 by OvenKung</p>
   <p>© 2025 Sweet Frozen. สงวนสิทธิ์ทุกประการ</p>
 </div>
