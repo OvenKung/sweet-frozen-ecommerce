@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🧪 Responsive Test - Sweet Frozen</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Debug responsive grid */
+        .debug-grid {
+            border: 2px solid red;
+            background: rgba(255,0,0,0.1);
+        }
+        .debug-item {
+            border: 1px solid blue;
+            background: rgba(0,0,255,0.1);
+            padding: 1rem;
+            text-align: center;
+        }
+        .screen-info {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: black;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-4">
+    <div class="screen-info" id="screenInfo">
+        <div>Screen: <span id="screenSize"></span></div>
+        <div>Viewport: <span id="viewportSize"></span></div>
+        <div>Breakpoint: <span id="breakpoint"></span></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-8">
+            🧪 Responsive Grid Test
+        </h1>
+
+        <div class="mb-8">
+            <h2 class="text-xl font-bold mb-4">TailwindCSS Responsive Grid</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 debug-grid">
+                <div class="debug-item">1 - Always visible</div>
+                <div class="debug-item">2 - SM: 2 cols</div>
+                <div class="debug-item">3 - LG: 3 cols</div>
+                <div class="debug-item">4 - XL: 4 cols</div>
+                <div class="debug-item">5 - 2XL: 5 cols</div>
+                <div class="debug-item">6 - Extra item</div>
+                <div class="debug-item">7 - Extra item</div>
+                <div class="debug-item">8 - Extra item</div>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-xl font-bold mb-4">CSS Grid Fallback</h2>
+            <div class="responsive-grid debug-grid" style="display: grid; gap: 1rem;">
+                <div class="debug-item">1</div>
+                <div class="debug-item">2</div>
+                <div class="debug-item">3</div>
+                <div class="debug-item">4</div>
+                <div class="debug-item">5</div>
+                <div class="debug-item">6</div>
+                <div class="debug-item">7</div>
+                <div class="debug-item">8</div>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-xl font-bold mb-4">Responsive Text</h2>
+            <div class="space-y-4">
+                <p class="text-sm sm:text-base lg:text-lg xl:text-xl">Text scaling test</p>
+                <p class="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">Another scaling test</p>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-xl font-bold mb-4">Responsive Utilities</h2>
+            <div class="space-y-2">
+                <div class="block sm:hidden bg-red-200 p-2">Visible only on mobile</div>
+                <div class="hidden sm:block lg:hidden bg-green-200 p-2">Visible only on tablet</div>
+                <div class="hidden lg:block bg-blue-200 p-2">Visible only on desktop</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateScreenInfo() {
+            const screenWidth = window.screen.width;
+            const screenHeight = window.screen.height;
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            
+            let breakpoint = 'XS';
+            if (viewportWidth >= 1536) breakpoint = '2XL';
+            else if (viewportWidth >= 1280) breakpoint = 'XL';
+            else if (viewportWidth >= 1024) breakpoint = 'LG';
+            else if (viewportWidth >= 768) breakpoint = 'MD';
+            else if (viewportWidth >= 640) breakpoint = 'SM';
+            
+            document.getElementById('screenSize').textContent = `${screenWidth}x${screenHeight}`;
+            document.getElementById('viewportSize').textContent = `${viewportWidth}x${viewportHeight}`;
+            document.getElementById('breakpoint').textContent = breakpoint;
+            
+            // Apply CSS Grid fallback
+            const responsiveGrid = document.querySelector('.responsive-grid');
+            if (responsiveGrid) {
+                if (viewportWidth < 640) {
+                    responsiveGrid.style.gridTemplateColumns = 'repeat(1, minmax(0, 1fr))';
+                } else if (viewportWidth < 768) {
+                    responsiveGrid.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
+                } else if (viewportWidth < 1024) {
+                    responsiveGrid.style.gridTemplateColumns = 'repeat(3, minmax(0, 1fr))';
+                } else if (viewportWidth < 1280) {
+                    responsiveGrid.style.gridTemplateColumns = 'repeat(4, minmax(0, 1fr))';
+                } else {
+                    responsiveGrid.style.gridTemplateColumns = 'repeat(5, minmax(0, 1fr))';
+                }
+            }
+        }
+        
+        // Update on load and resize
+        updateScreenInfo();
+        window.addEventListener('resize', updateScreenInfo);
+        
+        // Update every second to catch any changes
+        setInterval(updateScreenInfo, 1000);
+    </script>
+</body>
+</html>
