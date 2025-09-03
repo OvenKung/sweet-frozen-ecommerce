@@ -4,7 +4,6 @@
 
 [![Deploy Status](https://github.com/OvenKung/sweet-frozen-ecommerce/workflows/🚀%20Deploy%20Sweet%20Frozen%20E-commerce/badge.svg)](https://github.com/OvenKung/sweet-frozen-ecommerce/actions)
 [![Live Demo](https://img.shields.io/badge/Live-Demo-blue.svg)](https://OvenKung.github.io/sweet-frozen-ecommerce)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Made with Love](https://img.shields.io/badge/Made%20with-❤️%20%26%20🍦-ff69b4.svg)](https://github.com/OvenKung)
 
 <div align="center">
@@ -176,17 +175,6 @@ $breakpoints: (
 
 ### 🌐 **Live Website**
 เยี่ยมชมเว็บไซต์ได้ที่: **[Sweet Frozen E-commerce](https://OvenKung.github.io/sweet-frozen-ecommerce)**
-
-### 🔑 **Demo Accounts**
-```bash
-# Admin Account
-Email: admin@sweetfrozen.com
-Password: admin123
-
-# Customer Account  
-Email: customer@example.com
-Password: customer123
-```
 
 ### ⚡ **Quick Test Responsive**
 1. **เปิดเว็บไซต์** บน Desktop Browser
@@ -639,39 +627,6 @@ A record: @ -> 185.199.108.153
 - [ ] Analytics configured
 - [ ] Error monitoring setup
 - [ ] SSL certificate active
-
----
-
-## 📞 Support & Contact
-
-### **🆘 Getting Help**
-- 📧 **Email**: support@sweetfrozen.com
-- 💬 **Issues**: [GitHub Issues](https://github.com/OvenKung/sweet-frozen-ecommerce/issues)
-- 📖 **Documentation**: [Wiki](https://github.com/OvenKung/sweet-frozen-ecommerce/wiki)
-- 🎯 **Discussions**: [GitHub Discussions](https://github.com/OvenKung/sweet-frozen-ecommerce/discussions)
-
-### **🐛 Bug Reports**
-```markdown
-**Bug Description**
-A clear description of the bug
-
-**Steps to Reproduce**
-1. Go to '...'
-2. Click on '...'
-3. Scroll down to '...'
-4. See error
-
-**Expected Behavior**
-What you expected to happen
-
-**Screenshots**
-Add screenshots if applicable
-
-**Device Info**
-- Device: [e.g. iPhone 12]
-- OS: [e.g. iOS 15]
-- Browser: [e.g. Safari 15]
-```
 
 ---
 
