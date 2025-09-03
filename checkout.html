@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>💳 ชำระเงิน — Sweet Frozen</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'pastel-pink': '#ffb3ba',
+            'pastel-peach': '#ffdfba',
+            'pastel-yellow': '#ffffba',
+            'pastel-green': '#baffc9',
+            'pastel-blue': '#bae1ff',
+            'pastel-purple': '#e1baff',
+            'pastel-lavender': '#f0e6ff',
+            'primary': '#ff8fab',
+            'primary-hover': '#ff6b9d',
+            'secondary': '#c8e6c9',
+            'accent': '#b39ddb',
+          },
+          animation: {
+            'float': 'float 3s ease-in-out infinite',
+            'slide-in-up': 'slideInUp 0.8s ease-out',
+            'slide-in-left': 'slideInLeft 0.8s ease-out',
+            'bounce-in': 'bounceIn 0.8s ease-out',
+            'sparkle': 'sparkle 2s ease-in-out infinite',
+            'wobble': 'wobble 0.5s ease-in-out'
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '50%': { transform: 'translateY(-10px) rotate(2deg)' }
+            },
+            slideInUp: {
+              from: { opacity: '0', transform: 'translateY(30px)' },
+              to: { opacity: '1', transform: 'translateY(0)' }
+            },
+            slideInLeft: {
+              from: { opacity: '0', transform: 'translateX(-30px)' },
+              to: { opacity: '1', transform: 'translateX(0)' }
+            },
+            bounceIn: {
+              '0%': { opacity: '0', transform: 'scale(0.3)' },
+              '50%': { opacity: '1', transform: 'scale(1.05)' },
+              '100%': { opacity: '1', transform: 'scale(1)' }
+            },
+            sparkle: {
+              '0%, 100%': { opacity: '1', transform: 'scale(1) rotate(0deg)' },
+              '50%': { opacity: '0.7', transform: 'scale(1.2) rotate(180deg)' }
+            },
+            wobble: {
+              '0%, 100%': { transform: 'rotate(0deg)' },
+              '25%': { transform: 'rotate(-3deg)' },
+              '75%': { transform: 'rotate(3deg)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script type="module" src="/assets/js/app.js"></script>
+</head>
+<body class="bg-gradient-to-br from-pastel-green via-pastel-blue to-pastel-purple min-h-screen">
+  <div id="app-header"></div>
+  
+  <main class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <div class="text-center mb-8 animate-slide-in-up">
+      <div class="inline-block p-4 bg-white/20 backdrop-blur-lg rounded-full mb-4 animate-float">
+        <div class="text-4xl">💳</div>
+      </div>
+      <h1 class="text-3xl font-bold text-gray-800 mb-2">ชำระเงิน</h1>
+      <p class="text-gray-600">กรอกข้อมูลสำหรับการจัดส่งและชำระเงิน</p>
+    </div>
+
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Shipping Address Section -->
+      <div class="lg:col-span-2 space-y-6">
+        <div class="bg-white/30 backdrop-blur-lg rounded-2xl p-6 shadow-xl border border-white/20 animate-slide-in-left">
+          <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
+            <span class="text-2xl mr-2">🏠</span>
+            ที่อยู่จัดส่ง
+          </h2>
+          
+          <div id="addrList" class="mb-6"></div>
+          
+          <form id="addrForm" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">ชื่อ-นามสกุล</label>
+                <input 
+                  class="w-full px-4 py-3 bg-white/50 border border-white/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300 placeholder-gray-400" 
+                  name="fullName" 
+                  placeholder="ชื่อผู้รับ" 
+                  required 
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">เบอร์โทรศัพท์</label>
+                <input 
+                  class="w-full px-4 py-3 bg-white/50 border border-white/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300 placeholder-gray-400" 
+                  name="phone" 
+                  placeholder="เบอร์โทรติดต่อ" 
+                  required 
+                />
+              </div>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">ที่อยู่ บรรทัดที่ 1</label>
+              <input 
+                class="w-full px-4 py-3 bg-white/50 border border-white/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300 placeholder-gray-400" 
+                name="line1" 
+                placeholder="บ้านเลขที่ ซอย ถนน" 
+                required
+              />
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">ที่อยู่ บรรทัดที่ 2 (ไม่บังคับ)</label>
+              <input 
+                class="w-full px-4 py-3 bg-white/50 border border-white/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300 placeholder-gray-400" 
+                name="line2" 
+                placeholder="แขวง/ตำบล หมู่บ้าน อพาร์ทเม้นท์"
+              />
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">เมือง/อำเภอ</label>
+                <input 
+                  class="w-full px-4 py-3 bg-white/50 border border-white/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300 placeholder-gray-400" 
+                  name="city" 
+                  placeholder="อำเภอ" 
+                  required
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">จังหวัด</label>
+                <input 
+                  class="w-full px-4 py-3 bg-white/50 border border-white/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300 placeholder-gray-400" 
+                  name="state" 
+                  placeholder="จังหวัด" 
+                  required
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">รหัสไปรษณีย์</label>
+                <input 
+                  class="w-full px-4 py-3 bg-white/50 border border-white/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300 placeholder-gray-400" 
+                  name="zip" 
+                  placeholder="12345" 
+                  required
+                />
+              </div>
+            </div>
+            
+            <button 
+              type="submit"
+              class="w-full bg-gradient-to-r from-secondary to-pastel-green text-gray-800 font-semibold py-3 px-6 rounded-xl hover:shadow-lg transform hover:scale-105 transition-all duration-300"
+            >
+              <span class="flex items-center justify-center space-x-2">
+                <span>💾</span>
+                <span>บันทึกที่อยู่</span>
+              </span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Payment Section -->
+        <div class="bg-white/30 backdrop-blur-lg rounded-2xl p-6 shadow-xl border border-white/20 animate-slide-in-left">
+          <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
+            <span class="text-2xl mr-2">💳</span>
+            ข้อมูลการชำระเงิน
+          </h2>
+          
+          <div id="paymentList" class="mb-6"></div>
+          
+          <form id="payForm" class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">ชื่อบนบัตร</label>
+              <input 
+                class="w-full px-4 py-3 bg-white/50 border border-white/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300 placeholder-gray-400" 
+                name="name" 
+                placeholder="ชื่อตามบัตรเครดิต" 
+                required
+              />
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">หมายเลขบัตร</label>
+              <input 
+                class="w-full px-4 py-3 bg-white/50 border border-white/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300 placeholder-gray-400 font-mono tracking-wider" 
+                name="card" 
+                placeholder="4242 4242 4242 4242" 
+                required
+              />
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">วันหมดอายุ</label>
+                <input 
+                  class="w-full px-4 py-3 bg-white/50 border border-white/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300 placeholder-gray-400 text-center font-mono" 
+                  name="exp" 
+                  placeholder="MM/YY" 
+                  required
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">CVV</label>
+                <input 
+                  class="w-full px-4 py-3 bg-white/50 border border-white/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300 placeholder-gray-400 text-center font-mono" 
+                  name="cvv" 
+                  placeholder="123" 
+                  required
+                />
+              </div>
+            </div>
+
+            <button 
+              type="submit"
+              class="w-full bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-4 px-6 rounded-xl hover:shadow-lg transform hover:scale-105 transition-all duration-300 animate-bounce-in"
+            >
+              <span class="flex items-center justify-center space-x-2">
+                <span>🛒</span>
+                <span>ชำระเงินและสั่งซื้อ</span>
+              </span>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="lg:col-span-1">
+        <div class="bg-white/30 backdrop-blur-lg rounded-2xl p-6 shadow-xl border border-white/20 animate-slide-in-up sticky top-8">
+          <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
+            <span class="text-2xl mr-2">📋</span>
+            สรุปคำสั่งซื้อ
+          </h2>
+          
+          <div id="summary" class="space-y-3"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div id="app-footer"></div>
+  <script type="module">
+    import { requireLogin, addAddress, listAddresses, saveOrder, currentUser, loadUsers } from '/assets/js/auth.js';
+    import { Cart } from '/assets/js/cart.js';
+    import { PRODUCTS, getProduct } from '/assets/js/products.js';
+    import { toast, updateHeader } from '/assets/js/ui.js';
+    import { processPayment } from '/assets/js/payment.js';
+
+    // รอให้ users data โหลดเสร็จก่อนตรวจสอบ login
+    async function initCheckoutPage() {
+        try {
+            await loadUsers();
+        } catch (error) {
+            // Handle error silently
+        }
+        
+        const user = currentUser();
+        
+        if (!user) {
+            const r = encodeURIComponent('/checkout.html');
+            location.href = `/login.html?redirect=${r}`;
+            return false;
+        }
+        
+        return true;
+    }
+
+    // เรียก init function
+    initCheckoutPage().then(async authenticated => {
+        if (!authenticated) return;
+        
+        // โหลด products ก่อน
+        try {
+            const { loadIceCreamProducts } = await import('/assets/js/products.js');
+            await loadIceCreamProducts();
+        } catch (error) {
+            // Handle error silently
+        }
+        
+        // เรียก render functions
+        renderAddresses();
+        renderSummary();
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Update navbar to show current user state
+        setTimeout(() => {
+            updateHeader();
+        }, 100);
+    });
+
+    function priceOf(id){ const p = getProduct(id); return p? p.price : 0; }
+    function subtotal(){ return Cart.subtotal(priceOf); }
+
+    const addrList = document.getElementById('addrList');
+    const paymentList = document.getElementById('paymentList');
+    
+    function renderAddresses(){
+      const user = currentUser();
+      
+      if (!user) {
+        addrList.innerHTML = '<div class="bg-red-100 border border-red-300 text-red-700 p-3 rounded-xl text-center text-sm">❌ ไม่พบข้อมูลผู้ใช้ กรุณา Login ใหม่</div>';
+        return;
+      }
+      
+      const list = listAddresses();
+      
+      addrList.innerHTML = list.length ? 
+        '<div class="text-sm font-medium text-gray-700 mb-3">ที่อยู่ที่บันทึกไว้:</div>' : 
+        '<div class="bg-yellow-100 border border-yellow-300 text-yellow-700 p-3 rounded-xl text-center text-sm">ยังไม่มีที่อยู่ที่บันทึกไว้ — เพิ่มที่อยู่ด้านล่าง</div>';
+      
+      for(const a of list){
+        const dv = document.createElement('div'); 
+        dv.className='bg-white/50 border border-white/30 rounded-xl p-4 mb-3 hover:bg-white/70 transition-all duration-300';
+        
+        // รองรับโครงสร้างที่อยู่ใหม่และเก่า
+        const fullName = a.fullName || a.name || user.name || 'ไม่ระบุชื่อ';
+        const line1 = a.line1 || a.address || '';
+        const line2 = a.line2 || '';
+        const city = a.city || a.district || '';
+        const state = a.state || a.province || '';
+        const zip = a.zip || a.postalCode || '';
+        const phone = a.phone || user.phone || 'ไม่ระบุเบอร์โทร';
+        
+        dv.innerHTML = `
+          <label class="flex items-start space-x-3 cursor-pointer">
+            <input type="radio" name="addr" value="${a.id}" ${!addrList.querySelector('input[name=addr]')?'checked':''} class="mt-1 text-primary focus:ring-primary/50"/>
+            <div class="flex-1">
+              <div class="font-semibold text-gray-800">${fullName}</div>
+              <div class="text-sm text-gray-600 mt-1">${line1} ${line2}</div>
+              <div class="text-sm text-gray-600">${city}, ${state} ${zip}</div>
+              <div class="text-sm text-gray-500 mt-1">📞 ${phone}</div>
+            </div>
+          </label>`;
+        addrList.appendChild(dv);
+      }
+    }
+    renderAddresses();
+
+    function renderPaymentMethods() {
+        paymentList.innerHTML = '';
+        const user = currentUser();
+        if (!user) return;
+
+        // สร้างส่วนหัวเฉพาะเมื่อมี payment methods ที่บันทึกไว้
+        if (user.paymentMethods && user.paymentMethods.length > 0) {
+            const headerDiv = document.createElement('div');
+            headerDiv.className = 'mb-4';
+            headerDiv.innerHTML = `
+                <h3 class="text-lg font-semibold text-purple-800 mb-2">วิธีการชำระเงินที่บันทึกไว้</h3>
+            `;
+            paymentList.appendChild(headerDiv);
+
+            user.paymentMethods.forEach((payment, index) => {
+                const paymentDiv = document.createElement('div');
+                paymentDiv.className = 'bg-purple-50 border border-purple-200 rounded-lg p-4 mb-3 cursor-pointer hover:bg-purple-100 transition-colors';
+                
+                // ซ่อนตัวเลขบัตรบางส่วนเพื่อความปลอดภัย
+                const maskedCardNumber = `**** **** **** ${payment.cardNumber.slice(-4)}`;
+                
+                paymentDiv.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div class="w-12 h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded flex items-center justify-center mr-3">
+                                <span class="text-white font-semibold text-xs">${payment.cardType?.toUpperCase() || 'CARD'}</span>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-800">${maskedCardNumber}</p>
+                                <p class="text-sm text-gray-600">${payment.cardholderName}</p>
+                                <p class="text-xs text-gray-500">หมดอายุ ${payment.expiryMonth}/${payment.expiryYear}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <button onclick="selectPaymentMethod(${index})" 
+                                    class="mr-2 px-3 py-1 bg-purple-600 text-white rounded text-sm hover:bg-purple-700">
+                                เลือก
+                            </button>
+                            <button onclick="deletePaymentMethod(${index})" 
+                                    class="px-3 py-1 bg-red-500 text-white rounded text-sm hover:bg-red-600">
+                                ลบ
+                            </button>
+                        </div>
+                    </div>
+                `;
+                paymentList.appendChild(paymentDiv);
+            });
+        }
+    }
+    renderPaymentMethods();
+
+    // ฟังก์ชันสำหรับเลือก payment method
+    window.selectPaymentMethod = function(index) {
+        const user = currentUser();
+        if (!user || !user.paymentMethods || !user.paymentMethods[index]) return;
+        
+        const payment = user.paymentMethods[index];
+        
+        // เติมข้อมูลในฟอร์ม
+        document.querySelector('input[name="cardholderName"]').value = payment.cardholderName;
+        document.querySelector('input[name="cardNumber"]').value = payment.cardNumber;
+        document.querySelector('input[name="expiryMonth"]').value = payment.expiryMonth;
+        document.querySelector('input[name="expiryYear"]').value = payment.expiryYear;
+        document.querySelector('input[name="cvv"]').value = payment.cvv;
+        
+        // แสดงข้อความยืนยัน
+        const toast = document.createElement('div');
+        toast.className = 'fixed top-4 right-4 bg-green-100 border border-green-300 text-green-700 p-4 rounded-xl z-50 animate-slide-in-left';
+        toast.innerHTML = '<div class="flex items-center space-x-2"><span>✅</span><span>เลือกวิธีการชำระเงินแล้ว</span></div>';
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    };
+
+    // ฟังก์ชันสำหรับลบ payment method
+    window.deletePaymentMethod = function(index) {
+        if (!confirm('คุณต้องการลบวิธีการชำระเงินนี้หรือไม่?')) return;
+        
+        const user = currentUser();
+        if (!user || !user.paymentMethods) return;
+        
+        user.paymentMethods.splice(index, 1);
+        
+        // บันทึกข้อมูลลง localStorage
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        const userIndex = users.findIndex(u => u.email === user.email);
+        if (userIndex !== -1) {
+            users[userIndex] = user;
+            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem('currentUser', JSON.stringify(user));
+        }
+        
+        renderPaymentMethods();
+        
+        // แสดงข้อความยืนยัน
+        const toast = document.createElement('div');
+        toast.className = 'fixed top-4 right-4 bg-red-100 border border-red-300 text-red-700 p-4 rounded-xl z-50 animate-slide-in-left';
+        toast.innerHTML = '<div class="flex items-center space-x-2"><span>🗑️</span><span>ลบวิธีการชำระเงินแล้ว</span></div>';
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    };
+
+    document.getElementById('addrForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const {ok,address} = addAddress(Object.fromEntries(fd.entries()));
+      if(ok){ 
+        // Show success toast
+        const successDiv = document.createElement('div');
+        successDiv.className = 'fixed top-4 right-4 bg-green-100 border border-green-300 text-green-700 p-4 rounded-xl z-50 animate-slide-in-left';
+        successDiv.innerHTML = '<div class="flex items-center space-x-2"><span>✅</span><span>บันทึกที่อยู่สำเร็จ!</span></div>';
+        document.body.appendChild(successDiv);
+        setTimeout(() => successDiv.remove(), 3000);
+        
+        e.target.reset(); 
+        renderAddresses(); 
+      }
+    });
+
+    // Event listener สำหรับฟอร์มการชำระเงิน
+    document.getElementById('payForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const paymentData = Object.fromEntries(formData.entries());
+      
+      // ตรวจสอบความครบถ้วนของข้อมูล
+      if (!paymentData.cardholderName || !paymentData.cardNumber || !paymentData.expiryMonth || !paymentData.expiryYear || !paymentData.cvv) {
+        alert('กรุณากรอกข้อมูลการชำระเงินให้ครบถ้วน');
+        return;
+      }
+      
+      const user = currentUser();
+      if (!user) {
+        alert('ไม่พบข้อมูลผู้ใช้');
+        return;
+      }
+      
+      // กำหนดประเภทบัตรจากหมายเลขบัตร
+      let cardType = 'VISA';
+      if (paymentData.cardNumber.startsWith('5')) cardType = 'MASTER';
+      else if (paymentData.cardNumber.startsWith('4')) cardType = 'VISA';
+      else if (paymentData.cardNumber.startsWith('3')) cardType = 'AMEX';
+      
+      const newPayment = {
+        cardholderName: paymentData.cardholderName,
+        cardNumber: paymentData.cardNumber,
+        expiryMonth: paymentData.expiryMonth,
+        expiryYear: paymentData.expiryYear,
+        cvv: paymentData.cvv,
+        cardType: cardType,
+        savedAt: new Date().toISOString()
+      };
+      
+      // เพิ่ม payment method ลงในข้อมูลผู้ใช้
+      if (!user.paymentMethods) user.paymentMethods = [];
+      
+      // ตรวจสอบว่ามีบัตรนี้อยู่แล้วหรือไม่
+      const existingIndex = user.paymentMethods.findIndex(p => p.cardNumber === newPayment.cardNumber);
+      if (existingIndex !== -1) {
+        // อัปเดตข้อมูลบัตรที่มีอยู่
+        user.paymentMethods[existingIndex] = newPayment;
+      } else {
+        // เพิ่มบัตรใหม่
+        user.paymentMethods.push(newPayment);
+      }
+      
+      // บันทึกข้อมูลลง localStorage
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const userIndex = users.findIndex(u => u.email === user.email);
+      if (userIndex !== -1) {
+        users[userIndex] = user;
+        localStorage.setItem('users', JSON.stringify(users));
+        localStorage.setItem('currentUser', JSON.stringify(user));
+      }
+      
+      // แสดงข้อความสำเร็จ
+      const successDiv = document.createElement('div');
+      successDiv.className = 'fixed top-4 right-4 bg-green-100 border border-green-300 text-green-700 p-4 rounded-xl z-50 animate-slide-in-left';
+      successDiv.innerHTML = '<div class="flex items-center space-x-2"><span>✅</span><span>บันทึกข้อมูลการชำระเงินสำเร็จ!</span></div>';
+      document.body.appendChild(successDiv);
+      setTimeout(() => successDiv.remove(), 3000);
+      
+      // รีเซ็ตฟอร์มและอัปเดตการแสดงผล
+      e.target.reset();
+      renderPaymentMethods();
+    });
+
+    const sum = document.getElementById('summary');
+    function renderSummary(){
+      const c = Cart.get();
+      
+      sum.innerHTML = '';
+      
+      if (!c.items || !c.items.length) {
+        sum.innerHTML = '<div class="text-center text-gray-500 p-4">ไม่มีสินค้าในตะกร้า</div>';
+        return {sub: 0, shipping: 0, total: 0};
+      }
+      
+      let foundProducts = 0;
+      
+      for(const it of c.items){
+        // ใช้ getProduct แทน PRODUCTS.find โดยตรง
+        const p = getProduct(it.productId);
+        
+        if (!p) {
+          // แสดง placeholder สำหรับสินค้าที่ไม่พบ
+          const itemDiv = document.createElement('div');
+          itemDiv.className = 'flex justify-between items-center p-3 bg-white/50 rounded-lg';
+          itemDiv.innerHTML = `
+            <div class="flex-1">
+              <div class="font-medium text-gray-800">สินค้า ID: ${it.productId}</div>
+              <div class="text-sm text-gray-600">จำนวน ${it.qty} ชิ้น (กำลังโหลดข้อมูล...)</div>
+            </div>
+            <div class="font-semibold text-primary">กำลังคำนวณ...</div>
+          `;
+          sum.appendChild(itemDiv);
+          continue;
+        }
+        
+        foundProducts++;
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'flex justify-between items-center p-3 bg-white/50 rounded-lg';
+        itemDiv.innerHTML = `
+          <div class="flex-1">
+            <div class="font-medium text-gray-800">${p.name}</div>
+            <div class="text-sm text-gray-600">จำนวน ${it.qty} ชิ้น</div>
+          </div>
+          <div class="font-semibold text-primary">฿${(p.price*it.qty).toLocaleString()}</div>
+        `;
+        sum.appendChild(itemDiv);
+      }
+      
+      const sub = subtotal(); 
+      const shipping = sub>1500? 0 : 80; 
+      const total = sub+shipping;
+      
+      // Add separator
+      const separator = document.createElement('div');
+      separator.className = 'border-t border-white/30 my-4';
+      sum.appendChild(separator);
+      
+      // Add totals
+      const totalsDiv = document.createElement('div');
+      totalsDiv.className = 'space-y-2';
+      totalsDiv.innerHTML = `
+        <div class="flex justify-between text-gray-700">
+          <span>ยอดรวมสินค้า</span>
+          <span>฿${sub.toLocaleString()}</span>
+        </div>
+        <div class="flex justify-between text-gray-700">
+          <span>ค่าจัดส่ง</span>
+          <span>${shipping ? '฿'+shipping : 'ฟรี!'}</span>
+        </div>
+        <div class="border-t border-white/30 pt-2 flex justify-between text-lg font-bold text-gray-800">
+          <span>รวมทั้งหมด</span>
+          <span class="text-primary">฿${total.toLocaleString()}</span>
+        </div>
+      `;
+      sum.appendChild(totalsDiv);
+      
+      if(shipping === 0 && sub > 1500) {
+        const freeShippingDiv = document.createElement('div');
+        freeShippingDiv.className = 'mt-3 p-2 bg-green-100 border border-green-300 text-green-700 rounded-lg text-sm text-center';
+        freeShippingDiv.innerHTML = '🎉 ได้รับการจัดส่งฟรี!';
+        sum.appendChild(freeShippingDiv);
+      }
+      
+      return {sub, shipping, total};
+    }
+
+    // Remove this line since we call renderSummary() after products are loaded
+    // const totals = renderSummary();
+
+    document.getElementById('payForm').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const chosen = document.querySelector('input[name=addr]:checked');
+      if(!chosen){ 
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'fixed top-4 right-4 bg-red-100 border border-red-300 text-red-700 p-4 rounded-xl z-50 animate-slide-in-left';
+        errorDiv.innerHTML = '<div class="flex items-center space-x-2"><span>❌</span><span>กรุณาเลือกที่อยู่จัดส่ง</span></div>';
+        document.body.appendChild(errorDiv);
+        setTimeout(() => errorDiv.remove(), 3000);
+        return; 
+      }
+      
+      // Show processing
+      const processDiv = document.createElement('div');
+      processDiv.className = 'fixed top-4 right-4 bg-blue-100 border border-blue-300 text-blue-700 p-4 rounded-xl z-50 animate-slide-in-left';
+      processDiv.innerHTML = '<div class="flex items-center space-x-2"><span>⏳</span><span>กำลังประมวลผลการชำระเงิน...</span></div>';
+      document.body.appendChild(processDiv);
+      
+      const addrId = chosen.value;
+      const {name, card, exp, cvv} = Object.fromEntries(fd.entries());
+      const pay = await processPayment({amount: totals.total, cardNumber: card, name, exp, cvv});
+      
+      processDiv.remove();
+      
+      if(!pay.ok){ 
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'fixed top-4 right-4 bg-red-100 border border-red-300 text-red-700 p-4 rounded-xl z-50 animate-slide-in-left';
+        errorDiv.innerHTML = '<div class="flex items-center space-x-2"><span>❌</span><span>' + pay.message + '</span></div>';
+        document.body.appendChild(errorDiv);
+        setTimeout(() => errorDiv.remove(), 3000);
+        return; 
+      }
+      
+      const user = currentUser();
+      const order = {
+        id:'ord-'+Math.random().toString(36).slice(2,8).toUpperCase(),
+        email:user.email,
+        items: Cart.get().items,
+        amount: totals.total,
+        addressId: addrId,
+        txnId: pay.txnId,
+        createdAt: Date.now()
+      };
+      saveOrder(order); 
+      Cart.clear();
+      
+      // Show success modal
+      const successModal = document.createElement('div');
+      successModal.className = 'fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-bounce-in';
+      successModal.innerHTML = `
+        <div class="bg-white rounded-2xl p-8 max-w-md mx-4 text-center">
+          <div class="text-6xl mb-4">🎉</div>
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">สั่งซื้อสำเร็จ!</h2>
+          <div class="space-y-2 text-gray-600 mb-6">
+            <p><strong>หมายเลขคำสั่งซื้อ:</strong> ${order.id}</p>
+            <p><strong>หมายเลขธุรกรรม:</strong> ${order.txnId}</p>
+            <p><strong>ยอดรวม:</strong> ฿${order.amount.toLocaleString()}</p>
+          </div>
+          <button onclick="location.href='/account.html'" class="bg-gradient-to-r from-primary to-primary-hover text-white font-semibold py-3 px-6 rounded-xl hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+            ดูรายละเอียดคำสั่งซื้อ
+          </button>
+        </div>
+      `;
+      document.body.appendChild(successModal);
+    });
+  </script>
+</body>
+</html>

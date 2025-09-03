@@ -1,0 +1,81 @@
+name: 🔍 Code Quality Check
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  quality-check:
+    runs-on: ubuntu-latest
+    name: 📊 Quality Analysis
+    
+    steps:
+    - name: 📂 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: 📦 Install dependencies
+      run: npm install
+      
+    - name: 🧹 Check code formatting
+      run: |
+        echo "🔍 Checking JavaScript files..."
+        find . -name "*.js" -not -path "./node_modules/*" | wc -l
+        echo "📄 Checking HTML files..."
+        find . -name "*.html" | wc -l
+        echo "🎨 Checking CSS files..."
+        find . -name "*.css" | wc -l
+        
+    - name: 🔍 Security scan
+      run: |
+        echo "🔒 Running security checks..."
+        # Check for common security issues
+        if grep -r "eval(" assets/js/ 2>/dev/null; then
+          echo "⚠️ Found eval() usage - potential security risk"
+          exit 1
+        fi
+        if grep -r "innerHTML.*+\|innerHTML.*concat" assets/js/ 2>/dev/null; then
+          echo "⚠️ Found potential XSS vulnerability"
+          exit 1
+        fi
+        echo "✅ No obvious security issues found"
+        
+    - name: 📊 Code metrics
+      run: |
+        echo "📈 Calculating code metrics..."
+        JS_FILES=$(find assets/js -name "*.js" | wc -l)
+        JS_LINES=$(find assets/js -name "*.js" -exec wc -l {} + | tail -1 | awk '{print $1}')
+        HTML_FILES=$(find . -maxdepth 1 -name "*.html" | wc -l)
+        
+        echo "📊 Project Statistics:"
+        echo "  JavaScript files: $JS_FILES"
+        echo "  Lines of JS code: $JS_LINES"
+        echo "  HTML pages: $HTML_FILES"
+        
+        # Create metrics report
+        mkdir -p reports
+        cat > reports/metrics.json << EOF
+        {
+          "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+          "files": {
+            "javascript": $JS_FILES,
+            "html": $HTML_FILES
+          },
+          "lines": {
+            "javascript": $JS_LINES
+          }
+        }
+        EOF
+        
+    - name: 📤 Upload reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: code-quality-reports
+        path: reports/

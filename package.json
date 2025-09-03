@@ -1,0 +1,32 @@
+{
+  "name": "sweet-frozen-ecommerce",
+  "version": "1.0.0",
+  "description": "Sweet Frozen Ice Cream E-commerce Website",
+  "main": "index.html",
+  "scripts": {
+    "dev": "live-server --port=8080 --entry-file=index.html",
+    "build": "echo 'Building project...' && npm run validate",
+    "validate": "echo 'Validating files...' && node scripts/validate.js",
+    "test": "echo 'Running tests...' && node scripts/test.js",
+    "deploy": "echo 'Deploying to GitHub Pages...'",
+    "start": "npm run dev"
+  },
+  "keywords": [
+    "ecommerce",
+    "ice-cream",
+    "javascript",
+    "html",
+    "css",
+    "tailwind"
+  ],
+  "author": "Sweet Frozen Team",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/sweet-frozen-ecommerce.git"
+  },
+  "homepage": "https://YOUR_USERNAME.github.io/sweet-frozen-ecommerce"
+}

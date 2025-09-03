@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>🍦 Sweet Frozen - ร้านไอศกรีมออนไลน์</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'pastel-pink': '#ffb3ba',
+            'pastel-peach': '#ffdfba',
+            'pastel-yellow': '#ffffba',
+            'pastel-green': '#baffc9',
+            'pastel-blue': '#bae1ff',
+            'pastel-purple': '#e1baff',
+            'pastel-lavender': '#f0e6ff',
+            'primary': '#ff8fab',
+            'primary-hover': '#ff6b9d',
+            'secondary': '#c8e6c9',
+            'accent': '#b39ddb',
+          },
+          animation: {
+            'float': 'float 3s ease-in-out infinite',
+            'slide-in-up': 'slideInUp 0.8s ease-out',
+            'slide-in-left': 'slideInLeft 0.8s ease-out',
+            'bounce-in': 'bounceIn 0.8s ease-out',
+            'sparkle': 'sparkle 2s ease-in-out infinite',
+            'wobble': 'wobble 0.5s ease-in-out'
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '50%': { transform: 'translateY(-10px) rotate(2deg)' }
+            },
+            slideInUp: {
+              from: { opacity: '0', transform: 'translateY(30px)' },
+              to: { opacity: '1', transform: 'translateY(0)' }
+            },
+            slideInLeft: {
+              from: { opacity: '0', transform: 'translateX(-30px)' },
+              to: { opacity: '1', transform: 'translateX(0)' }
+            },
+            bounceIn: {
+              '0%': { opacity: '0', transform: 'scale(0.3)' },
+              '50%': { opacity: '1', transform: 'scale(1.05)' },
+              '100%': { opacity: '1', transform: 'scale(1)' }
+            },
+            sparkle: {
+              '0%, 100%': { opacity: '1', transform: 'scale(1) rotate(0deg)' },
+              '50%': { opacity: '0.7', transform: 'scale(1.2) rotate(180deg)' }
+            },
+            wobble: {
+              '0%, 100%': { transform: 'rotate(0deg)' },
+              '25%': { transform: 'rotate(-3deg)' },
+              '75%': { transform: 'rotate(3deg)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="/assets/css/styles.css"/>
+  <script type="module" src="/assets/js/app.js"></script>
+</head>
+<body>
+  <div id="app-header"></div>
+  <main class="max-w-7xl mx-auto px-4 py-6 animate-slide-in-up">
+    <!-- Hero Section -->
+    <section class="mb-10">
+      <div class="grid grid-cols-1 xl:grid-cols-5 gap-6">
+        <!-- Main Welcome Section -->
+        <div class="xl:col-span-3 bg-gradient-to-br from-white to-purple-50 border-2 border-pastel-peach rounded-3xl p-8 shadow-xl">
+          <h1 class="text-4xl lg:text-6xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-6 animate-bounce leading-tight">
+            🍦 ยินดีต้อนรับสู่<br>Sweet Frozen
+          </h1>
+          <p class="text-xl text-purple-700 mb-6 leading-relaxed">
+            ✨ ร้านไอศกรีมออนไลน์ที่มีไอศกรีมหลากหลายรสชาติ สดใหม่ อร่อย เย็นชื่นใจ ส่งถึงบ้านคุณ! ✨
+          </p>
+          
+          <!-- Feature Badges -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+            <div class="bg-pastel-pink px-4 py-3 rounded-2xl text-center border-2 border-pink-200 shadow-md">
+              <div class="text-2xl mb-1">🚚</div>
+              <div class="text-sm font-bold">ฟรีค่าส่ง</div>
+              <div class="text-xs text-purple-600">เมื่อซื้อครบ ฿1,500</div>
+            </div>
+            <div class="bg-pastel-blue px-4 py-3 rounded-2xl text-center border-2 border-blue-200 shadow-md">
+              <div class="text-2xl mb-1">💳</div>
+              <div class="text-sm font-bold">รับบัตรเครดิต</div>
+              <div class="text-xs text-purple-600">ชำระง่าย ปลอดภัย</div>
+            </div>
+            <div class="bg-pastel-green px-4 py-3 rounded-2xl text-center border-2 border-green-200 shadow-md">
+              <div class="text-2xl mb-1">❄️</div>
+              <div class="text-sm font-bold">เก็บความเย็น</div>
+              <div class="text-xs text-purple-600">4-6 ชั่วโมง</div>
+            </div>
+          </div>
+          
+          <p class="text-center text-purple-600 text-sm">
+            🎮 กด <kbd class="bg-pastel-yellow border-2 border-pastel-peach rounded px-2 py-1 font-bold">Alt</kbd>+<kbd class="bg-pastel-yellow border-2 border-pastel-peach rounded px-2 py-1 font-bold">Shift</kbd>+<kbd class="bg-pastel-yellow border-2 border-pastel-peach rounded px-2 py-1 font-bold">R</kbd> เพื่อรีเซ็ตระบบ
+          </p>
+        </div>
+        
+        <!-- Featured Product Section -->
+        <div class="xl:col-span-2 bg-gradient-to-br from-white to-purple-50 border-2 border-pastel-peach rounded-3xl p-6 shadow-xl">
+          <div class="text-center mb-4">
+            <div class="inline-block bg-pastel-yellow px-4 py-2 rounded-full text-lg font-black text-primary border-2 border-yellow-300 animate-bounce">
+              ⭐ ไอศกรีมแนะนำวันนี้
+            </div>
+          </div>
+          <div id="featured"></div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- All Products Section -->
+    <div class="text-center mb-8">
+      <h2 class="text-3xl lg:text-4xl font-black text-primary mb-2">🍨 ไอศกรีมทั้งหมด</h2>
+      <p class="text-purple-600">เลือกไอศกรีมโปรดของคุณได้เลย</p>
+    </div>
+
+    <!-- Search and Filter Section -->
+    <div class="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-6 mb-8 border border-white/20">
+      <div class="flex flex-col md:flex-row gap-4 items-center">
+        <!-- Search Bar -->
+        <div class="flex-1 relative">
+          <input 
+            type="text" 
+            id="searchInput"
+            placeholder="🔍 ค้นหาไอศกรีม..." 
+            class="w-full px-4 py-3 pl-12 rounded-2xl border-2 border-pastel-pink/30 focus:border-pastel-pink focus:outline-none transition-all duration-300"
+          >
+          <div class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+            🔍
+          </div>
+        </div>
+        
+        <!-- Category Filter -->
+        <select id="categoryFilter" class="px-4 py-3 rounded-2xl border-2 border-pastel-purple/30 focus:border-pastel-purple focus:outline-none transition-all duration-300 bg-white min-w-[180px]">
+          <option value="">🍦 หมวดหมู่ทั้งหมด</option>
+          <option value="Fruit">🍓 ผลไม้</option>
+          <option value="Chocolate">🍫 ช็อกโกแลต</option>
+          <option value="Yogurt">🥛 โยเกิร์ต</option>
+          <option value="Asian">🍵 รสชาติเอเชีย</option>
+        </select>
+        
+        <!-- Price Range -->
+        <select id="priceFilter" class="px-4 py-3 rounded-2xl border-2 border-pastel-green/30 focus:border-pastel-green focus:outline-none transition-all duration-300 bg-white min-w-[150px]">
+          <option value="">💰 ราคาทั้งหมด</option>
+          <option value="0-40">฿0 - ฿40</option>
+          <option value="41-55">฿41 - ฿55</option>
+          <option value="56-100">฿56 ขึ้นไป</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="productGrid"></div>
+  </main>
+  <div id="app-footer"></div>
+  
+  <!-- Back to Top Button -->
+  <button class="back-to-top" onclick="scrollToTop()" title="กลับขึ้นบน">
+    ⬆️
+  </button>
+  
+  <!-- Reading Progress Bar -->
+  <div id="progress-bar" style="position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, #ff8fab, #e1baff); z-index: 9999; transition: width 0.3s ease;"></div>
+
+  <script type="module">
+    import { PRODUCTS, loadIceCreamProducts } from '/assets/js/products.js';
+    import { Cart } from '/assets/js/cart.js';
+    import { renderHeader, renderFooter, toast, updateHeader, enableResetHotkey } from '/assets/js/ui.js';
+    import { currentUser } from '/assets/js/auth.js';
+    
+    // Render header and footer first
+    renderHeader();
+    renderFooter();
+    enableResetHotkey();
+    
+    // Ensure navbar shows correct login state
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        updateHeader();
+      }, 100);
+    });
+    
+    function card(p){
+      const el = document.createElement('div'); 
+      el.className='bg-white border-2 border-pastel-blue rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:border-primary shadow-lg';
+      el.style.animationDelay = Math.random() * 0.5 + 's';
+      
+      el.innerHTML = `
+        <a href="/product.html?id=${p.id}" class="block">
+          <img src="${p.image}" alt="${p.name}" class="w-full h-48 object-cover transition-all duration-300 hover:scale-110"/>
+        </a>
+        <div class="p-4 flex flex-col gap-2">
+          <a href="/product.html?id=${p.id}" class="text-primary font-bold text-lg hover:text-primary-hover transition-colors">
+            ${p.name}
+          </a>
+          <div class="bg-pastel-peach px-2 py-1 rounded-xl text-sm inline-block w-fit">
+            🏷️ ${p.category}
+          </div>
+          <div class="text-2xl font-black text-primary">
+            ฿${p.price.toLocaleString()}
+          </div>
+          <button class="w-full bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-3 px-4 rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-2 border-primary" data-id="${p.id}">
+            🛒 เพิ่มในตะกร้า
+          </button>
+        </div>`;
+      
+      const button = el.querySelector('button');
+      button.addEventListener('click', ()=>{
+        // Add click animation
+        button.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          button.style.transform = '';
+        }, 150);
+        
+        Cart.add(p.id,1); 
+        document.getElementById('cartCount').textContent = Cart.count();
+        toast('เพิ่มในตะกร้าแล้ว! 🍦');
+      });
+      return el;
+    }
+    
+    // State for filtering
+    let filteredProducts = [];
+    let currentSearchTerm = '';
+    let currentCategory = '';
+    let currentPriceRange = '';
+
+    function filterProducts() {
+      const searchTerm = document.getElementById('searchInput')?.value.toLowerCase().trim() || '';
+      const category = document.getElementById('categoryFilter')?.value || '';
+      const priceRange = document.getElementById('priceFilter')?.value || '';
+      
+      currentSearchTerm = searchTerm;
+      currentCategory = category;
+      currentPriceRange = priceRange;
+      
+      filteredProducts = PRODUCTS.filter(product => {
+        // Search filter
+        const matchesSearch = searchTerm === '' || 
+          product.name.toLowerCase().includes(searchTerm) ||
+          product.description.toLowerCase().includes(searchTerm);
+        
+        // Category filter
+        const matchesCategory = category === '' || product.category === category;
+        
+        // Price filter
+        let matchesPrice = true;
+        if (priceRange) {
+          const [min, max] = priceRange.split('-').map(Number);
+          if (max) {
+            matchesPrice = product.price >= min && product.price <= max;
+          } else {
+            matchesPrice = product.price >= min;
+          }
+        }
+        
+        return matchesSearch && matchesCategory && matchesPrice;
+      });
+      
+      renderProducts();
+      
+      // Show results count
+      const resultText = filteredProducts.length === PRODUCTS.length 
+        ? `แสดงสินค้าทั้งหมด ${filteredProducts.length} รายการ`
+        : `พบ ${filteredProducts.length} รายการจาก ${PRODUCTS.length} รายการ`;
+      
+      // Update results count display
+      let countDisplay = document.getElementById('resultsCount');
+      if (!countDisplay) {
+        countDisplay = document.createElement('div');
+        countDisplay.id = 'resultsCount';
+        countDisplay.className = 'text-center text-gray-600 mb-4 text-sm font-medium';
+        document.getElementById('productGrid').parentNode.insertBefore(countDisplay, document.getElementById('productGrid'));
+      }
+      countDisplay.textContent = resultText;
+    }
+
+    // Render products immediately with fallback data, then update when JSON loads
+    function renderProducts() {
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = ''; // Clear existing products
+      
+      // Use filtered products if filters are active
+      let list = (currentSearchTerm || currentCategory || currentPriceRange) ? filteredProducts : PRODUCTS;
+      
+      // Handle URL search parameter for backward compatibility
+      const params = new URLSearchParams(location.search);
+      const q = (params.get('q')||'').toLowerCase().trim();
+      if(q && !currentSearchTerm){ 
+        list = list.filter(p=>p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)); 
+        // Set search input if URL has query
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) searchInput.value = q;
+      }
+      
+      if (list.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full text-center py-12 bg-white/50 rounded-3xl">
+            <div class="text-6xl mb-4">🔍</div>
+            <h3 class="text-xl font-bold text-gray-700 mb-2">ไม่พบสินค้าที่ตรองค้นหา</h3>
+            <p class="text-gray-500 mb-4">ลองเปลี่ยนเงื่อนไขการค้นหาหรือเลือกหมวดหมู่อื่น</p>
+            <button onclick="clearFilters()" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-opacity-90 transition-all">
+              🔄 ล้างตัวกรอง
+            </button>
+          </div>
+        `;
+        return;
+      }
+      
+      list.forEach(p=>grid.appendChild(card(p)));
+      
+      // featured ice cream
+      const feat = document.getElementById('featured');
+      const featuredProduct = PRODUCTS[0];
+      if (featuredProduct) {
+        feat.innerHTML = `
+          <div class="text-center">
+            <!-- Image -->
+            <div class="mb-4">
+              <img src="${featuredProduct.image}" alt="${featuredProduct.name}" 
+                   class="w-24 h-24 mx-auto object-cover rounded-full border-4 border-primary shadow-lg transition-transform duration-300 hover:scale-110"/>
+            </div>
+            
+            <!-- Product Info -->
+            <h3 class="text-primary font-black text-lg mb-2 leading-tight">${featuredProduct.name}</h3>
+            <p class="text-purple-600 text-sm mb-3 leading-relaxed">${featuredProduct.description.substring(0, 60)}...</p>
+            
+            <!-- Price & Action -->
+            <div class="mb-4">
+              <div class="text-2xl font-black text-primary mb-3">฿${featuredProduct.price.toLocaleString()}</div>
+              <a href="/product.html?id=${featuredProduct.id}" 
+                 class="inline-block bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-2 px-6 rounded-full text-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:scale-105">
+                🍦 ลองชิมเลย!
+              </a>
+            </div>
+          </div>`;
+      }
+    }
+    
+    // Global functions for buttons
+    window.clearFilters = function() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('categoryFilter').value = '';
+      document.getElementById('priceFilter').value = '';
+      currentSearchTerm = '';
+      currentCategory = '';
+      currentPriceRange = '';
+      filteredProducts = [];
+      renderProducts();
+      
+      // Remove results count
+      const countDisplay = document.getElementById('resultsCount');
+      if (countDisplay) countDisplay.remove();
+    };
+    
+    window.quickAdd = function(productId) {
+      Cart.add(productId, 1);
+      toast('✨ เพิ่มสินค้าลงตะกร้าแล้ว!');
+    };
+    
+    // Scroll functions
+    window.scrollToTop = function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    
+    // Progress bar and back to top button
+    function updateScrollElements() {
+      const scrolled = window.pageYOffset;
+      const maxHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (scrolled / maxHeight) * 100;
+      
+      // Update progress bar
+      const progressBar = document.getElementById('progress-bar');
+      if (progressBar) {
+        progressBar.style.width = progress + '%';
+      }
+      
+      // Show/hide back to top button
+      const backToTop = document.querySelector('.back-to-top');
+      if (backToTop) {
+        if (scrolled > 300) {
+          backToTop.classList.add('visible');
+        } else {
+          backToTop.classList.remove('visible');
+        }
+      }
+    }
+    
+    window.addEventListener('scroll', updateScrollElements);
+    
+    // Setup event listeners for filters
+    document.addEventListener('DOMContentLoaded', function() {
+      // Search input with debounce
+      let searchTimeout;
+      const searchInput = document.getElementById('searchInput');
+      if (searchInput) {
+        searchInput.addEventListener('input', function() {
+          clearTimeout(searchTimeout);
+          searchTimeout = setTimeout(() => {
+            filterProducts();
+          }, 300);
+        });
+      }
+      
+      // Category and price filters
+      const categoryFilter = document.getElementById('categoryFilter');
+      const priceFilter = document.getElementById('priceFilter');
+      
+      if (categoryFilter) {
+        categoryFilter.addEventListener('change', filterProducts);
+      }
+      
+      if (priceFilter) {
+        priceFilter.addEventListener('change', filterProducts);
+      }
+    });
+    
+    // Render immediately with fallback data
+    renderProducts();
+    
+    // Load full data from JSON and re-render
+    loadIceCreamProducts().then(() => {
+      renderProducts();
+    });
+  </script>
+</body>
+</html>

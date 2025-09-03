@@ -1,0 +1,172 @@
+[
+  {
+    "id": "u-demo001",
+    "name": "นายสมชาย ใจดี",
+    "email": "somchai@email.com",
+    "pass": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+    "phone": "089-123-4567",
+    "addresses": [
+      {
+        "id": "addr-001",
+        "type": "home",
+        "name": "บ้าน",
+        "address": "123/45 หมู่บ้านสวยงาม ซอยสุขใจ 12",
+        "district": "บางนา",
+        "province": "กรุงเทพมหานคร",
+        "postalCode": "10260",
+        "isDefault": true
+      },
+      {
+        "id": "addr-002", 
+        "type": "work",
+        "name": "ที่ทำงาน",
+        "address": "456 อาคารธุรกิจ ชั้น 15 ถนนสีลม",
+        "district": "บางรัก",
+        "province": "กรุงเทพมหานคร", 
+        "postalCode": "10500",
+        "isDefault": false
+      }
+    ],
+    "favoriteProducts": ["ice-001", "ice-003", "ice-007"],
+    "orderHistory": [
+      {
+        "id": "order-001",
+        "date": "2025-09-01",
+        "total": 450,
+        "status": "delivered",
+        "items": [
+          {"productId": "ice-001", "quantity": 2, "price": 150},
+          {"productId": "ice-003", "quantity": 1, "price": 150}
+        ]
+      },
+      {
+        "id": "order-002", 
+        "date": "2025-08-28",
+        "total": 375,
+        "status": "delivered",
+        "items": [
+          {"productId": "ice-007", "quantity": 3, "price": 125}
+        ]
+      }
+    ],
+    "paymentMethods": [
+      {
+        "cardholderName": "นายสมชาย ใจดี",
+        "cardNumber": "4111111111111111",
+        "expiryMonth": "12",
+        "expiryYear": "2027",
+        "cvv": "123",
+        "cardType": "VISA",
+        "savedAt": "2024-01-15T10:30:00Z"
+      },
+      {
+        "cardholderName": "นายสมชาย ใจดี", 
+        "cardNumber": "5555555555554444",
+        "expiryMonth": "06",
+        "expiryYear": "2026",
+        "cvv": "456",
+        "cardType": "MASTER",
+        "savedAt": "2024-02-20T14:15:00Z"
+      }
+    ],
+    "preferences": {
+      "notifications": true,
+      "newsletter": true,
+      "language": "th"
+    },
+    "memberSince": "2024-01-15",
+    "points": 850,
+    "level": "Gold"
+  },
+  {
+    "id": "u-demo002",
+    "name": "นางสาวมาลี รักไอศกรีม",
+    "email": "malee@email.com",
+    "pass": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+    "phone": "092-456-7890",
+    "addresses": [
+      {
+        "id": "addr-003",
+        "type": "home",
+        "name": "บ้าน",
+        "address": "789 คอนโดสไตล์ ห้อง 2505 ถนนสุขุมวิท",
+        "district": "คลองเตย",
+        "province": "กรุงเทพมหานคร",
+        "postalCode": "10110",
+        "isDefault": true
+      }
+    ],
+    "favoriteProducts": ["ice-002", "ice-005", "ice-008"],
+    "orderHistory": [
+      {
+        "id": "order-003",
+        "date": "2025-09-02",
+        "total": 600,
+        "status": "processing",
+        "items": [
+          {"productId": "ice-002", "quantity": 2, "price": 175},
+          {"productId": "ice-005", "quantity": 2, "price": 125}
+        ]
+      }
+    ],
+    "paymentMethods": [
+      {
+        "cardholderName": "นางสาวมาลี รักไอศกรีม",
+        "cardNumber": "3782822463100005",
+        "expiryMonth": "03",
+        "expiryYear": "2025",
+        "cvv": "789",
+        "cardType": "AMEX",
+        "savedAt": "2024-03-20T09:15:00Z"
+      }
+    ],
+    "preferences": {
+      "notifications": true,
+      "newsletter": false,
+      "language": "th"
+    },
+    "memberSince": "2024-03-20",
+    "points": 420,
+    "level": "Silver"
+  },
+  {
+    "id": "u-demo003",
+    "name": "นายวิชัย หวานใจ",
+    "email": "wichai@email.com", 
+    "pass": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+    "phone": "085-789-0123",
+    "addresses": [
+      {
+        "id": "addr-004",
+        "type": "home",
+        "name": "บ้าน",
+        "address": "321 หมู่บ้านไอศกรีม ซอยเย็นใจ 7",
+        "district": "ลาดพร้าว",
+        "province": "กรุงเทพมหานคร",
+        "postalCode": "10230",
+        "isDefault": true
+      }
+    ],
+    "favoriteProducts": ["ice-004", "ice-006", "ice-009"],
+    "orderHistory": [
+      {
+        "id": "order-004",
+        "date": "2025-08-30",
+        "total": 825,
+        "status": "delivered", 
+        "items": [
+          {"productId": "ice-004", "quantity": 3, "price": 175},
+          {"productId": "ice-006", "quantity": 2, "price": 150}
+        ]
+      }
+    ],
+    "preferences": {
+      "notifications": false,
+      "newsletter": true,
+      "language": "th"
+    },
+    "memberSince": "2024-07-10",
+    "points": 1250,
+    "level": "Platinum"
+  }
+]

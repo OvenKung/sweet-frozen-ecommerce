@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>ติดต่อเรา — Sweet Frozen</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'pastel-pink': '#ffb3ba',
+            'pastel-peach': '#ffdfba',
+            'pastel-yellow': '#ffffba',
+            'pastel-green': '#baffc9',
+            'pastel-blue': '#bae1ff',
+            'pastel-purple': '#e1baff',
+            'pastel-lavender': '#f0e6ff',
+            'primary': '#ff8fab',
+            'primary-hover': '#ff7096',
+            'accent': '#8ecae6'
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="/assets/css/styles.css"/>
+</head>
+<body>
+  <div id="app-header"></div>
+  
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl lg:text-5xl font-black text-primary mb-4">📞 ติดต่อเรา</h1>
+      <p class="text-xl text-gray-600">เรายินดีรับฟังความคิดเห็นและข้อเสนอแนะจากคุณ</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <!-- Contact Form -->
+      <div class="bg-white rounded-3xl shadow-xl p-8 border-2 border-pastel-pink">
+        <h2 class="text-2xl font-bold text-primary mb-6">💌 ส่งข้อความถึงเรา</h2>
+        
+        <form id="contactForm" class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">ชื่อ</label>
+              <input type="text" id="contactName" required
+                     class="w-full px-4 py-3 border-2 border-pastel-blue rounded-xl focus:border-primary focus:outline-none transition-all">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">อีเมล</label>
+              <input type="email" id="contactEmail" required
+                     class="w-full px-4 py-3 border-2 border-pastel-blue rounded-xl focus:border-primary focus:outline-none transition-all">
+            </div>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">หัวข้อ</label>
+            <select id="contactSubject" required
+                    class="w-full px-4 py-3 border-2 border-pastel-blue rounded-xl focus:border-primary focus:outline-none transition-all">
+              <option value="">เลือกหัวข้อ</option>
+              <option value="general">สอบถามทั่วไป</option>
+              <option value="order">เกี่ยวกับคำสั่งซื้อ</option>
+              <option value="product">เกี่ยวกับสินค้า</option>
+              <option value="delivery">เกี่ยวกับการจัดส่ง</option>
+              <option value="complaint">ร้องเรียน</option>
+              <option value="suggestion">ข้อเสนอแนะ</option>
+            </select>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">ข้อความ</label>
+            <textarea id="contactMessage" rows="5" required
+                      placeholder="เขียนข้อความของคุณที่นี่..."
+                      class="w-full px-4 py-3 border-2 border-pastel-blue rounded-xl focus:border-primary focus:outline-none transition-all resize-none"></textarea>
+          </div>
+          
+          <button type="submit" 
+                  class="w-full bg-gradient-to-r from-primary to-accent text-white font-bold py-4 px-6 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300">
+            📨 ส่งข้อความ
+          </button>
+        </form>
+      </div>
+      
+      <!-- Contact Info -->
+      <div class="space-y-8">
+        <!-- Store Info -->
+        <div class="bg-gradient-to-br from-pastel-pink to-pastel-peach rounded-3xl p-8 text-center">
+          <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-3xl mx-auto mb-4">🍦</div>
+          <h3 class="text-xl font-bold text-purple-700 mb-4">Sweet Frozen Store</h3>
+          <div class="space-y-2 text-purple-600">
+            <p>📍 123/456 ถนนสุขุมวิท แขวงคลองตัน</p>
+            <p>เขตวัฒนา กรุงเทพมหานคร 10110</p>
+            <p>📱 โทร: 02-123-4567</p>
+            <p>📧 อีเมล: support@sweetfrozen.com</p>
+          </div>
+        </div>
+        
+        <!-- Business Hours -->
+        <div class="bg-gradient-to-br from-pastel-blue to-pastel-purple rounded-3xl p-8">
+          <h3 class="text-xl font-bold text-white mb-4 text-center">🕐 เวลาทำการ</h3>
+          <div class="space-y-2 text-white">
+            <div class="flex justify-between">
+              <span>จันทร์ - ศุกร์</span>
+              <span>9:00 - 18:00</span>
+            </div>
+            <div class="flex justify-between">
+              <span>เสาร์ - อาทิตย์</span>
+              <span>10:00 - 17:00</span>
+            </div>
+            <div class="flex justify-between border-t border-white/20 pt-2 mt-4">
+              <span>วันหยุดนักขัตฤกษ์</span>
+              <span>ปิด</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- FAQ -->
+        <div class="bg-gradient-to-br from-pastel-green to-pastel-yellow rounded-3xl p-8">
+          <h3 class="text-xl font-bold text-purple-700 mb-4 text-center">❓ คำถามที่พบบ่อย</h3>
+          <div class="space-y-3 text-sm">
+            <div>
+              <p class="font-medium text-purple-700">🚚 จัดส่งใช้เวลานานแค่ไหน?</p>
+              <p class="text-purple-600">ภายใน 2-4 ชั่วโมงสำหรับกรุงเทพฯ</p>
+            </div>
+            <div>
+              <p class="font-medium text-purple-700">❄️ ไอศกรีมจะยังเย็นไหม?</p>
+              <p class="text-purple-600">ใช่ เราใช้กล่องโฟมพิเศษรักษาอุณหภูมิ</p>
+            </div>
+            <div>
+              <p class="font-medium text-purple-700">💰 มีค่าจัดส่งเท่าไหร่?</p>
+              <p class="text-purple-600">50 บาท (ฟรีเมื่อซื้อครบ 1,500 บาท)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <div id="app-footer"></div>
+  
+  <script type="module">
+    import { renderHeader, renderFooter, toast } from '/assets/js/ui.js';
+    
+    // Render header and footer
+    renderHeader();
+    renderFooter();
+    
+    // Newsletter subscription
+    window.subscribeNewsletter = function() {
+      const email = document.getElementById('newsletterEmail').value;
+      if (email) {
+        toast('🎉 สมัครรับข่าวสารสำเร็จ! ขอบคุณที่สนใจเรา', 'success');
+        document.getElementById('newsletterEmail').value = '';
+      } else {
+        toast('กรุณากรอกอีเมลให้ครบถ้วน', 'warning');
+      }
+    };
+    
+    // Contact form submission
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('contactName').value;
+      const email = document.getElementById('contactEmail').value;
+      const subject = document.getElementById('contactSubject').value;
+      const message = document.getElementById('contactMessage').value;
+      
+      if (name && email && subject && message) {
+        // Simulate sending message
+        toast('📨 ส่งข้อความสำเร็จ! เราจะติดต่อกลับภายใน 24 ชั่วโมง', 'success');
+        
+        // Reset form
+        this.reset();
+      } else {
+        toast('กรุณากรอกข้อมูลให้ครบถ้วน', 'warning');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>👤 บัญชีของฉัน — Sweet Frozen</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'pastel-pink': '#ffb3ba',
+            'pastel-peach': '#ffdfba',
+            'pastel-yellow': '#ffffba',
+            'pastel-green': '#baffc9',
+            'pastel-blue': '#bae1ff',
+            'pastel-purple': '#e1baff',
+            'pastel-lavender': '#f0e6ff',
+            'primary': '#ff8fab',
+            'primary-hover': '#ff6b9d',
+            'secondary': '#c8e6c9',
+            'accent': '#b39ddb',
+          },
+          animation: {
+            'float': 'float 3s ease-in-out infinite',
+            'slide-in-up': 'slideInUp 0.8s ease-out',
+            'slide-in-left': 'slideInLeft 0.8s ease-out',
+            'bounce-in': 'bounceIn 0.8s ease-out',
+            'sparkle': 'sparkle 2s ease-in-out infinite',
+            'wobble': 'wobble 0.5s ease-in-out'
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '50%': { transform: 'translateY(-10px) rotate(2deg)' }
+            },
+            slideInUp: {
+              from: { opacity: '0', transform: 'translateY(30px)' },
+              to: { opacity: '1', transform: 'translateY(0)' }
+            },
+            slideInLeft: {
+              from: { opacity: '0', transform: 'translateX(-30px)' },
+              to: { opacity: '1', transform: 'translateX(0)' }
+            },
+            bounceIn: {
+              '0%': { opacity: '0', transform: 'scale(0.3)' },
+              '50%': { opacity: '1', transform: 'scale(1.05)' },
+              '100%': { opacity: '1', transform: 'scale(1)' }
+            },
+            sparkle: {
+              '0%, 100%': { opacity: '1', transform: 'scale(1) rotate(0deg)' },
+              '50%': { opacity: '0.7', transform: 'scale(1.2) rotate(180deg)' }
+            },
+            wobble: {
+              '0%, 100%': { transform: 'rotate(0deg)' },
+              '25%': { transform: 'rotate(-3deg)' },
+              '75%': { transform: 'rotate(3deg)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script type="module" src="/assets/js/app.js"></script>
+</head>
+<body class="bg-gradient-to-br from-pastel-lavender via-pastel-blue to-pastel-green min-h-screen">
+  <div id="app-header"></div>
+  
+  <main class="container mx-auto px-4 py-8">
+    <div class="max-w-6xl mx-auto">
+      <!-- Header -->
+      <div class="text-center mb-8 animate-slide-in-up">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">บัญชีของฉัน</h1>
+        <p class="text-gray-600">จัดการข้อมูลส่วนตัวและประวัติการสั่งซื้อ</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <!-- Sidebar Profile Card -->
+        <div class="lg:col-span-1">
+          <div class="bg-white/30 backdrop-blur-lg rounded-2xl p-6 shadow-xl border border-white/20 animate-slide-in-left sticky top-8">
+            <div id="profileCard"></div>
+            <div id="userStats" class="mt-6"></div>
+          </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="lg:col-span-3">
+          <!-- Tab Navigation -->
+          <div class="bg-white/30 backdrop-blur-lg rounded-2xl p-2 shadow-xl border border-white/20 mb-6 animate-slide-in-up">
+            <nav class="flex space-x-1" role="tablist">
+              <button class="tab-btn active flex-1 bg-white/50 text-gray-800 font-semibold py-3 px-4 rounded-xl transition-all duration-300 hover:bg-white/70" data-tab="profile">
+                <span class="flex items-center justify-center space-x-2">
+                  <span>👤</span>
+                  <span>ข้อมูลส่วนตัว</span>
+                </span>
+              </button>
+              <button class="tab-btn flex-1 text-gray-600 font-semibold py-3 px-4 rounded-xl transition-all duration-300 hover:bg-white/30" data-tab="addresses">
+                <span class="flex items-center justify-center space-x-2">
+                  <span>📍</span>
+                  <span>ที่อยู่</span>
+                </span>
+              </button>
+              <button class="tab-btn flex-1 text-gray-600 font-semibold py-3 px-4 rounded-xl transition-all duration-300 hover:bg-white/30" data-tab="orders">
+                <span class="flex items-center justify-center space-x-2">
+                  <span>📦</span>
+                  <span>ประวัติการสั่งซื้อ</span>
+                </span>
+              </button>
+              <button class="tab-btn flex-1 text-gray-600 font-semibold py-3 px-4 rounded-xl transition-all duration-300 hover:bg-white/30" data-tab="favorites">
+                <span class="flex items-center justify-center space-x-2">
+                  <span>❤️</span>
+                  <span>สินค้าโปรด</span>
+                </span>
+              </button>
+            </nav>
+          </div>
+
+          <!-- Tab Content -->
+          <div class="bg-white/30 backdrop-blur-lg rounded-2xl p-6 shadow-xl border border-white/20 animate-slide-in-up">
+            <!-- Profile Tab -->
+            <div id="profile" class="tab-content active"></div>
+            
+            <!-- Addresses Tab -->
+            <div id="addresses" class="tab-content hidden"></div>
+            
+            <!-- Orders Tab -->
+            <div id="orders" class="tab-content hidden"></div>
+            
+            <!-- Favorites Tab -->
+            <div id="favorites" class="tab-content hidden"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <div id="app-footer"></div>
+  
+  <script type="module">
+    import { requireLogin, currentUser, demoLogin, addUserAddress, updateUserAddress, deleteUserAddress } from '/assets/js/auth.js';
+    import { PRODUCTS } from '/assets/js/products.js';
+    import { updateHeader, toast } from '/assets/js/ui.js';
+
+    // Initialize the page
+    async function initializePage() {
+      // Check if user is logged in
+      let u = currentUser();
+      
+      // If no user, try demo login
+      if (!u) {
+        try {
+          u = await demoLogin('somchai@email.com');
+        } catch (error) {
+          console.error('❌ Demo login failed:', error);
+        }
+      }
+
+      // If still no user, redirect to login
+      if (!u) {
+        window.location.href = '/login.html';
+        return;
+      }
+      
+      // Update navbar to show logged in state immediately
+      updateHeader();
+      
+      // Initialize all page components
+      renderProfileCard();
+      renderUserStats();
+      renderProfile();
+      renderAddresses();
+      renderOrders();
+      renderFavorites();
+      setupTabs();
+
+      // Profile Card
+      function renderProfileCard() {
+        const levelColors = {
+          'Gold': 'bg-gradient-to-r from-yellow-400 to-yellow-600',
+          'Silver': 'bg-gradient-to-r from-gray-400 to-gray-600', 
+          'Platinum': 'bg-gradient-to-r from-purple-400 to-purple-600',
+          'Bronze': 'bg-gradient-to-r from-orange-400 to-orange-600'
+        };
+        
+        const levelIcons = {
+          'Gold': '🥇',
+          'Silver': '🥈',
+          'Platinum': '💎',
+          'Bronze': '🥉'
+        };
+
+        document.getElementById('profileCard').innerHTML = `
+          <div class="text-center">
+            <div class="w-24 h-24 mx-auto mb-4 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center text-4xl animate-bounce">
+              👤
+            </div>
+            <h3 class="text-xl font-bold text-primary mb-1">${u.name}</h3>
+            <p class="text-purple-600 text-sm mb-3">${u.email}</p>
+            
+            <div class="inline-flex items-center ${levelColors[u.level] || levelColors['Bronze']} text-white px-4 py-2 rounded-full text-sm font-bold mb-4 shadow-lg">
+              ${levelIcons[u.level] || '🥉'} ${u.level || 'Bronze'} Member
+            </div>
+            
+            <div class="bg-pastel-yellow px-4 py-2 rounded-xl border-2 border-yellow-300">
+              <div class="text-sm text-purple-700">💰 คะแนนสะสม</div>
+              <div class="text-2xl font-black text-primary">${u.points || 0} แต้ม</div>
+            </div>
+          </div>
+        `;
+      }
+
+      // User Stats
+      function renderUserStats() {
+        const totalOrders = u.orderHistory?.length || 0;
+        const totalSpent = u.orderHistory?.reduce((sum, order) => sum + order.total, 0) || 0;
+        const memberSince = u.memberSince ? new Date(u.memberSince).toLocaleDateString('th-TH') : 'ไม่ระบุ';
+        
+        document.getElementById('userStats').innerHTML = `
+          <div class="space-y-4">
+            <div class="bg-pastel-pink px-4 py-3 rounded-xl border-2 border-pink-200">
+              <div class="text-sm text-purple-700">📦 จำนวนคำสั่งซื้อ</div>
+              <div class="text-xl font-bold text-primary">${totalOrders} คำสั่ง</div>
+            </div>
+            
+            <div class="bg-pastel-green px-4 py-3 rounded-xl border-2 border-green-200">
+              <div class="text-sm text-purple-700">💰 ยอดซื้อรวม</div>
+              <div class="text-xl font-bold text-primary">฿${totalSpent.toLocaleString()}</div>
+            </div>
+            
+            <div class="bg-pastel-lavender px-4 py-3 rounded-xl border-2 border-purple-200">
+              <div class="text-sm text-purple-700">📅 สมาชิกตั้งแต่</div>
+              <div class="text-sm font-bold text-primary">${memberSince}</div>
+            </div>
+          </div>
+        `;
+      }
+
+      // Profile Edit Form
+      function renderProfile() {
+        document.getElementById('profile').innerHTML = `
+          <form class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-bold text-purple-700 mb-2">ชื่อ-นามสกุล</label>
+                <input type="text" value="${u.name}" class="w-full py-3 px-4 border-2 border-pastel-blue rounded-xl outline-none transition-all duration-300 focus:border-primary focus:ring-4 focus:ring-primary/20">
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-purple-700 mb-2">อีเมล</label>
+                <input type="email" value="${u.email}" class="w-full py-3 px-4 border-2 border-pastel-blue rounded-xl outline-none transition-all duration-300 focus:border-primary focus:ring-4 focus:ring-primary/20" readonly>
+              </div>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-bold text-purple-700 mb-2">เบอร์โทรศัพท์</label>
+              <input type="tel" value="${u.phone || ''}" class="w-full py-3 px-4 border-2 border-pastel-blue rounded-xl outline-none transition-all duration-300 focus:border-primary focus:ring-4 focus:ring-primary/20">
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label class="flex items-center space-x-2">
+                  <input type="checkbox" ${u.preferences?.notifications ? 'checked' : ''} class="w-5 h-5 text-primary rounded focus:ring-primary">
+                  <span class="text-sm text-purple-700">📧 รับการแจ้งเตือน</span>
+                </label>
+              </div>
+              <div>
+                <label class="flex items-center space-x-2">
+                  <input type="checkbox" ${u.preferences?.newsletter ? 'checked' : ''} class="w-5 h-5 text-primary rounded focus:ring-primary">
+                  <span class="text-sm text-purple-700">📰 รับจดหมายข่าว</span>
+                </label>
+              </div>
+            </div>
+            
+            <button type="submit" class="bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-3 px-8 rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+              💾 บันทึกข้อมูล
+            </button>
+          </form>
+        `;
+      }
+
+      // Addresses
+      function renderAddresses() {
+        const addresses = u.addresses || [];
+        document.getElementById('addresses').innerHTML = `
+          <div class="space-y-4">
+            ${addresses.length === 0 ? 
+              '<div class="text-center py-8 text-purple-600">📍 ยังไม่มีที่อยู่ที่บันทึกไว้</div>' :
+              addresses.map(addr => `
+                <div class="bg-white border-2 border-pastel-blue rounded-2xl p-4 shadow-md">
+                  <div class="flex justify-between items-start mb-2">
+                    <div class="flex items-center gap-2">
+                      <span class="text-lg">${addr.type === 'home' ? '🏠' : '🏢'}</span>
+                      <span class="font-bold text-primary">${addr.name}</span>
+                      ${addr.isDefault ? '<span class="bg-pastel-yellow px-2 py-1 rounded-full text-xs font-bold">ค่าเริ่มต้น</span>' : ''}
+                    </div>
+                  </div>
+                  <p class="text-purple-600 text-sm mb-2">${addr.address}</p>
+                  <p class="text-purple-600 text-sm">${addr.district}, ${addr.province} ${addr.postalCode}</p>
+                  <div class="mt-3 flex gap-2">
+                    <button onclick="editAddress('${addr.id}')" class="bg-white border-2 border-pastel-green text-purple-700 font-bold py-2 px-4 rounded-xl text-sm hover:shadow-md transition-all duration-300">
+                      ✏️ แก้ไข
+                    </button>
+                    <button onclick="deleteAddress('${addr.id}')" class="bg-white border-2 border-red-300 text-red-600 font-bold py-2 px-4 rounded-xl text-sm hover:shadow-md transition-all duration-300">
+                      🗑️ ลบ
+                    </button>
+                  </div>
+                </div>
+              `).join('')
+            }
+            <button onclick="addNewAddress()" class="w-full bg-gradient-to-r from-pastel-green to-secondary text-purple-700 font-bold py-3 px-6 rounded-2xl border-2 border-green-300 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+              ➕ เพิ่มที่อยู่ใหม่
+            </button>
+          </div>
+        `;
+      }
+
+      // Order History  
+      function renderOrders() {
+        const orders = u.orderHistory || [];
+        const statusColors = {
+          'delivered': 'bg-green-100 text-green-800',
+          'processing': 'bg-yellow-100 text-yellow-800',
+          'shipped': 'bg-blue-100 text-blue-800',
+          'cancelled': 'bg-red-100 text-red-800'
+        };
+        
+        const statusIcons = {
+          'delivered': '✅',
+          'processing': '⏳', 
+          'shipped': '🚚',
+          'cancelled': '❌'
+        };
+
+        document.getElementById('orders').innerHTML = `
+          <div class="space-y-4">
+            ${orders.length === 0 ? 
+              '<div class="text-center py-8 text-purple-600">📦 ยังไม่มีประวัติการสั่งซื้อ</div>' :
+              orders.map(order => `
+                <div class="bg-white border-2 border-pastel-blue rounded-2xl p-6 shadow-md">
+                  <div class="flex justify-between items-start mb-4">
+                    <div>
+                      <h4 class="font-bold text-primary">คำสั่งซื้อ #${order.id}</h4>
+                      <p class="text-sm text-purple-600">${new Date(order.date).toLocaleDateString('th-TH')}</p>
+                    </div>
+                    <span class="px-3 py-1 rounded-full text-sm font-bold ${statusColors[order.status] || statusColors['processing']}">
+                      ${statusIcons[order.status] || '⏳'} ${order.status}
+                    </span>
+                  </div>
+                  
+                  <div class="space-y-2 mb-4">
+                    ${order.items.map(item => {
+                      const product = PRODUCTS.find(p => p.id === item.productId);
+                      return `
+                        <div class="flex justify-between items-center py-2 border-b border-pastel-lavender">
+                          <div class="flex items-center gap-3">
+                            ${product ? `<img src="${product.image}" alt="${product.name}" class="w-12 h-12 object-cover rounded-full border-2 border-pastel-pink">` : ''}
+                            <div>
+                              <p class="font-medium text-purple-700">${product?.name || 'สินค้า'}</p>
+                              <p class="text-sm text-purple-600">จำนวน: ${item.quantity}</p>
+                            </div>
+                          </div>
+                          <p class="font-bold text-primary">฿${(item.price * item.quantity).toLocaleString()}</p>
+                        </div>
+                      `;
+                    }).join('')}
+                  </div>
+                  
+                  <div class="flex justify-between items-center pt-3 border-t-2 border-pastel-pink">
+                    <span class="text-lg font-bold text-purple-700">รวมทั้งสิ้น</span>
+                    <span class="text-2xl font-black text-primary">฿${order.total.toLocaleString()}</span>
+                  </div>
+                </div>
+              `).join('')
+            }
+          </div>
+        `;
+      }
+
+      // Favorite Products
+      function renderFavorites() {
+        const favoriteIds = u.favoriteProducts || [];
+        const favoriteProducts = PRODUCTS.filter(p => favoriteIds.includes(p.id));
+        
+        document.getElementById('favorites').innerHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            ${favoriteProducts.length === 0 ? 
+              '<div class="col-span-full text-center py-8 text-purple-600">❤️ ยังไม่มีไอศกรีมโปรด</div>' :
+              favoriteProducts.map(product => `
+                <div class="bg-white border-2 border-pastel-pink rounded-2xl p-4 shadow-md hover:shadow-lg transition-all duration-300">
+                  <div class="flex items-center gap-4">
+                    <img src="${product.image}" alt="${product.name}" class="w-16 h-16 object-cover rounded-full border-2 border-primary">
+                    <div class="flex-1">
+                      <h4 class="font-bold text-primary">${product.name}</h4>
+                      <p class="text-sm text-purple-600 mb-2">${product.category}</p>
+                      <p class="text-lg font-black text-primary">฿${product.price.toLocaleString()}</p>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                      <button class="bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-2 px-4 rounded-xl text-sm transition-all duration-300 hover:shadow-md">
+                        🛒 สั่งซื้อ
+                      </button>
+                      <button class="bg-white border-2 border-red-300 text-red-600 font-bold py-2 px-4 rounded-xl text-sm transition-all duration-300 hover:shadow-md">
+                        💔 ลบ
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              `).join('')
+            }
+          </div>
+        `;
+      }
+
+      // Tab functionality
+      function setupTabs() {
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const targetTab = btn.dataset.tab;
+            
+            // Remove active class from all tabs
+            tabBtns.forEach(b => {
+              b.classList.remove('active', 'bg-white/50', 'text-gray-800');
+              b.classList.add('text-gray-600');
+            });
+            
+            // Add active class to clicked tab
+            btn.classList.add('active', 'bg-white/50', 'text-gray-800');
+            btn.classList.remove('text-gray-600');
+            
+            // Hide all content
+            tabContents.forEach(content => {
+              content.classList.add('hidden');
+              content.classList.remove('active');
+            });
+            
+            // Show target content
+            const targetContent = document.getElementById(targetTab);
+            if (targetContent) {
+              targetContent.classList.remove('hidden');
+              targetContent.classList.add('active');
+            }
+          });
+        });
+      }
+    }
+
+    // Start the application
+    initializePage().catch(error => {
+      console.error('❌ Page initialization failed:', error);
+      window.location.href = '/login.html';
+    });
+
+    // Address Modal Functions
+    window.addNewAddress = function() {
+      document.getElementById('modalTitle').textContent = 'เพิ่มที่อยู่ใหม่';
+      document.getElementById('addressId').value = '';
+      document.getElementById('addressForm').reset();
+      document.getElementById('addressModal').classList.remove('hidden');
+    };
+
+    window.editAddress = function(addressId) {
+      const address = u.addresses.find(addr => addr.id === addressId);
+      if (!address) return;
+      
+      document.getElementById('modalTitle').textContent = 'แก้ไขที่อยู่';
+      document.getElementById('addressId').value = addressId;
+      document.getElementById('addressName').value = address.name || '';
+      document.getElementById('addressType').value = address.type || 'home';
+      document.getElementById('addressDetail').value = address.address || '';
+      document.getElementById('addressDistrict').value = address.district || '';
+      document.getElementById('addressProvince').value = address.province || '';
+      document.getElementById('addressPostalCode').value = address.postalCode || '';
+      document.getElementById('addressDefault').checked = address.isDefault || false;
+      
+      document.getElementById('addressModal').classList.remove('hidden');
+    };
+
+    window.deleteAddress = function(addressId) {
+      if (!confirm('คุณต้องการลบที่อยู่นี้หรือไม่?')) return;
+      
+      const result = deleteUserAddress(addressId);
+      if (result.ok) {
+        toast('ลบที่อยู่สำเร็จ', 'success');
+        // รีโหลดข้อมูลผู้ใช้
+        u = currentUser();
+        renderAddresses();
+      } else {
+        toast(result.message || 'เกิดข้อผิดพลาด', 'error');
+      }
+    };
+
+    window.closeAddressModal = function() {
+      document.getElementById('addressModal').classList.add('hidden');
+    };
+
+    // Address Form Submit
+    document.getElementById('addressForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const addressData = {
+        name: document.getElementById('addressName').value.trim(),
+        type: document.getElementById('addressType').value,
+        address: document.getElementById('addressDetail').value.trim(),
+        district: document.getElementById('addressDistrict').value.trim(),
+        province: document.getElementById('addressProvince').value.trim(),
+        postalCode: document.getElementById('addressPostalCode').value.trim(),
+        isDefault: document.getElementById('addressDefault').checked
+      };
+      
+      // ตรวจสอบข้อมูล
+      if (!addressData.name || !addressData.address || !addressData.district || !addressData.province || !addressData.postalCode) {
+        toast('กรุณากรอกข้อมูลให้ครบถ้วน', 'error');
+        return;
+      }
+      
+      const addressId = document.getElementById('addressId').value;
+      let result;
+      
+      if (addressId) {
+        // แก้ไขที่อยู่
+        result = updateUserAddress(addressId, addressData);
+      } else {
+        // เพิ่มที่อยู่ใหม่
+        result = addUserAddress(addressData);
+      }
+      
+      if (result.ok) {
+        toast(addressId ? 'แก้ไขที่อยู่สำเร็จ' : 'เพิ่มที่อยู่สำเร็จ', 'success');
+        closeAddressModal();
+        // รีโหลดข้อมูลผู้ใช้
+        u = currentUser();
+        renderAddresses();
+      } else {
+        toast(result.message || 'เกิดข้อผิดพลาด', 'error');
+      }
+    });
+
+    // ปิด modal เมื่อคลิกข้างนอก
+    document.getElementById('addressModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeAddressModal();
+      }
+    });
+  </script>
+
+  <!-- Address Modal -->
+  <div id="addressModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md shadow-xl">
+      <div class="flex justify-between items-center mb-4">
+        <h3 id="modalTitle" class="text-xl font-bold text-primary">เพิ่มที่อยู่ใหม่</h3>
+        <button onclick="closeAddressModal()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+      </div>
+      
+      <form id="addressForm" class="space-y-4">
+        <input type="hidden" id="addressId" value="">
+        
+        <div>
+          <label class="block text-sm font-bold text-purple-700 mb-2">ชื่อที่อยู่</label>
+          <input type="text" id="addressName" class="w-full px-3 py-2 border-2 border-pastel-blue rounded-xl outline-none focus:border-primary" placeholder="บ้าน, ที่ทำงาน">
+        </div>
+        
+        <div>
+          <label class="block text-sm font-bold text-purple-700 mb-2">ประเภท</label>
+          <select id="addressType" class="w-full px-3 py-2 border-2 border-pastel-blue rounded-xl outline-none focus:border-primary">
+            <option value="home">🏠 บ้าน</option>
+            <option value="work">🏢 ที่ทำงาน</option>
+          </select>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-bold text-purple-700 mb-2">ที่อยู่</label>
+          <textarea id="addressDetail" class="w-full px-3 py-2 border-2 border-pastel-blue rounded-xl outline-none focus:border-primary h-20" placeholder="บ้านเลขที่, ถนน, ซอย"></textarea>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-sm font-bold text-purple-700 mb-2">อำเภอ/เขต</label>
+            <input type="text" id="addressDistrict" class="w-full px-3 py-2 border-2 border-pastel-blue rounded-xl outline-none focus:border-primary">
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-purple-700 mb-2">จังหวัด</label>
+            <input type="text" id="addressProvince" class="w-full px-3 py-2 border-2 border-pastel-blue rounded-xl outline-none focus:border-primary">
+          </div>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-bold text-purple-700 mb-2">รหัสไปรษณีย์</label>
+          <input type="text" id="addressPostalCode" class="w-full px-3 py-2 border-2 border-pastel-blue rounded-xl outline-none focus:border-primary" maxlength="5">
+        </div>
+        
+        <div class="flex items-center">
+          <input type="checkbox" id="addressDefault" class="mr-2">
+          <label for="addressDefault" class="text-sm text-purple-700">ตั้งเป็นที่อยู่เริ่มต้น</label>
+        </div>
+        
+        <div class="flex gap-3 pt-4">
+          <button type="button" onclick="closeAddressModal()" class="flex-1 bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-xl hover:bg-gray-400 transition-colors">
+            ยกเลิก
+          </button>
+          <button type="submit" class="flex-1 bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-2 px-4 rounded-xl hover:shadow-lg transition-all">
+            บันทึก
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

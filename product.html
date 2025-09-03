@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>รายละเอียดไอศกรีม — Sweet Frozen</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'pastel-pink': '#ffb3ba',
+            'pastel-peach': '#ffdfba',
+            'pastel-yellow': '#ffffba',
+            'pastel-green': '#baffc9',
+            'pastel-blue': '#bae1ff',
+            'pastel-purple': '#e1baff',
+            'pastel-lavender': '#f0e6ff',
+            'primary': '#ff8fab',
+            'primary-hover': '#ff6b9d',
+            'secondary': '#c8e6c9',
+            'accent': '#b39ddb',
+          },
+          animation: {
+            'float': 'float 3s ease-in-out infinite',
+            'slide-in-up': 'slideInUp 0.8s ease-out',
+            'slide-in-left': 'slideInLeft 0.8s ease-out',
+            'bounce-in': 'bounceIn 0.8s ease-out',
+            'sparkle': 'sparkle 2s ease-in-out infinite',
+            'wobble': 'wobble 0.5s ease-in-out'
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '50%': { transform: 'translateY(-10px) rotate(2deg)' }
+            },
+            slideInUp: {
+              from: { opacity: '0', transform: 'translateY(30px)' },
+              to: { opacity: '1', transform: 'translateY(0)' }
+            },
+            slideInLeft: {
+              from: { opacity: '0', transform: 'translateX(-30px)' },
+              to: { opacity: '1', transform: 'translateX(0)' }
+            },
+            bounceIn: {
+              '0%': { opacity: '0', transform: 'scale(0.3)' },
+              '50%': { opacity: '1', transform: 'scale(1.05)' },
+              '100%': { opacity: '1', transform: 'scale(1)' }
+            },
+            sparkle: {
+              '0%, 100%': { opacity: '1', transform: 'scale(1) rotate(0deg)' },
+              '50%': { opacity: '0.7', transform: 'scale(1.2) rotate(180deg)' }
+            },
+            wobble: {
+              '0%, 100%': { transform: 'rotate(0deg)' },
+              '25%': { transform: 'rotate(-3deg)' },
+              '75%': { transform: 'rotate(3deg)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="/assets/css/styles.css"/>
+  <script type="module" src="/assets/js/app.js"></script>
+</head>
+<body>
+  <div id="app-header"></div>
+  
+  <!-- Breadcrumb -->
+  <nav class="max-w-6xl mx-auto px-4 py-2">
+    <div class="flex items-center space-x-2 text-sm">
+      <a href="/" class="text-primary hover:text-primary-hover transition-colors">🏠 หน้าหลัก</a>
+      <span class="text-gray-400">›</span>
+      <span class="text-gray-600" id="breadcrumb-category">สินค้า</span>
+      <span class="text-gray-400">›</span>
+      <span class="text-gray-800 font-medium" id="breadcrumb-product">รายละเอียดสินค้า</span>
+    </div>
+  </nav>
+
+  <main class="max-w-6xl mx-auto px-4 py-4" id="content"></main>
+  <div id="app-footer"></div>
+  <script type="module">
+    import { getProduct, PRODUCTS, loadIceCreamProducts } from '/assets/js/products.js';
+    import { Cart } from '/assets/js/cart.js';
+    import { toast, updateHeader } from '/assets/js/ui.js';
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Update navbar to show current user state
+        setTimeout(() => {
+            updateHeader();
+        }, 100);
+    });
+
+    function renderProduct() {
+      const params = new URLSearchParams(location.search);
+      const id = params.get('id');
+      const p = getProduct(id);
+      const c = document.getElementById('content');
+
+      if(!p){ 
+        c.innerHTML = '<div class="alert error">ไม่พบไอศกรีมที่คุณต้องการ 😔</div>'; 
+      }
+      else{
+        const allergensList = p.allergens && p.allergens.length > 0 
+          ? p.allergens.join(', ') 
+          : 'ไม่มี';
+          
+        const ingredientsList = p.ingredients && p.ingredients.length > 0 
+          ? p.ingredients.join(', ') 
+          : 'ไม่ระบุ';
+          
+        c.innerHTML = `
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div>
+              <img src="${p.image}" alt="${p.name}" class="w-full rounded-3xl border-4 border-pastel-pink shadow-xl"/>
+            </div>
+            <div class="bg-gradient-to-br from-white to-blue-50 p-8 rounded-3xl border-2 border-pastel-blue shadow-xl">
+              <h2 class="text-4xl font-black text-primary mb-4">🍦 ${p.name}</h2>
+              <div class="bg-pastel-peach px-4 py-2 rounded-2xl text-sm inline-block mb-4">🏷️ หมวด: ${p.category}</div>
+              <p class="text-lg leading-relaxed text-purple-700 mb-6">${p.description}</p>
+              
+              <div class="bg-gradient-to-r from-pastel-lavender to-pastel-blue p-6 rounded-2xl mb-6 border-2 border-pastel-purple">
+                <div class="text-sm mb-2"><strong>📋 ส่วนผสม:</strong> ${ingredientsList}</div>
+                <div class="text-sm mb-2"><strong>⚠️ สารก่อภูมิแพ้:</strong> ${allergensList}</div>
+                ${p.calories ? `<div class="text-sm mb-2"><strong>🔥 แคลอรี่:</strong> ${p.calories} kcal</div>` : ''}
+                <div class="text-sm"><strong>📦 คงเหลือ:</strong> <span class="text-primary font-bold">${p.stock} ชิ้น</span></div>
+              </div>
+              
+              <div class="text-5xl font-black text-center text-primary mb-8 drop-shadow-lg">
+                ฿${p.price.toLocaleString()}
+              </div>
+              <div class="flex gap-3 items-center bg-pastel-yellow p-4 rounded-2xl">
+                <label class="font-bold text-purple-700">จำนวน:</label>
+                <input id="qty" type="number" min="1" max="${p.stock}" value="1" class="w-20 text-center font-bold py-2 px-3 border-2 border-pastel-blue rounded-xl"/>
+                <button id="addBtn" class="flex-1 bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1">🛒 เพิ่มในตะกร้า</button>
+              </div>
+            </div>
+          </div>`;
+        
+        const addBtn = document.getElementById('addBtn');
+        if (addBtn) {
+          addBtn.addEventListener('click', ()=>{
+            const q = Math.max(1, parseInt(document.getElementById('qty').value||'1',10));
+            Cart.add(p.id, q);
+            document.getElementById('cartCount').textContent = Cart.count();
+            toast(`เพิ่ม ${p.name} ลงตะกร้าแล้ว! 🍦`);
+          });
+        }
+      }
+    }
+    
+    // Render immediately with available data
+    renderProduct();
+    
+    // Load full data from JSON and re-render
+    loadIceCreamProducts().then(() => {
+      renderProduct();
+    });
+  </script>
+</body>
+</html>

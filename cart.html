@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>🛒 ตะกร้าสินค้า — Sweet Frozen</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'pastel-pink': '#ffb3ba',
+            'pastel-peach': '#ffdfba',
+            'pastel-yellow': '#ffffba',
+            'pastel-green': '#baffc9',
+            'pastel-blue': '#bae1ff',
+            'pastel-purple': '#e1baff',
+            'pastel-lavender': '#f0e6ff',
+            'primary': '#ff8fab',
+            'primary-hover': '#ff6b9d',
+            'secondary': '#c8e6c9',
+            'accent': '#b39ddb',
+          },
+          animation: {
+            'float': 'float 3s ease-in-out infinite',
+            'slide-in-up': 'slideInUp 0.8s ease-out',
+            'slide-in-left': 'slideInLeft 0.8s ease-out',
+            'bounce-in': 'bounceIn 0.8s ease-out',
+            'sparkle': 'sparkle 2s ease-in-out infinite',
+            'wobble': 'wobble 0.5s ease-in-out'
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' }
+            },
+            slideInUp: {
+              from: { opacity: '0', transform: 'translateY(30px)' },
+              to: { opacity: '1', transform: 'translateY(0)' }
+            },
+            slideInLeft: {
+              from: { opacity: '0', transform: 'translateX(-30px)' },
+              to: { opacity: '1', transform: 'translateX(0)' }
+            },
+            bounceIn: {
+              '0%': { opacity: '0', transform: 'scale(0.3)' },
+              '50%': { opacity: '1', transform: 'scale(1.05)' },
+              '100%': { opacity: '1', transform: 'scale(1)' }
+            },
+            sparkle: {
+              '0%, 100%': { opacity: '1', transform: 'scale(1) rotate(0deg)' },
+              '50%': { opacity: '0.7', transform: 'scale(1.2) rotate(180deg)' }
+            },
+            wobble: {
+              '0%, 100%': { transform: 'rotate(0deg)' },
+              '25%': { transform: 'rotate(-3deg)' },
+              '75%': { transform: 'rotate(3deg)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="/assets/css/styles.css"/>
+  <script type="module" src="/assets/js/app.js"></script>
+</head>
+<body>
+  <div id="app-header"></div>
+  <main class="max-w-6xl mx-auto px-4 py-4">
+    <h2 class="text-center text-primary text-4xl font-black mb-8">
+      🛒 ตะกร้าไอศกรีมของคุณ
+    </h2>
+    
+    <div class="bg-gradient-to-br from-white to-purple-50 p-6 rounded-3xl shadow-xl mb-6">
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse bg-white border-2 border-pastel-green rounded-2xl overflow-hidden shadow-lg" id="cartTable">
+          <thead>
+            <tr class="bg-gradient-to-r from-pastel-pink to-pastel-peach">
+              <th class="p-4 text-left font-bold">🍦 ไอศกรีม</th>
+              <th class="p-4 text-left font-bold">💰 ราคา</th>
+              <th class="p-4 text-left font-bold">📦 จำนวน</th>
+              <th class="p-4 text-left font-bold">💵 รวม</th>
+              <th class="p-4 text-left font-bold">🗑️</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+          <tfoot>
+            <tr class="bg-pastel-lavender">
+              <td colspan="3" class="p-4 text-right text-lg font-bold">💝 รวมทั้งหมด</td>
+              <td id="subtotal" class="p-4 text-primary text-xl font-black">฿0</td>
+              <td class="p-4"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+    <div class="flex gap-3 justify-end">
+      <a class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-3 px-6 rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1" href="/index.html">🍦 เลือกไอศกรีมต่อ</a>
+      <button id="checkoutBtn" class="bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-2 border-primary">💳 สั่งซื้อเลย!</button>
+    </div>
+  </main>
+  <div id="app-footer"></div>
+  
+  <script type="module">
+    import { Cart } from '/assets/js/cart.js';
+    import { PRODUCTS, getProduct, loadIceCreamProducts } from '/assets/js/products.js';
+    import { toast, updateHeader } from '/assets/js/ui.js';
+    import { currentUser, logout } from '/assets/js/auth.js';
+
+    document.addEventListener('DOMContentLoaded', async function() {
+        // Load products first
+        try {
+            await loadIceCreamProducts();
+        } catch (error) {
+        }
+
+        // Load users data
+        try {
+            const { loadUsers } = await import('/assets/js/auth.js');
+            await loadUsers();
+        } catch (error) {
+        }
+
+        // Update navbar
+        setTimeout(() => {
+            updateHeader();
+        }, 100);
+
+        // Setup event listeners
+        setupEventListeners();
+
+        // Initial render
+        render();
+    });
+
+    function setupEventListeners() {
+        const checkoutBtn = document.getElementById('checkoutBtn');
+
+        if (checkoutBtn) {
+            checkoutBtn.addEventListener('click', async function(e) {
+                e.preventDefault();
+                
+                if (checkoutBtn.disabled) {
+                    toast('❌ ตะกร้าของคุณว่างเปล่า');
+                    return;
+                }
+                
+                // รอให้ users โหลดเสร็จก่อนตรวจสอบ user
+                try {
+                    const { loadUsers } = await import('/assets/js/auth.js');
+                    await loadUsers();
+                } catch (error) {
+                }
+                
+                const user = currentUser();
+                
+                if (!user) {
+                    // ลองตรวจสอบใน localStorage โดยตรง
+                    const currentAuth = localStorage.getItem('app.auth.current.v1');
+                    if (currentAuth) {
+                        toast('❌ เกิดข้อผิดพลาดในการตรวจสอบผู้ใช้ กรุณา Login ใหม่');
+                    } else {
+                        toast('❌ กรุณาเข้าสู่ระบบก่อนสั่งซื้อ');
+                    }
+                    setTimeout(() => {
+                        location.href = '/login.html?redirect=' + encodeURIComponent('/checkout.html');
+                    }, 1500);
+                    return;
+                }
+                
+                const cart = Cart.get();
+                if (!cart.items.length) {
+                    toast('❌ ตะกร้าของคุณว่างเปล่า');
+                    return;
+                }
+                
+                checkoutBtn.innerHTML = '⏳ กำลังโหลด...';
+                checkoutBtn.disabled = true;
+                
+                setTimeout(() => {
+                    location.href = '/checkout.html';
+                }, 500);
+            });
+        }
+    }
+
+    function priceOf(id) { 
+        const p = getProduct(id); 
+        return p ? p.price : 0; 
+    }
+
+    function render() {
+        const tbody = document.querySelector('#cartTable tbody');
+        if (!tbody) {
+            return;
+        }
+        
+        tbody.innerHTML = '';
+        const c = Cart.get();
+        
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        
+        if (!c.items.length) {
+            tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-gray-500">ตะกร้าของคุณว่างเปล่า 🛒</td></tr>';
+            
+            if (checkoutBtn) {
+                checkoutBtn.disabled = true;
+                checkoutBtn.className = checkoutBtn.className.replace('from-primary to-primary-hover', 'from-gray-300 to-gray-400');
+                checkoutBtn.style.cursor = 'not-allowed';
+            }
+        } else {
+            if (checkoutBtn) {
+                checkoutBtn.disabled = false;
+                checkoutBtn.className = checkoutBtn.className.replace('from-gray-300 to-gray-400', 'from-primary to-primary-hover');
+                checkoutBtn.style.cursor = 'pointer';
+                checkoutBtn.innerHTML = '💳 สั่งซื้อเลย!';
+            }
+            
+            for (const it of c.items) {
+                const p = PRODUCTS.find(x => x.id === it.productId);
+                
+                if (!p) {
+                    continue;
+                }
+                
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-4">
+                        <div style="display:flex;align-items:center;gap:10px">
+                            <img src="${p.image}" alt="" style="width:64px;height:48px;object-fit:cover;border-radius:8px;border:1px solid #e5e7eb"/>
+                            <a href="/product.html?id=${p.id}" class="text-blue-600 hover:underline">${p.name}</a>
+                        </div>
+                    </td>
+                    <td class="p-4">฿${p.price.toLocaleString()}</td>
+                    <td class="p-4">
+                        <input data-id="${p.id}" class="qty w-20 px-2 py-1 border rounded" type="number" min="1" value="${it.qty}"/>
+                    </td>
+                    <td class="p-4 font-bold">฿${(p.price * it.qty).toLocaleString()}</td>
+                    <td class="p-4">
+                        <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600" data-rm="${p.id}">🗑️ ลบ</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            }
+        }
+        
+        // Update subtotal
+        const subtotalEl = document.getElementById('subtotal');
+        if (subtotalEl) {
+            subtotalEl.textContent = '฿' + Cart.subtotal(priceOf).toLocaleString();
+        }
+        
+        // Update cart count in navbar
+        const cartCountEl = document.getElementById('cartCount');
+        if (cartCountEl) {
+            cartCountEl.textContent = Cart.count();
+        }
+        
+        // Setup quantity change listeners
+        tbody.querySelectorAll('.qty').forEach(inp => {
+            inp.addEventListener('change', (e) => {
+                const id = e.target.getAttribute('data-id');
+                const q = Math.max(1, parseInt(e.target.value || '1', 10));
+                Cart.setQty(id, q);
+                render();
+            });
+        });
+        
+        // Setup remove button listeners
+        tbody.querySelectorAll('[data-rm]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = e.target.getAttribute('data-rm');
+                Cart.remove(id);
+                toast('ลบสินค้าออกจากตะกร้าแล้ว');
+                render();
+            });
+        });
+    }
+  </script>
+</body>
+</html>

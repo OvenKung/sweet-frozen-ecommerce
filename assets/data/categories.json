@@ -1,0 +1,34 @@
+[
+  {
+    "id": "cat-001",
+    "name": "ช็อกโกแลต",
+    "slug": "chocolate",
+    "description": "ไอศกรีมรสช็อกโกแลตเข้มข้น หลากหลายชนิด",
+    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&h=300&fit=crop",
+    "featured": true
+  },
+  {
+    "id": "cat-002", 
+    "name": "ผลไม้",
+    "slug": "fruit",
+    "description": "ไอศกรีมรสผลไม้สดใหม่ ธรรมชาติ",
+    "image": "https://images.unsplash.com/photo-1567206563064-6f60f40a2b57?w=400&h=300&fit=crop",
+    "featured": true
+  },
+  {
+    "id": "cat-003",
+    "name": "โยเกิร์ต", 
+    "slug": "yogurt",
+    "description": "ไอศกรีมโยเกิร์ตเปรี้ยวหวาน เพื่อสุขภาพ",
+    "image": "https://images.unsplash.com/photo-1571212515416-4b2d3909b131?w=400&h=300&fit=crop",
+    "featured": false
+  },
+  {
+    "id": "cat-004",
+    "name": "รสชาติเอเชีย",
+    "slug": "asian",
+    "description": "ไอศกรีมรสชาติเอเชีย เช่น มัทฉะ ถั่วแดง",
+    "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=400&h=300&fit=crop",
+    "featured": false
+  }
+]

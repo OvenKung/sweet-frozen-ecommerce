@@ -1,0 +1,85 @@
+name: 🚀 Deploy Sweet Frozen E-commerce
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  # Job สำหรับ test และ validation
+  test:
+    runs-on: ubuntu-latest
+    name: 🧪 Test & Validate
+    
+    steps:
+    - name: 📂 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: 📦 Install dependencies
+      run: npm install
+      
+    - name: ✅ Run tests
+      run: npm run test
+      
+    - name: 🔍 Validate files
+      run: npm run validate
+      
+    - name: 📊 Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results
+        path: test-results/
+
+  # Job สำหรับ build และ deploy
+  deploy:
+    runs-on: ubuntu-latest
+    name: 🚀 Build & Deploy
+    needs: test
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    
+    steps:
+    - name: 📂 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: 📦 Install dependencies
+      run: npm install
+      
+    - name: 🏗️ Build project
+      run: npm run build
+      
+    - name: 🎯 Setup Pages
+      uses: actions/configure-pages@v4
+      
+    - name: 📤 Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: '.'
+        
+    - name: 🚀 Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
+
+# ตั้งค่าสิทธิ์สำหรับ GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# กำหนดให้รันทีละ deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: false

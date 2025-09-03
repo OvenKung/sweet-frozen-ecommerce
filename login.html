@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>🍨 เข้าสู่ระบบ — Sweet Frozen</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'pastel-pink': '#ffb3ba',
+            'pastel-peach': '#ffdfba',
+            'pastel-yellow': '#ffffba',
+            'pastel-green': '#baffc9',
+            'pastel-blue': '#bae1ff',
+            'pastel-purple': '#e1baff',
+            'pastel-lavender': '#f0e6ff',
+            'primary': '#ff8fab',
+            'primary-hover': '#ff6b9d',
+            'secondary': '#c8e6c9',
+            'accent': '#b39ddb',
+          },
+          animation: {
+            'float': 'float 3s ease-in-out infinite',
+            'slide-in-up': 'slideInUp 0.8s ease-out',
+            'slide-in-left': 'slideInLeft 0.8s ease-out',
+            'bounce-in': 'bounceIn 0.8s ease-out',
+            'sparkle': 'sparkle 2s ease-in-out infinite',
+            'wobble': 'wobble 0.5s ease-in-out'
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '50%': { transform: 'translateY(-10px) rotate(2deg)' }
+            },
+            slideInUp: {
+              from: { opacity: '0', transform: 'translateY(30px)' },
+              to: { opacity: '1', transform: 'translateY(0)' }
+            },
+            slideInLeft: {
+              from: { opacity: '0', transform: 'translateX(-30px)' },
+              to: { opacity: '1', transform: 'translateX(0)' }
+            },
+            bounceIn: {
+              '0%': { opacity: '0', transform: 'scale(0.3)' },
+              '50%': { opacity: '1', transform: 'scale(1.05)' },
+              '100%': { opacity: '1', transform: 'scale(1)' }
+            },
+            sparkle: {
+              '0%, 100%': { opacity: '1', transform: 'scale(1) rotate(0deg)' },
+              '50%': { opacity: '0.7', transform: 'scale(1.2) rotate(180deg)' }
+            },
+            wobble: {
+              '0%, 100%': { transform: 'rotate(0deg)' },
+              '25%': { transform: 'rotate(-3deg)' },
+              '75%': { transform: 'rotate(3deg)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script type="module" src="/assets/js/app.js"></script>
+</head>
+<body class="bg-gradient-to-br from-pastel-blue via-pastel-purple to-pastel-pink min-h-screen">
+  <div id="app-header"></div>
+  
+  <main class="container mx-auto px-4 py-8">
+    <div class="max-w-md mx-auto">
+      <!-- Header Card -->
+      <div class="text-center mb-8 animate-slide-in-up">
+        <div class="inline-block p-4 bg-white/20 backdrop-blur-lg rounded-full mb-4 animate-float">
+          <div class="text-4xl">🍨</div>
+        </div>
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">เข้าสู่ระบบ</h1>
+        <p class="text-gray-600">ยินดีต้อนรับกลับสู่ Sweet Frozen!</p>
+      </div>
+
+      <!-- Demo Login Section -->
+      <div class="bg-gradient-to-r from-pastel-yellow to-pastel-peach backdrop-blur-lg rounded-2xl p-6 shadow-xl border border-white/20 mb-6 animate-slide-in-left">
+        <div class="text-center">
+          <div class="text-2xl mb-3">🎭</div>
+          <h3 class="font-bold text-gray-800 mb-3">ทดลองใช้งาน (Demo)</h3>
+          <div class="grid grid-cols-1 gap-2 mb-3">
+            <button 
+              id="demoLogin1" 
+              class="bg-white/50 hover:bg-white/70 text-gray-800 font-medium py-2 px-4 rounded-xl transition-all duration-300 hover:scale-105"
+            >
+              👨 สมชาย วิเศษ
+            </button>
+            <button 
+              id="demoLogin2" 
+              class="bg-white/50 hover:bg-white/70 text-gray-800 font-medium py-2 px-4 rounded-xl transition-all duration-300 hover:scale-105"
+            >
+              👩 มาลี ใจดี
+            </button>
+            <button 
+              id="demoLogin3" 
+              class="bg-white/50 hover:bg-white/70 text-gray-800 font-medium py-2 px-4 rounded-xl transition-all duration-300 hover:scale-105"
+            >
+              👨‍💼 วิชัย รักษ์ดี
+            </button>
+          </div>
+          <p class="text-sm text-gray-600">คลิกเพื่อเข้าสู่ระบบในฐานะผู้ใช้ทดลอง</p>
+        </div>
+      </div>
+
+      <!-- Login Form -->
+      <div class="bg-white/30 backdrop-blur-lg rounded-2xl p-8 shadow-xl border border-white/20 animate-slide-in-up">
+        <form id="loginForm" class="space-y-6">
+          <div class="space-y-1">
+            <label class="block text-sm font-medium text-gray-700 mb-1">อีเมล</label>
+            <input 
+              class="w-full px-4 py-3 bg-white/50 border border-white/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300 placeholder-gray-400" 
+              name="email" 
+              type="email" 
+              placeholder="example@email.com" 
+              required
+            />
+          </div>
+          
+          <div class="space-y-1">
+            <label class="block text-sm font-medium text-gray-700 mb-1">รหัสผ่าน</label>
+            <input 
+              class="w-full px-4 py-3 bg-white/50 border border-white/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300 placeholder-gray-400" 
+              name="password" 
+              type="password" 
+              placeholder="รหัสผ่านของคุณ" 
+              required
+            />
+          </div>
+
+          <button 
+            type="submit"
+            class="w-full bg-gradient-to-r from-primary to-primary-hover text-white font-semibold py-3 px-6 rounded-xl hover:shadow-lg transform hover:scale-105 transition-all duration-300 animate-bounce-in"
+          >
+            <span class="flex items-center justify-center space-x-2">
+              <span>🚀</span>
+              <span>เข้าสู่ระบบ</span>
+            </span>
+          </button>
+          
+          <div id="msg" class="hidden p-4 rounded-xl text-center font-medium"></div>
+        </form>
+
+        <!-- Links Section -->
+        <div class="space-y-4 mt-6 pt-6 border-t border-white/20">
+          <div class="text-center">
+            <p class="text-gray-600">
+              ยังไม่มีบัญชี? 
+              <a href="/register.html" class="text-primary font-semibold hover:text-primary-hover transition-colors duration-300">
+                สมัครสมาชิก
+              </a>
+            </p>
+          </div>
+          <div class="text-center">
+            <a href="/forgot-password.html" class="text-gray-500 hover:text-gray-700 transition-colors duration-300 text-sm">
+              🔑 ลืมรหัสผ่าน?
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <div id="app-footer"></div>
+  <script type="module">
+    import { login, demoLogin } from '/assets/js/auth.js';
+    import { updateHeader } from '/assets/js/ui.js';
+    const form = document.getElementById('loginForm');
+    const msg = document.getElementById('msg');
+    
+    // Demo login buttons
+    document.getElementById('demoLogin1').addEventListener('click', async () => {
+      // Show loading state
+      const btn = document.getElementById('demoLogin1');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '⏳ กำลังเข้าสู่ระบบ...';
+      btn.disabled = true;
+      
+      try {
+        const user = await demoLogin('somchai@email.com');
+        if (user) {
+          updateHeader(); // Update navbar immediately
+          
+          // Add success message
+          msg.textContent = `เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับ ${user.name}`;
+          msg.className='bg-green-100 border border-green-300 text-green-700 p-4 rounded-xl text-center font-medium'; 
+          msg.classList.remove('hidden');
+          
+          setTimeout(() => {
+            location.href = '/account.html';
+          }, 1000);
+        } else {
+          console.error('❌ Demo login failed');
+          btn.innerHTML = '❌ เข้าสู่ระบบไม่สำเร็จ';
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+          }, 2000);
+        }
+      } catch (error) {
+        console.error('❌ Demo login error:', error);
+        btn.innerHTML = '❌ เกิดข้อผิดพลาด';
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+        }, 2000);
+      }
+    });
+    
+    document.getElementById('demoLogin2').addEventListener('click', async () => {
+      // Show loading state
+      const btn = document.getElementById('demoLogin2');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '⏳ กำลังเข้าสู่ระบบ...';
+      btn.disabled = true;
+      
+      try {
+        const user = await demoLogin('malee@email.com');
+        if (user) {
+          updateHeader(); // Update navbar immediately
+          
+          // Add success message
+          msg.textContent = `เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับ ${user.name}`;
+          msg.className='bg-green-100 border border-green-300 text-green-700 p-4 rounded-xl text-center font-medium'; 
+          msg.classList.remove('hidden');
+          
+          setTimeout(() => {
+            location.href = '/account.html';
+          }, 1000);
+        } else {
+          console.error('❌ Demo login failed');
+          btn.innerHTML = '❌ เข้าสู่ระบบไม่สำเร็จ';
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+          }, 2000);
+        }
+      } catch (error) {
+        console.error('❌ Demo login error:', error);
+        btn.innerHTML = '❌ เกิดข้อผิดพลาด';
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+        }, 2000);
+      }
+    });
+    
+    document.getElementById('demoLogin3').addEventListener('click', async () => {
+      // Show loading state
+      const btn = document.getElementById('demoLogin3');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '⏳ กำลังเข้าสู่ระบบ...';
+      btn.disabled = true;
+      
+      try {
+        const user = await demoLogin('wichai@email.com');
+        if (user) {
+          updateHeader(); // Update navbar immediately
+          
+          // Add success message
+          msg.textContent = `เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับ ${user.name}`;
+          msg.className='bg-green-100 border border-green-300 text-green-700 p-4 rounded-xl text-center font-medium'; 
+          msg.classList.remove('hidden');
+          
+          setTimeout(() => {
+            location.href = '/account.html';
+          }, 1000);
+        } else {
+          console.error('❌ Demo login failed');
+          btn.innerHTML = '❌ เข้าสู่ระบบไม่สำเร็จ';
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+          }, 2000);
+        }
+      } catch (error) {
+        console.error('❌ Demo login error:', error);
+        btn.innerHTML = '❌ เกิดข้อผิดพลาด';
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+        }, 2000);
+      }
+    });
+    
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      
+      // Show loading state
+      submitBtn.innerHTML = '<span class="flex items-center justify-center space-x-2"><span>⏳</span><span>กำลังเข้าสู่ระบบ...</span></span>';
+      submitBtn.disabled = true;
+      
+      const fd = new FormData(form);
+      const res = await login(Object.fromEntries(fd.entries()));
+      
+      if(!res.ok){
+        msg.textContent = res.message; 
+        msg.className='bg-red-100 border border-red-300 text-red-700 p-4 rounded-xl text-center font-medium'; 
+        msg.classList.remove('hidden');
+        
+        // Reset button
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+      }else{
+        updateHeader(); // Update navbar immediately
+        
+        msg.textContent = `เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับ ${res.user.name}`;
+        msg.className='bg-green-100 border border-green-300 text-green-700 p-4 rounded-xl text-center font-medium'; 
+        msg.classList.remove('hidden');
+        
+        setTimeout(() => {
+          const params = new URLSearchParams(location.search);
+          const r = params.get('redirect') || '/index.html';
+          location.href = r;
+        }, 1500);
+      }
+    });
+  </script>
+</body>
+</html>
