@@ -85,6 +85,18 @@
     import { getProduct, PRODUCTS, loadIceCreamProducts } from './assets/js/products.js';
     import { Cart } from './assets/js/cart.js';
     import { toast, updateHeader } from './assets/js/ui.js';
+    import { 
+      loadReviews, 
+      getProductReviews, 
+      getProductRating, 
+      getProductReviewStats,
+      addReview,
+      markReviewHelpful,
+      generateStarRating,
+      generateInteractiveStarRating,
+      formatRelativeTime 
+    } from './assets/js/reviews.js';
+    import { currentUser } from './assets/js/auth.js';
 
     document.addEventListener('DOMContentLoaded', function() {
         // Update navbar to show current user state
@@ -110,15 +122,31 @@
         const ingredientsList = p.ingredients && p.ingredients.length > 0 
           ? p.ingredients.join(', ') 
           : 'ไม่ระบุ';
+
+        // Get review data
+        const reviewStats = getProductReviewStats(p.id);
+        const reviews = getProductReviews(p.id);
+        const currentUserData = currentUser();
+        const userHasReviewed = currentUserData && reviews.some(r => r.userId === currentUserData.id);
           
         c.innerHTML = `
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
             <div>
               <img src="${p.image}" alt="${p.name}" class="w-full rounded-3xl border-4 border-pastel-pink shadow-xl"/>
             </div>
             <div class="bg-gradient-to-br from-white to-blue-50 p-8 rounded-3xl border-2 border-pastel-blue shadow-xl">
               <h2 class="text-4xl font-black text-primary mb-4">🍦 ${p.name}</h2>
               <div class="bg-pastel-peach px-4 py-2 rounded-2xl text-sm inline-block mb-4">🏷️ หมวด: ${p.category}</div>
+              
+              <!-- Rating Section -->
+              <div class="flex items-center gap-3 mb-4 p-3 bg-yellow-50 rounded-xl border border-yellow-200">
+                <div class="flex items-center">
+                  ${generateStarRating(reviewStats.averageRating)}
+                </div>
+                <span class="text-lg font-bold text-gray-700">${reviewStats.averageRating}</span>
+                <span class="text-sm text-gray-600">(${reviewStats.totalReviews} รีวิว)</span>
+              </div>
+              
               <p class="text-lg leading-relaxed text-purple-700 mb-6">${p.description}</p>
               
               <div class="bg-gradient-to-r from-pastel-lavender to-pastel-blue p-6 rounded-2xl mb-6 border-2 border-pastel-purple">
@@ -137,8 +165,126 @@
                 <button id="addBtn" class="flex-1 bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1">🛒 เพิ่มในตะกร้า</button>
               </div>
             </div>
-          </div>`;
+          </div>
+
+          <!-- Reviews Section -->
+          <div class="bg-gradient-to-br from-white to-purple-50 rounded-3xl border-2 border-pastel-blue shadow-xl p-8">
+            <h3 class="text-2xl font-bold text-primary mb-6 flex items-center">
+              ⭐ รีวิวและความคิดเห็น
+              <span class="text-lg font-normal text-gray-600 ml-2">(${reviewStats.totalReviews} รีวิว)</span>
+            </h3>
+
+            <!-- Review Summary -->
+            ${reviewStats.totalReviews > 0 ? `
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="text-center">
+                  <div class="text-4xl font-black text-primary mb-2">${reviewStats.averageRating}</div>
+                  <div class="flex justify-center mb-2">
+                    ${generateStarRating(reviewStats.averageRating, 'text-xl')}
+                  </div>
+                  <div class="text-gray-600">จาก ${reviewStats.totalReviews} รีวิว</div>
+                </div>
+                <div class="space-y-2">
+                  ${[5,4,3,2,1].map(star => {
+                    const count = reviewStats.ratingDistribution[star];
+                    const percentage = reviewStats.totalReviews > 0 ? (count / reviewStats.totalReviews * 100) : 0;
+                    return `
+                      <div class="flex items-center gap-2">
+                        <span class="text-sm w-3">${star}</span>
+                        <span class="text-yellow-400">⭐</span>
+                        <div class="flex-1 bg-gray-200 rounded-full h-2">
+                          <div class="bg-yellow-400 h-2 rounded-full" style="width: ${percentage}%"></div>
+                        </div>
+                        <span class="text-sm text-gray-600 w-8">${count}</span>
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            ` : ''}
+
+            <!-- Write Review Form -->
+            ${currentUserData && !userHasReviewed ? `
+              <div class="bg-blue-50 border-2 border-blue-200 rounded-2xl p-6 mb-6">
+                <h4 class="text-lg font-bold text-primary mb-4">✍️ เขียนรีวิวของคุณ</h4>
+                <form id="reviewForm" class="space-y-4">
+                  <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">คะแนน</label>
+                    ${generateInteractiveStarRating()}
+                  </div>
+                  <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">หัวเรื่อง</label>
+                    <input type="text" name="title" required maxlength="100" 
+                           class="w-full px-4 py-2 border-2 border-blue-200 rounded-xl focus:border-primary focus:outline-none"
+                           placeholder="สรุปความรู้สึกเกี่ยวกับสินค้า">
+                  </div>
+                  <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">รีวิว</label>
+                    <textarea name="comment" required maxlength="500" rows="4"
+                              class="w-full px-4 py-2 border-2 border-blue-200 rounded-xl focus:border-primary focus:outline-none"
+                              placeholder="บอกเล่าประสบการณ์ของคุณกับสินค้านี้..."></textarea>
+                  </div>
+                  <button type="submit" class="bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all">
+                    📝 ส่งรีวิว
+                  </button>
+                </form>
+              </div>
+            ` : currentUserData && userHasReviewed ? `
+              <div class="bg-green-50 border-2 border-green-200 rounded-2xl p-4 mb-6 text-center">
+                <div class="text-green-700">✅ คุณได้เขียนรีวิวสินค้านี้แล้ว</div>
+              </div>
+            ` : `
+              <div class="bg-gray-50 border-2 border-gray-200 rounded-2xl p-4 mb-6 text-center">
+                <div class="text-gray-600">
+                  <a href="./login.html" class="text-primary font-bold">เข้าสู่ระบบ</a> 
+                  เพื่อเขียนรีวิว
+                </div>
+              </div>
+            `}
+
+            <!-- Reviews List -->
+            <div class="space-y-4" id="reviewsList">
+              ${reviews.length === 0 ? `
+                <div class="text-center py-8 text-gray-500">
+                  <div class="text-4xl mb-4">🤔</div>
+                  <div>ยังไม่มีรีวิวสำหรับสินค้านี้</div>
+                  <div class="text-sm">เป็นคนแรกที่รีวิวสินค้านี้สิ!</div>
+                </div>
+              ` : reviews.map(review => `
+                <div class="bg-white border-2 border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                  <div class="flex justify-between items-start mb-3">
+                    <div class="flex items-center gap-3">
+                      <div class="w-10 h-10 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center text-white font-bold">
+                        ${review.userName.charAt(0)}
+                      </div>
+                      <div>
+                        <div class="font-bold text-gray-800">${review.userName}</div>
+                        <div class="text-sm text-gray-500">${formatRelativeTime(review.date)}</div>
+                      </div>
+                      ${review.verified ? '<span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">✓ ยืนยันการซื้อ</span>' : ''}
+                    </div>
+                    <div class="flex items-center gap-2">
+                      ${generateStarRating(review.rating, 'text-sm')}
+                    </div>
+                  </div>
+                  
+                  <h5 class="font-bold text-gray-800 mb-2">${review.title}</h5>
+                  <p class="text-gray-700 mb-4 leading-relaxed">${review.comment}</p>
+                  
+                  <div class="flex items-center justify-between text-sm">
+                    <button onclick="markHelpful('${review.id}')" 
+                            class="text-gray-500 hover:text-primary transition-colors flex items-center gap-1">
+                      👍 มีประโยชน์ (${review.helpful || 0})
+                    </button>
+                    <div class="text-gray-400">${review.date}</div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
         
+        // Add event listeners
         const addBtn = document.getElementById('addBtn');
         if (addBtn) {
           addBtn.addEventListener('click', ()=>{
@@ -148,6 +294,12 @@
             toast(`เพิ่ม ${p.name} ลงตะกร้าแล้ว! 🍦`);
           });
         }
+
+        // Review form handler
+        const reviewForm = document.getElementById('reviewForm');
+        if (reviewForm) {
+          reviewForm.addEventListener('submit', handleReviewSubmit);
+        }
       }
     }
     
@@ -155,9 +307,66 @@
     renderProduct();
     
     // Load full data from JSON and re-render
-    loadIceCreamProducts().then(() => {
+    // Handle review form submission
+    async function handleReviewSubmit(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const rating = parseInt(formData.get('rating'));
+      const title = formData.get('title');
+      const comment = formData.get('comment');
+
+      if (!rating || rating < 1 || rating > 5) {
+        toast('กรุณาให้คะแนน 1-5 ดาว', 'error');
+        return;
+      }
+
+      if (!title.trim()) {
+        toast('กรุณากรอกหัวเรื่องรีวิว', 'error');
+        return;
+      }
+
+      if (!comment.trim()) {
+        toast('กรุณากรอกความคิดเห็น', 'error');
+        return;
+      }
+
+      try {
+        const params = new URLSearchParams(location.search);
+        const productId = params.get('id');
+        
+        addReview(productId, rating, title, comment);
+        toast('เขียนรีวิวสำเร็จ! ขอบคุณสำหรับความคิดเห็น 🙏', 'success');
+        
+        // Refresh the product page to show new review
+        setTimeout(() => {
+          renderProduct();
+        }, 1000);
+        
+      } catch (error) {
+        toast(error.message, 'error');
+      }
+    }
+
+    // Mark review as helpful
+    window.markHelpful = function(reviewId) {
+      const newCount = markReviewHelpful(reviewId);
+      toast('ขอบคุณสำหรับความคิดเห็น! 👍');
+      
+      // Update the display
+      const button = document.querySelector(`button[onclick="markHelpful('${reviewId}')"]`);
+      if (button) {
+        button.innerHTML = `👍 มีประโยชน์ (${newCount})`;
+      }
+    };
+
+    // Wait for products to load, then render
+    async function init() {
+      await loadIceCreamProducts();
+      await loadReviews();
       renderProduct();
-    });
+    }
+
+    init();
   </script>
 </body>
 </html>

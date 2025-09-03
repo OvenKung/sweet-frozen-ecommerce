@@ -27,7 +27,7 @@ async function loadIceCreamProducts() {
     console.log('✅ Loaded', PRODUCTS.length, 'products from JSON');
     return PRODUCTS;
   } catch (error) {
-    console.warn('Could not load ice-creams.json, using fallback products:', error);
+    // console.warn('Could not load ice-creams.json, using fallback products:', error);
     return PRODUCTS; // Use the fallback products already set above
   }
 }

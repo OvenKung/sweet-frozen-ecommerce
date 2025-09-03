@@ -267,8 +267,8 @@
         const user = currentUser();
         
         if (!user) {
-            const r = encodeURIComponent('/checkout.html');
-            location.href = `/login.html?redirect=${r}`;
+            const r = encodeURIComponent('./checkout.html');
+            location.href = `./login.html?redirect=${r}`;
             return false;
         }
         

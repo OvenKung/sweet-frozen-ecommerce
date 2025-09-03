@@ -11,7 +11,7 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-USERNAME=$1
+USERNAME="OvenKung"
 REPO_NAME="sweet-frozen-ecommerce"
 
 echo "👤 GitHub Username: $USERNAME"

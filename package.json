@@ -8,7 +8,8 @@
     "build": "echo 'Building project...' && npm run validate",
     "validate": "echo 'Validating files...' && node scripts/validate.js",
     "test": "echo 'Running tests...' && node scripts/test.js",
-    "deploy": "echo 'Deploying to GitHub Pages...'",
+    "production-check": "node scripts/production-check.js",
+    "deploy": "npm run production-check && echo 'Deploying to GitHub Pages...'",
     "start": "npm run dev"
   },
   "keywords": [

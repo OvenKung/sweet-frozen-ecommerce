@@ -1,0 +1,50 @@
+name: Deploy to GitHub Pages with Production Monitoring
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: npm install
+      
+    - name: Run tests
+      run: npm test
+      
+    - name: Validate files
+      run: npm run validate
+      
+    - name: Production readiness check
+      run: npm run production-check
+      
+    - name: Create .nojekyll file
+      run: echo "" > .nojekyll
+      
+    - name: Deploy to GitHub Pages
+      if: github.ref == 'refs/heads/main'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: .
+        
+    - name: Post-deployment health check
+      if: github.ref == 'refs/heads/main'
+      run: |
+        echo "🚀 Deployment completed successfully!"
+        echo "🔍 Your site will be available at: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
+        echo "⏰ It may take a few minutes for changes to appear"
+        echo "🏥 Production monitoring is now active"

@@ -29,6 +29,7 @@ export function renderHeader(forceRender = false){
       
       <nav class="flex items-center gap-2">
         <a class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1" href="./index.html">🏠 หน้าแรก</a>
+        <a class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1" href="./reviews.html">⭐ รีวิว</a>
         <a class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 relative animate-float" href="./cart.html" aria-label="Cart">
           🛒 <span class="absolute -top-2 -right-2 bg-gradient-to-r from-primary-hover to-primary text-white rounded-full text-xs px-2 py-1 font-bold animate-pulse shadow-lg" id="cartCount">${Cart.count()}</span>
         </a>
@@ -137,6 +138,7 @@ export function renderFooter(){
           <h4 class="font-bold text-purple-700 mb-4">🔗 ลิงก์ด่วน</h4>
           <ul class="space-y-2 text-sm">
             <li><a href="./index.html" class="text-purple-600 hover:text-primary transition-colors">หน้าแรก</a></li>
+            <li><a href="./reviews.html" class="text-purple-600 hover:text-primary transition-colors">รีวิวลูกค้า</a></li>
             <li><a href="./cart.html" class="text-purple-600 hover:text-primary transition-colors">ตะกร้าสินค้า</a></li>
             <li><a href="./account.html" class="text-purple-600 hover:text-primary transition-colors">บัญชีผู้ใช้</a></li>
             <li><a href="./contact.html" class="text-purple-600 hover:text-primary transition-colors">ติดต่อเรา</a></li>

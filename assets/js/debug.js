@@ -76,14 +76,72 @@ window.sweetFrozenDebug = {
 
   // Run all tests
   async runAllTests() {
-    console.log('🧪 Running Sweet Frozen debug tests...');
+    console.log('🧪 Running Sweet Frozen comprehensive debug tests...');
     
     this.testLocalStorage();
     await this.testDataFiles();
     await this.testAuth();
     await this.testProducts();
+    this.testPathManagement();
+    this.testErrorHandling();
     
     console.log('✅ Debug tests completed! Check the logs above for any issues.');
+  },
+
+  // Test path management
+  testPathManagement() {
+    console.log('🔍 Testing path management...');
+    
+    try {
+      if (window.pathManager) {
+        console.log('✅ PathManager available');
+        console.log('🌐 Environment:', window.pathManager.isGitHubPages ? 'GitHub Pages' : 'Local');
+        console.log('📁 Base path:', window.pathManager.basePath);
+      } else {
+        console.warn('⚠️ PathManager not loaded');
+      }
+    } catch (error) {
+      console.error('❌ PathManager error:', error);
+    }
+  },
+
+  // Test error handling
+  testErrorHandling() {
+    console.log('🔍 Testing error handling...');
+    
+    try {
+      if (window.sweetFrozenErrors) {
+        console.log('✅ ErrorHandler available');
+        const errorCount = window.sweetFrozenErrors.getErrors().length;
+        console.log('📊 Recorded errors:', errorCount);
+      } else {
+        console.warn('⚠️ ErrorHandler not loaded');
+      }
+    } catch (error) {
+      console.error('❌ ErrorHandler test failed:', error);
+    }
+  },
+
+  // Test performance monitoring
+  testPerformance() {
+    console.log('🔍 Testing performance monitoring...');
+    
+    try {
+      if (window.sweetFrozenPerf) {
+        console.log('✅ PerformanceMonitor available');
+        const report = window.getPerformanceReport();
+        console.log('📊 Performance report:', report);
+        
+        const memory = window.checkMemory();
+        if (memory) {
+          console.log('💾 Memory usage:', memory);
+        }
+      } else {
+        console.warn('⚠️ PerformanceMonitor not loaded');
+      }
+    } catch (error) {
+      console.error('❌ Performance test failed:', error);
+    }
   }
 };
 
