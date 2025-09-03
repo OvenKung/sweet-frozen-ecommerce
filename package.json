@@ -9,7 +9,7 @@
     "validate": "echo 'Validating files...' && node scripts/validate.js",
     "test": "echo 'Running tests...' && node scripts/test.js",
     "production-check": "node scripts/production-check.js",
-    "deploy": "./deploy.sh",
+    "deploy": "./utils/deploy.sh",
     "quick-deploy": "git add . && git commit -m '🚀 Quick deploy' && git push origin main",
     "start": "npm run dev"
   },

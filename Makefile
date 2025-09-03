@@ -5,7 +5,7 @@
 # Default target
 deploy:
 	@echo "🚀 Starting full deployment..."
-	@./deploy.sh "📦 Deploy via Makefile"
+	@./utils/deploy.sh "📦 Deploy via Makefile"
 
 # Quick deployment without production check
 quick-deploy:

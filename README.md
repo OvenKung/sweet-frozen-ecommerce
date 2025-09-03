@@ -13,6 +13,63 @@
   <img src="https://img.shields.io/badge/4K%20Ready-✅-purple.svg" alt="4K Ready">
 </div>
 
+## 📁 Project Structure
+
+```
+📂 Sweet Frozen E-commerce/
+├── 🎯 Web Pages
+│   ├── index.html              # Homepage with Hero section
+│   ├── product.html            # Product catalog
+│   ├── cart.html               # Shopping cart
+│   ├── checkout.html           # Checkout process
+│   ├── login.html              # User authentication
+│   ├── register.html           # User registration
+│   ├── account.html            # User account management
+│   ├── forgot-password.html    # Password recovery
+│   └── 404.html                # Error page
+│
+├── 🎨 Assets
+│   ├── css/
+│   │   └── styles.css          # Main stylesheet
+│   └── js/
+│       ├── app.js              # Main application
+│       ├── auth.js             # Authentication
+│       ├── cart.js             # Shopping cart logic
+│       ├── payment.js          # Payment processing
+│       ├── products.js         # Product management
+│       ├── storage.js          # Local storage utilities
+│       ├── ui.js               # UI components
+│       └── validation.js       # Form validation
+│
+├── 📚 Documentation (docs/)
+│   ├── DEPLOYMENT-GUIDE.md     # Complete deployment guide
+│   ├── RESPONSIVE-DESIGN-GUIDE.md  # Responsive design guide
+│   ├── REVIEW-SYSTEM-GUIDE.md  # Review system guide
+│   └── README.md               # Documentation index
+│
+├── ⚙️ Utilities (utils/)
+│   ├── deploy.sh               # Automated deployment
+│   ├── fix-hero-responsive.sh  # Hero section fixes
+│   ├── fix-responsive.sh       # General responsive fixes
+│   └── README.md               # Utilities guide
+│
+├── 🧪 Tests (tests/)
+│   ├── debug.html              # Debug interface
+│   ├── responsive-test.html    # Responsive testing
+│   └── README.md               # Testing guide
+│
+├── ⚡ Configuration
+│   ├── package.json            # NPM configuration
+│   ├── Makefile                # Build automation
+│   └── .github/
+│       └── workflows/
+│           └── deploy.yml      # GitHub Actions CI/CD
+│
+└── 📄 Documentation
+    ├── README.md               # This file
+    └── LICENSE                 # MIT License
+```</div>
+
 ---
 
 ## ✨ Features Overview
@@ -173,36 +230,72 @@ Version Control: Git
 
 ## 🛠️ Installation & Development
 
-### **📋 Prerequisites**
-```bash
-Node.js >= 18.0.0
-Git >= 2.0.0
-Modern Browser (Chrome, Firefox, Safari, Edge)
-```
+### 📋 Prerequisites
 
-### **🚀 Quick Setup**
+- **Node.js** >= 18.0.0
+- **Git** >= 2.0.0
+- **Modern Browser** (Chrome, Firefox, Safari, Edge)
+
+### 🚀 Quick Setup
+
 ```bash
 # 1. Clone Repository
 git clone https://github.com/OvenKung/sweet-frozen-ecommerce.git
 cd sweet-frozen-ecommerce
 
-# 2. Install Dependencies
+# 2. Install Dependencies (Optional)
 npm install
 
-# 3. Start Development Server
-npm run dev
-
-# 4. Open Browser
-open http://localhost:3000
+# 3. Open index.html in browser
+open index.html
 ```
 
-### **📜 Available Scripts**
+### ⚡ One-Command Deployment
+
+Choose your preferred deployment method:
+
 ```bash
-npm run dev        # 🚀 Start development server
-npm run build      # 🏗️ Build for production  
+# Method 1: NPM Script
+npm run deploy
+
+# Method 2: Make Command  
+make deploy
+
+# Method 3: Direct Script
+./utils/deploy.sh
+
+# Method 4: Git Alias (after setup)
+git deploy
+```
+
+### 📜 Available Scripts
+
+```bash
+npm run dev        # 🚀 Start development server (optional)
+npm run build      # 🏗️ Build for production (optional)
 npm run test       # 🧪 Run test suite
-npm run validate   # ✅ Validate HTML/CSS
 npm run deploy     # 🚀 Deploy to GitHub Pages
+```
+
+### 🧪 Testing & Debugging
+
+```bash
+# Open test files
+open tests/debug.html              # Debug interface
+open tests/responsive-test.html    # Responsive testing
+
+# Run responsive fixes
+./utils/fix-responsive.sh         # General fixes
+./utils/fix-hero-responsive.sh    # Hero section fixes
+```
+
+### � Documentation
+
+```bash
+# Read guides
+cat docs/DEPLOYMENT-GUIDE.md      # Deployment guide
+cat docs/RESPONSIVE-DESIGN-GUIDE.md  # Responsive guide
+cat docs/REVIEW-SYSTEM-GUIDE.md   # Review system guide
 ```
 
 ---
