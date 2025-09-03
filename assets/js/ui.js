@@ -55,8 +55,8 @@ export function renderHeader(forceRender = false){
       </nav>
       
       <!-- Mobile Navigation Menu -->
-      <div class="hidden sm:hidden fixed top-0 left-0 w-full h-full bg-black/50 z-40" id="mobileMenuOverlay"></div>
-      <div class="hidden sm:hidden fixed top-0 right-0 w-64 h-full bg-white shadow-xl z-50 transform translate-x-full transition-transform duration-300" id="mobileMenu">
+      <div class="hidden sm:hidden fixed inset-0 w-screen h-screen bg-black/80 backdrop-blur-sm z-40" id="mobileMenuOverlay" style="position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; width: 100vw !important; height: 100vh !important;"></div>
+      <div class="hidden sm:hidden fixed top-0 right-0 w-80 h-screen bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300" id="mobileMenu">
         <div class="p-4 border-b border-gray-200">
           <div class="flex items-center justify-between">
             <span class="font-bold text-primary">Sweet Frozen</span>
