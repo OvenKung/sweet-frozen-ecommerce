@@ -2,12 +2,20 @@
 <html lang="th">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
   <title>🍦 Sweet Frozen - ร้านไอศกรีมออนไลน์</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
+      mode: 'jit',
       theme: {
+        screens: {
+          'sm': '640px',
+          'md': '768px', 
+          'lg': '1024px',
+          'xl': '1280px',
+          '2xl': '1536px',
+        },
         extend: {
           colors: {
             'pastel-pink': '#ffb3ba',

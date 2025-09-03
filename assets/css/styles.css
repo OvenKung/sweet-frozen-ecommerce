@@ -1,5 +1,54 @@
 /* 🍦 Sweet Frozen Ice Cream Shop - Custom CSS for Tailwind */
 
+/* Force responsive behavior */
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+/* Ensure viewport compliance */
+body {
+  min-width: 320px;
+  overflow-x: hidden;
+}
+
+/* Force responsive grid behavior */
+.product-grid {
+  display: grid !important;
+  gap: 1rem !important;
+}
+
+/* Mobile first responsive grid */
+@media (max-width: 639px) {
+  .product-grid {
+    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .product-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .product-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  }
+}
+
 /* Custom animations not available in Tailwind */
 @keyframes float {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
