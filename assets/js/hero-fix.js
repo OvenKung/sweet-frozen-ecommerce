@@ -15,8 +15,6 @@ document.addEventListener('DOMContentLoaded', function() {
         children[0].style.gridColumn = 'span 1';
         children[1].style.gridColumn = 'span 1';
       }
-      
-      console.log('Hero section fixed for iPad:', window.innerWidth + 'px');
     }
   }
   

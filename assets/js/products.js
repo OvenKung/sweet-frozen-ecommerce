@@ -11,7 +11,7 @@ let PRODUCTS = [
   {id:"ic-008", name:"กรีนทีมัทฉะ", price:58, image:"https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=600&h=400&fit=crop", description:"ไอศกรีมชาเขียวมัทฉะแท้ รสชาติเข้มข้น", category:"Asian", stock:75, ingredients:["นม","ครีม","ผงมัทฉะ","น้ำตาล"], allergens:["นม"], calories:170}
 ];
 
-// Load ice cream products from JSON file
+// Load products data
 async function loadIceCreamProducts() {
   try {
     const response = await fetch('./assets/data/ice-creams.json');
@@ -19,16 +19,16 @@ async function loadIceCreamProducts() {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    if (Array.isArray(data)) {
-      PRODUCTS = data;
-    } else if (data.ice_creams && Array.isArray(data.ice_creams)) {
-      PRODUCTS = data.ice_creams;
+    
+    // Validate data structure
+    if (!Array.isArray(data)) {
+      throw new Error('Products data is not an array');
     }
-    console.log('✅ Loaded', PRODUCTS.length, 'products from JSON');
-    return PRODUCTS;
+    
+    PRODUCTS = data;
   } catch (error) {
-    // console.warn('Could not load ice-creams.json, using fallback products:', error);
-    return PRODUCTS; // Use the fallback products already set above
+    console.error('❌ Failed to load products:', error);
+    // Fallback to existing array
   }
 }
 
