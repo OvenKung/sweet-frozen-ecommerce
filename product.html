@@ -62,8 +62,8 @@
       }
     }
   </script>
-  <link rel="stylesheet" href="/assets/css/styles.css"/>
-  <script type="module" src="/assets/js/app.js"></script>
+  <link rel="stylesheet" href="./assets/css/styles.css"/>
+  <script type="module" src="./assets/js/app.js"></script>
 </head>
 <body>
   <div id="app-header"></div>
@@ -71,7 +71,7 @@
   <!-- Breadcrumb -->
   <nav class="max-w-6xl mx-auto px-4 py-2">
     <div class="flex items-center space-x-2 text-sm">
-      <a href="/" class="text-primary hover:text-primary-hover transition-colors">🏠 หน้าหลัก</a>
+      <a href="./index.html" class="text-primary hover:text-primary-hover transition-colors">🏠 หน้าหลัก</a>
       <span class="text-gray-400">›</span>
       <span class="text-gray-600" id="breadcrumb-category">สินค้า</span>
       <span class="text-gray-400">›</span>
@@ -82,9 +82,9 @@
   <main class="max-w-6xl mx-auto px-4 py-4" id="content"></main>
   <div id="app-footer"></div>
   <script type="module">
-    import { getProduct, PRODUCTS, loadIceCreamProducts } from '/assets/js/products.js';
-    import { Cart } from '/assets/js/cart.js';
-    import { toast, updateHeader } from '/assets/js/ui.js';
+    import { getProduct, PRODUCTS, loadIceCreamProducts } from './assets/js/products.js';
+    import { Cart } from './assets/js/cart.js';
+    import { toast, updateHeader } from './assets/js/ui.js';
 
     document.addEventListener('DOMContentLoaded', function() {
         // Update navbar to show current user state

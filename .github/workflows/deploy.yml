@@ -59,7 +59,12 @@ jobs:
       run: npm install
       
     - name: 🏗️ Build project
-      run: npm run build
+      run: |
+        npm run build
+        # Create .nojekyll to disable Jekyll processing
+        touch .nojekyll
+        # Ensure proper MIME types for modules
+        echo 'application/javascript js' > .htaccess
       
     - name: 🎯 Setup Pages
       uses: actions/configure-pages@v4

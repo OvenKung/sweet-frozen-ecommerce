@@ -1,0 +1,2 @@
+# Disable Jekyll processing
+# This ensures that files starting with _ or containing special characters are served correctly

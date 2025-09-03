@@ -96,7 +96,7 @@ export function requireLogin(redirectTo){
   const u = currentUser();
   if(!u){
     const r = encodeURIComponent(redirectTo || location.pathname);
-    location.href = `/login.html?redirect=${r}`;
+    location.href = `./login.html?redirect=${r}`;
     return false;
   }
   return true;

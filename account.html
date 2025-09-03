@@ -62,7 +62,7 @@
       }
     }
   </script>
-  <script type="module" src="/assets/js/app.js"></script>
+  <script type="module" src="./assets/js/app.js"></script>
 </head>
 <body class="bg-gradient-to-br from-pastel-lavender via-pastel-blue to-pastel-green min-h-screen">
   <div id="app-header"></div>
@@ -138,9 +138,9 @@
   <div id="app-footer"></div>
   
   <script type="module">
-    import { requireLogin, currentUser, demoLogin, addUserAddress, updateUserAddress, deleteUserAddress } from '/assets/js/auth.js';
-    import { PRODUCTS } from '/assets/js/products.js';
-    import { updateHeader, toast } from '/assets/js/ui.js';
+    import { requireLogin, currentUser, demoLogin, addUserAddress, updateUserAddress, deleteUserAddress } from './assets/js/auth.js';
+    import { PRODUCTS } from './assets/js/products.js';
+    import { updateHeader, toast } from './assets/js/ui.js';
 
     // Initialize the page
     async function initializePage() {
@@ -158,7 +158,7 @@
 
       // If still no user, redirect to login
       if (!u) {
-        window.location.href = '/login.html';
+        window.location.href = './login.html';
         return;
       }
       
@@ -449,7 +449,7 @@
     // Start the application
     initializePage().catch(error => {
       console.error('❌ Page initialization failed:', error);
-      window.location.href = '/login.html';
+      window.location.href = './login.html';
     });
 
     // Address Modal Functions

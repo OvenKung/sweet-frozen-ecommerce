@@ -62,8 +62,8 @@
       }
     }
   </script>
-  <link rel="stylesheet" href="/assets/css/styles.css"/>
-  <script type="module" src="/assets/js/app.js"></script>
+  <link rel="stylesheet" href="./assets/css/styles.css"/>
+  <script type="module" src="./assets/js/app.js"></script>
 </head>
 <body>
   <div id="app-header"></div>
@@ -170,10 +170,10 @@
   <div id="progress-bar" style="position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, #ff8fab, #e1baff); z-index: 9999; transition: width 0.3s ease;"></div>
 
   <script type="module">
-    import { PRODUCTS, loadIceCreamProducts } from '/assets/js/products.js';
-    import { Cart } from '/assets/js/cart.js';
-    import { renderHeader, renderFooter, toast, updateHeader, enableResetHotkey } from '/assets/js/ui.js';
-    import { currentUser } from '/assets/js/auth.js';
+    import { PRODUCTS, loadIceCreamProducts } from './assets/js/products.js';
+    import { Cart } from './assets/js/cart.js';
+    import { renderHeader, renderFooter, toast, updateHeader, enableResetHotkey } from './assets/js/ui.js';
+    import { currentUser } from './assets/js/auth.js';
     
     // Render header and footer first
     renderHeader();
@@ -193,11 +193,11 @@
       el.style.animationDelay = Math.random() * 0.5 + 's';
       
       el.innerHTML = `
-        <a href="/product.html?id=${p.id}" class="block">
+        <a href="./product.html?id=${p.id}" class="block">
           <img src="${p.image}" alt="${p.name}" class="w-full h-48 object-cover transition-all duration-300 hover:scale-110"/>
         </a>
         <div class="p-4 flex flex-col gap-2">
-          <a href="/product.html?id=${p.id}" class="text-primary font-bold text-lg hover:text-primary-hover transition-colors">
+          <a href="./product.html?id=${p.id}" class="text-primary font-bold text-lg hover:text-primary-hover transition-colors">
             ${p.name}
           </a>
           <div class="bg-pastel-peach px-2 py-1 rounded-xl text-sm inline-block w-fit">
@@ -335,7 +335,7 @@
             <!-- Price & Action -->
             <div class="mb-4">
               <div class="text-2xl font-black text-primary mb-3">฿${featuredProduct.price.toLocaleString()}</div>
-              <a href="/product.html?id=${featuredProduct.id}" 
+              <a href="./product.html?id=${featuredProduct.id}" 
                  class="inline-block bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-2 px-6 rounded-full text-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:scale-105">
                 🍦 ลองชิมเลย!
               </a>

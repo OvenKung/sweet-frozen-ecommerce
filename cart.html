@@ -62,8 +62,8 @@
       }
     }
   </script>
-  <link rel="stylesheet" href="/assets/css/styles.css"/>
-  <script type="module" src="/assets/js/app.js"></script>
+  <link rel="stylesheet" href="./assets/css/styles.css"/>
+  <script type="module" src="./assets/js/app.js"></script>
 </head>
 <body>
   <div id="app-header"></div>
@@ -96,17 +96,17 @@
       </div>
     </div>
     <div class="flex gap-3 justify-end">
-      <a class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-3 px-6 rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1" href="/index.html">🍦 เลือกไอศกรีมต่อ</a>
+      <a class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-3 px-6 rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1" href="./index.html">🍦 เลือกไอศกรีมต่อ</a>
       <button id="checkoutBtn" class="bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-2 border-primary">💳 สั่งซื้อเลย!</button>
     </div>
   </main>
   <div id="app-footer"></div>
   
   <script type="module">
-    import { Cart } from '/assets/js/cart.js';
-    import { PRODUCTS, getProduct, loadIceCreamProducts } from '/assets/js/products.js';
-    import { toast, updateHeader } from '/assets/js/ui.js';
-    import { currentUser, logout } from '/assets/js/auth.js';
+    import { Cart } from './assets/js/cart.js';
+    import { PRODUCTS, getProduct, loadIceCreamProducts } from './assets/js/products.js';
+    import { toast, updateHeader } from './assets/js/ui.js';
+    import { currentUser, logout } from './assets/js/auth.js';
 
     document.addEventListener('DOMContentLoaded', async function() {
         // Load products first
@@ -164,7 +164,7 @@
                         toast('❌ กรุณาเข้าสู่ระบบก่อนสั่งซื้อ');
                     }
                     setTimeout(() => {
-                        location.href = '/login.html?redirect=' + encodeURIComponent('/checkout.html');
+                        location.href = './login.html?redirect=' + encodeURIComponent('/checkout.html');
                     }, 1500);
                     return;
                 }
@@ -179,7 +179,7 @@
                 checkoutBtn.disabled = true;
                 
                 setTimeout(() => {
-                    location.href = '/checkout.html';
+                    location.href = './checkout.html';
                 }, 500);
             });
         }
@@ -229,7 +229,7 @@
                     <td class="p-4">
                         <div style="display:flex;align-items:center;gap:10px">
                             <img src="${p.image}" alt="" style="width:64px;height:48px;object-fit:cover;border-radius:8px;border:1px solid #e5e7eb"/>
-                            <a href="/product.html?id=${p.id}" class="text-blue-600 hover:underline">${p.name}</a>
+                            <a href="./product.html?id=${p.id}" class="text-blue-600 hover:underline">${p.name}</a>
                         </div>
                     </td>
                     <td class="p-4">฿${p.price.toLocaleString()}</td>

@@ -22,27 +22,27 @@ export function renderHeader(forceRender = false){
   el.innerHTML = `
   <header class="header sticky top-0 bg-white/95 backdrop-blur-lg border-b-2 border-pastel-pink z-50 shadow-lg">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <a href="/index.html" class="flex items-center gap-3 font-black text-xl text-primary animate-float">
+      <a href="./index.html" class="flex items-center gap-3 font-black text-xl text-primary animate-float">
         <div class="w-10 h-10 rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center text-2xl animate-pulse shadow-lg">🍦</div> 
         <span>Sweet Frozen</span>
       </a>
       
       <nav class="flex items-center gap-2">
-        <a class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1" href="/index.html">🏠 หน้าแรก</a>
-        <a class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 relative animate-float" href="/cart.html" aria-label="Cart">
+        <a class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1" href="./index.html">🏠 หน้าแรก</a>
+        <a class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 relative animate-float" href="./cart.html" aria-label="Cart">
           🛒 <span class="absolute -top-2 -right-2 bg-gradient-to-r from-primary-hover to-primary text-white rounded-full text-xs px-2 py-1 font-bold animate-pulse shadow-lg" id="cartCount">${Cart.count()}</span>
         </a>
         ${u ? `
           <div class="relative">
             <div class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer" id="userMenuBtn">👤 ${u.name}</div>
             <div class="hidden absolute top-12 right-0 bg-white border-2 border-gray-200 rounded-2xl p-2 min-w-48 shadow-xl z-50" id="userMenu">
-              <a class="block bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-4 rounded-xl mb-2 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 text-center" href="/account.html">👤 บัญชีผู้ใช้</a>
+              <a class="block bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-4 rounded-xl mb-2 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 text-center" href="./account.html">👤 บัญชีผู้ใช้</a>
               <button class="w-full bg-gradient-to-r from-red-300 to-red-400 border-2 border-red-300 text-white font-bold py-2 px-4 rounded-xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1" id="logoutBtn">🚪 ออกจากระบบ</button>
             </div>
           </div>
         ` : `
-          <a class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1" href="/login.html">เข้าสู่ระบบ</a>
-          <a class="bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-2 px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-2 border-primary" href="/register.html">สมัครสมาชิก</a>
+          <a class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1" href="./login.html">เข้าสู่ระบบ</a>
+          <a class="bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-2 px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-2 border-primary" href="./register.html">สมัครสมาชิก</a>
         `}
       </nav>
     </div>
@@ -88,7 +88,7 @@ function setupHeaderEvents() {
     lo.addEventListener('click', ()=>{ 
       logout(); 
       updateHeader(); // Update header after logout
-      location.href='/index.html'; 
+      location.href='./index.html'; 
     }); 
   }
 }
@@ -136,10 +136,10 @@ export function renderFooter(){
         <div>
           <h4 class="font-bold text-purple-700 mb-4">🔗 ลิงก์ด่วน</h4>
           <ul class="space-y-2 text-sm">
-            <li><a href="/index.html" class="text-purple-600 hover:text-primary transition-colors">หน้าแรก</a></li>
-            <li><a href="/cart.html" class="text-purple-600 hover:text-primary transition-colors">ตะกร้าสินค้า</a></li>
-            <li><a href="/account.html" class="text-purple-600 hover:text-primary transition-colors">บัญชีผู้ใช้</a></li>
-            <li><a href="/contact.html" class="text-purple-600 hover:text-primary transition-colors">ติดต่อเรา</a></li>
+            <li><a href="./index.html" class="text-purple-600 hover:text-primary transition-colors">หน้าแรก</a></li>
+            <li><a href="./cart.html" class="text-purple-600 hover:text-primary transition-colors">ตะกร้าสินค้า</a></li>
+            <li><a href="./account.html" class="text-purple-600 hover:text-primary transition-colors">บัญชีผู้ใช้</a></li>
+            <li><a href="./contact.html" class="text-purple-600 hover:text-primary transition-colors">ติดต่อเรา</a></li>
           </ul>
         </div>
         

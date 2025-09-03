@@ -62,7 +62,7 @@
       }
     }
   </script>
-  <script type="module" src="/assets/js/app.js"></script>
+  <script type="module" src="./assets/js/app.js"></script>
 </head>
 <body class="bg-gradient-to-br from-pastel-green via-pastel-blue to-pastel-purple min-h-screen">
   <div id="app-header"></div>
@@ -250,11 +250,11 @@
   </main>
   <div id="app-footer"></div>
   <script type="module">
-    import { requireLogin, addAddress, listAddresses, saveOrder, currentUser, loadUsers } from '/assets/js/auth.js';
-    import { Cart } from '/assets/js/cart.js';
-    import { PRODUCTS, getProduct } from '/assets/js/products.js';
-    import { toast, updateHeader } from '/assets/js/ui.js';
-    import { processPayment } from '/assets/js/payment.js';
+    import { requireLogin, addAddress, listAddresses, saveOrder, currentUser, loadUsers } from './assets/js/auth.js';
+    import { Cart } from './assets/js/cart.js';
+    import { PRODUCTS, getProduct } from './assets/js/products.js';
+    import { toast, updateHeader } from './assets/js/ui.js';
+    import { processPayment } from './assets/js/payment.js';
 
     // รอให้ users data โหลดเสร็จก่อนตรวจสอบ login
     async function initCheckoutPage() {
@@ -678,7 +678,7 @@
             <p><strong>หมายเลขธุรกรรม:</strong> ${order.txnId}</p>
             <p><strong>ยอดรวม:</strong> ฿${order.amount.toLocaleString()}</p>
           </div>
-          <button onclick="location.href='/account.html'" class="bg-gradient-to-r from-primary to-primary-hover text-white font-semibold py-3 px-6 rounded-xl hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+          <button onclick="location.href = './account.html'" class="bg-gradient-to-r from-primary to-primary-hover text-white font-semibold py-3 px-6 rounded-xl hover:shadow-lg transform hover:scale-105 transition-all duration-300">
             ดูรายละเอียดคำสั่งซื้อ
           </button>
         </div>
