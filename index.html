@@ -4,6 +4,10 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
   <title>🍦 Sweet Frozen - ร้านไอศกรีมออนไลน์</title>
+  <!-- Font Awesome for Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <!-- Bubble Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -17,6 +21,10 @@
           '2xl': '1536px',
         },
         extend: {
+          fontFamily: {
+            'bubble': ['Fredoka', 'sans-serif'],
+            'round': ['Nunito', 'sans-serif'],
+          },
           colors: {
             'pastel-pink': '#ffb3ba',
             'pastel-peach': '#ffdfba',
@@ -42,7 +50,14 @@
             'wiggle': 'wiggle 1s ease-in-out infinite',
             'heartbeat': 'heartbeat 1.5s ease-in-out infinite',
             'shimmer': 'shimmer 2s linear infinite',
-            'typing': 'typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite'
+            'typing': 'typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite',
+            'glow': 'glow 2s ease-in-out infinite alternate',
+            'ripple': 'ripple 0.6s linear',
+            'shake': 'shake 0.5s ease-in-out',
+            'zoom-in': 'zoomIn 0.3s ease-out',
+            'slide-down': 'slideDown 0.5s ease-out',
+            'fade-in-up': 'fadeInUp 0.6s ease-out',
+            'rotate-slow': 'rotate 20s linear infinite'
           },
           keyframes: {
             float: {
@@ -91,6 +106,35 @@
             'blink-caret': {
               'from, to': { 'border-color': 'transparent' },
               '50%': { 'border-color': '#ff8fab' }
+            },
+            glow: {
+              '0%': { 'box-shadow': '0 0 5px #ff8fab, 0 0 10px #ff8fab, 0 0 15px #ff8fab' },
+              '100%': { 'box-shadow': '0 0 20px #ff8fab, 0 0 30px #ff8fab, 0 0 40px #ff8fab' }
+            },
+            ripple: {
+              '0%': { transform: 'scale(0)', opacity: '1' },
+              '100%': { transform: 'scale(4)', opacity: '0' }
+            },
+            shake: {
+              '0%, 100%': { transform: 'translateX(0)' },
+              '10%, 30%, 50%, 70%, 90%': { transform: 'translateX(-5px)' },
+              '20%, 40%, 60%, 80%': { transform: 'translateX(5px)' }
+            },
+            zoomIn: {
+              '0%': { transform: 'scale(0)', opacity: '0' },
+              '100%': { transform: 'scale(1)', opacity: '1' }
+            },
+            slideDown: {
+              '0%': { transform: 'translateY(-100%)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' }
+            },
+            fadeInUp: {
+              '0%': { transform: 'translateY(30px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' }
+            },
+            rotate: {
+              '0%': { transform: 'rotate(0deg)' },
+              '100%': { transform: 'rotate(360deg)' }
             }
           }
         }
@@ -150,6 +194,7 @@
     /* Glowing effect for cards */
     .card-glow:hover {
       box-shadow: 0 0 20px rgba(255, 139, 171, 0.5);
+      animation: glow 2s ease-in-out infinite alternate;
     }
     
     /* Floating animation for emojis */
@@ -167,6 +212,58 @@
       animation: gradient-shift 3s ease infinite;
     }
     
+    /* Ripple effect for buttons */
+    .btn-ripple {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-ripple::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+    
+    .btn-ripple:active::before {
+      width: 300px;
+      height: 300px;
+    }
+    
+    /* Glass morphism cards */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    }
+    
+    /* Neon text effect */
+    .neon-text {
+      color: #ff8fab;
+      text-shadow: 
+        0 0 5px #ff8fab,
+        0 0 10px #ff8fab,
+        0 0 20px #ff8fab,
+        0 0 40px #ff8fab,
+        0 0 80px #ff8fab;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    
+    /* Loading pulse effect */
+    .loading-pulse {
+      animation: pulse 1.5s ease-in-out infinite;
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 2s infinite;
+    }
+    
     @keyframes gradient-shift {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
@@ -174,7 +271,7 @@
     }
   </style>
 </head>
-<body>
+<body class="font-bubble bg-gradient-to-br from-pastel-pink via-pastel-lavender to-pastel-mint min-h-screen">
   <div id="app-header"></div>
   <main class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 py-4 sm:py-6 animate-slide-in-up">
     <!-- Hero Section -->
@@ -240,7 +337,7 @@
         <div class="md:col-span-1 xl:col-span-2 bg-gradient-to-br from-white to-purple-50 border-2 border-pastel-peach rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl">
           <div class="text-center mb-3 sm:mb-4">
             <div class="inline-block bg-pastel-yellow px-3 sm:px-4 py-2 rounded-full text-base sm:text-lg font-black text-primary border-2 border-yellow-300 animate-bounce">
-              ⭐ ไอศกรีมแนะนำวันนี้
+              <i class="fas fa-star mr-1"></i> ไอศกรีมแนะนำวันนี้
             </div>
           </div>
           
@@ -287,11 +384,11 @@
           <input 
             type="text" 
             id="searchInput"
-            placeholder="🔍 ค้นหาไอศกรีม..." 
+            placeholder="ค้นหาไอศกรีม..." 
             class="w-full px-4 py-3 pl-12 rounded-2xl border-2 border-pastel-pink/30 focus:border-pastel-pink focus:outline-none transition-all duration-300"
           >
           <div class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
-            🔍
+            <i class="fas fa-search"></i>
           </div>
         </div>
         
@@ -330,25 +427,25 @@
     <div class="fixed bottom-6 right-6 flex flex-col space-y-3 z-50">
       <!-- Quick Cart -->
       <button onclick="toggleQuickCart()" class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 animate-bounce-slow" title="ตะกร้าด่วน">
-        🛒
+        <i class="fas fa-shopping-cart"></i>
         <span id="floatingCartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold">0</span>
       </button>
       
       <!-- Random Product -->
       <button onclick="showRandomProduct()" class="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 animate-pulse-slow" title="สินค้าแนะนำ">
-        🎲
+        <i class="fas fa-dice"></i>
       </button>
       
       <!-- Theme Toggle -->
       <button onclick="toggleTheme()" class="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 animate-wiggle" title="เปลี่ยนธีม">
-        🌙
+        <i class="fas fa-moon"></i>
       </button>
     </div>
     
     <!-- Quick Cart Popup -->
     <div id="quickCartPopup" class="fixed bottom-24 right-6 w-80 bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl border border-white/30 p-4 transform translate-y-4 opacity-0 invisible transition-all duration-300 z-40">
       <h3 class="font-bold text-primary mb-3 flex items-center justify-between">
-        🛒 ตะกร้าด่วน
+        <i class="fas fa-shopping-cart mr-2"></i> ตะกร้าด่วน
         <button onclick="toggleQuickCart()" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
       </h3>
       <div id="quickCartItems" class="space-y-2 max-h-60 overflow-y-auto">
@@ -373,7 +470,7 @@
   <script type="module">
     import { PRODUCTS, loadIceCreamProducts } from './assets/js/products.js';
     import { Cart } from './assets/js/cart.js';
-    import { renderHeader, renderFooter, toast, updateHeader, enableResetHotkey } from './assets/js/ui.js';
+    import { renderHeader, renderFooter, toast, updateHeader, enableResetHotkey, initializeGlobalStyles, initializeQuickCart, updateFloatingCartCount } from './assets/js/ui.js';
     import { currentUser } from './assets/js/auth.js';
     import { 
       loadReviews, 
@@ -382,10 +479,14 @@
       generateStarRating 
     } from './assets/js/reviews.js';
     
-    // Render header and footer first
+    // Initialize global styles and render header/footer
+    initializeGlobalStyles();
     renderHeader();
     renderFooter();
     enableResetHotkey();
+    
+    // Initialize quick cart
+    initializeQuickCart();
     
     // Ensure navbar shows correct login state
     document.addEventListener('DOMContentLoaded', () => {
@@ -399,8 +500,13 @@
       const isFavorite = user && user.favoriteProducts && user.favoriteProducts.includes(p.id);
       
       const el = document.createElement('div'); 
-      el.className='product-card bg-white/90 backdrop-blur-lg border-2 border-pastel-blue rounded-xl sm:rounded-2xl overflow-hidden flex flex-col transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 hover:border-primary shadow-xl relative card-glow animate-slide-in-up hover:scale-105';
+      el.className='product-card bg-white/90 backdrop-blur-lg border-2 border-pastel-blue rounded-xl sm:rounded-2xl overflow-hidden flex flex-col transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 hover:border-primary shadow-xl relative card-glow animate-slide-in-up hover:scale-105 btn-ripple glass-card';
       el.style.animationDelay = Math.random() * 0.5 + 's';
+      
+      // Add hover sound effect
+      el.addEventListener('mouseenter', () => {
+        // เสียง hover (ถ้าต้องการ)
+      });
       
       // Get rating data
       const rating = getProductRating(p.id);
@@ -410,11 +516,14 @@
         <!-- Favorite Button -->
         <button class="absolute top-2 right-2 w-8 h-8 rounded-full ${isFavorite ? 'bg-red-500 text-white' : 'bg-white/80 backdrop-blur-sm text-gray-400 hover:text-red-500'} flex items-center justify-center transition-all duration-300 hover:scale-110 z-10 shadow-md" 
                 onclick="toggleFavorite('${p.id}', event)">
-          ${isFavorite ? '❤️' : '🤍'}
+          ${isFavorite ? '<i class="fas fa-heart text-red-500"></i>' : '<i class="far fa-heart"></i>'}
         </button>
         
-        <a href="./product.html?id=${p.id}" class="block">
-          <img src="${p.image}" alt="${p.name}" class="w-full h-36 sm:h-40 lg:h-48 object-cover transition-all duration-300 hover:scale-110"/>
+        <a href="./product.html?id=${p.id}" class="block group">
+          <img src="${p.image}" alt="${p.name}" class="w-full h-36 sm:h-40 lg:h-48 object-cover transition-all duration-500 hover:scale-110 hover:brightness-110 group-hover:saturate-150"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end justify-center p-2">
+            <span class="text-white font-bold text-xs bg-white/20 backdrop-blur-sm rounded-full px-2 py-1 animate-bounce">👀 ดูรายละเอียด</span>
+          </div>
         </a>
         <div class="p-3 sm:p-4 flex flex-col gap-1 sm:gap-2 flex-1">
           <a href="./product.html?id=${p.id}" class="text-primary font-bold text-sm sm:text-base lg:text-lg hover:text-primary-hover transition-colors leading-tight">
@@ -433,27 +542,53 @@
           ` : '<div class="text-xs text-gray-400 mb-1">ยังไม่มีรีวิว</div>'}
           
           <div class="bg-pastel-peach px-2 py-1 rounded-lg sm:rounded-xl text-xs sm:text-sm inline-block w-fit">
-            🏷️ ${p.category}
+            <i class="fas fa-tag mr-1"></i> ${p.category}
           </div>
           <div class="text-lg sm:text-xl lg:text-2xl font-black text-primary">
             ฿${p.price.toLocaleString()}
           </div>
           <button class="w-full bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-2 sm:py-3 px-3 sm:px-4 rounded-xl sm:rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-2 border-primary text-xs sm:text-sm lg:text-base min-h-[44px] mt-auto" data-id="${p.id}">
-            🛒 <span class="hidden sm:inline">เพิ่มในตะกร้า</span><span class="sm:hidden">เพิ่ม</span>
+            <i class="fas fa-shopping-cart mr-1"></i> <span class="hidden sm:inline">เพิ่มในตะกร้า</span><span class="sm:hidden">เพิ่ม</span>
           </button>
         </div>`;
       
       const button = el.querySelector('button[data-id]');
       button.addEventListener('click', ()=>{
+        // Add loading state
+        const originalText = button.innerHTML;
+        button.innerHTML = '<div class="flex items-center justify-center gap-2"><div class="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></div>เพิ่มแล้ว...</div>';
+        button.disabled = true;
+        
         // Add click animation
         button.style.transform = 'scale(0.95)';
         setTimeout(() => {
           button.style.transform = '';
         }, 150);
         
-        Cart.add(p.id,1); 
-        document.getElementById('cartCount').textContent = Cart.count();
-        toast('เพิ่มในตะกร้าแล้ว! 🍦');
+        // Simulate loading
+        setTimeout(() => {
+          Cart.add(p.id,1); 
+          document.getElementById('cartCount').textContent = Cart.count();
+          
+          // Update floating cart count
+          updateFloatingCartCount();
+          
+          // Trigger cart update event
+          window.dispatchEvent(new CustomEvent('cartUpdated'));
+          
+          // Success state
+          button.innerHTML = '<div class="flex items-center justify-center gap-2 animate-bounce"><i class="fas fa-check-circle"></i> เพิ่มแล้ว!</div>';
+          button.className = button.className.replace('from-primary to-primary-hover', 'from-green-500 to-green-600');
+          
+          toast('เพิ่มในตะกร้าแล้ว! 🍦');
+          
+          // Reset after delay
+          setTimeout(() => {
+            button.innerHTML = originalText;
+            button.className = button.className.replace('from-green-500 to-green-600', 'from-primary to-primary-hover');
+            button.disabled = false;
+          }, 2000);
+        }, 800);
       });
       return el;
     }
@@ -556,11 +691,11 @@
       if (list.length === 0) {
         grid.innerHTML = `
           <div class="col-span-full text-center py-12 bg-white/50 rounded-3xl">
-            <div class="text-6xl mb-4">🔍</div>
+            <div class="text-6xl mb-4"><i class="fas fa-search text-gray-400"></i></div>
             <h3 class="text-xl font-bold text-gray-700 mb-2">ไม่พบสินค้าที่ตรองค้นหา</h3>
             <p class="text-gray-500 mb-4">ลองเปลี่ยนเงื่อนไขการค้นหาหรือเลือกหมวดหมู่อื่น</p>
             <button onclick="clearFilters()" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-opacity-90 transition-all">
-              🔄 ล้างตัวกรอง
+              <i class="fas fa-undo mr-2"></i> ล้างตัวกรอง
             </button>
           </div>
         `;
@@ -581,7 +716,20 @@
       const productsForCurrentPage = list.slice(startIndex, endIndex);
       
       // Render products for current page
-      productsForCurrentPage.forEach(p => grid.appendChild(card(p)));
+      productsForCurrentPage.forEach((p, index) => {
+        const productCard = card(p);
+        // Add stagger animation
+        productCard.style.opacity = '0';
+        productCard.style.transform = 'translateY(20px)';
+        grid.appendChild(productCard);
+        
+        // Animate in with delay
+        setTimeout(() => {
+          productCard.style.transition = 'all 0.6s ease-out';
+          productCard.style.opacity = '1';
+          productCard.style.transform = 'translateY(0)';
+        }, index * 100);
+      });
       
       // Render pagination controls
       renderPagination(list.length);
@@ -629,8 +777,8 @@
       paginationHTML += `
         <button onclick="goToPage(${currentPage - 1})" 
                 ${currentPage === 1 ? 'disabled' : ''}
-                class="px-3 py-2 mx-1 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300">
-          ‹ ก่อนหน้า
+                class="px-4 py-2 mx-1 text-sm font-medium text-gray-500 bg-white/80 backdrop-blur-sm border border-gray-300 rounded-xl hover:bg-gradient-to-r hover:from-primary hover:to-primary-hover hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105 hover:shadow-lg btn-ripple">
+          <span class="flex items-center gap-1"><i class="fas fa-chevron-left"></i> ก่อนหน้า</span>
         </button>
       `;
       
@@ -648,7 +796,7 @@
       if (startPage > 1) {
         paginationHTML += `
           <button onclick="goToPage(1)" 
-                  class="px-3 py-2 mx-1 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 transition-all duration-300">
+                  class="px-3 py-2 mx-1 text-sm font-medium text-gray-500 bg-white/80 backdrop-blur-sm border border-gray-300 rounded-xl hover:bg-gradient-to-r hover:from-primary hover:to-primary-hover hover:text-white transition-all duration-300 hover:scale-105 btn-ripple">
             1
           </button>
         `;
@@ -664,9 +812,9 @@
           <button onclick="goToPage(${i})" 
                   class="px-3 py-2 mx-1 text-sm font-medium ${
                     isActive 
-                      ? 'text-white bg-primary border border-primary' 
-                      : 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700'
-                  } rounded-lg transition-all duration-300">
+                      ? 'text-white bg-gradient-to-r from-primary to-primary-hover border-2 border-primary shadow-lg animate-pulse' 
+                      : 'text-gray-500 bg-white/80 backdrop-blur-sm border border-gray-300 hover:bg-gradient-to-r hover:from-primary hover:to-primary-hover hover:text-white'
+                  } rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg btn-ripple">
             ${i}
           </button>
         `;
@@ -679,7 +827,7 @@
         }
         paginationHTML += `
           <button onclick="goToPage(${totalPages})" 
-                  class="px-3 py-2 mx-1 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 transition-all duration-300">
+                  class="px-3 py-2 mx-1 text-sm font-medium text-gray-500 bg-white/80 backdrop-blur-sm border border-gray-300 rounded-xl hover:bg-gradient-to-r hover:from-primary hover:to-primary-hover hover:text-white transition-all duration-300 hover:scale-105 btn-ripple">
             ${totalPages}
           </button>
         `;
@@ -689,8 +837,8 @@
       paginationHTML += `
         <button onclick="goToPage(${currentPage + 1})" 
                 ${currentPage === totalPages ? 'disabled' : ''}
-                class="px-3 py-2 mx-1 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300">
-          ถัดไป ›
+                class="px-4 py-2 mx-1 text-sm font-medium text-gray-500 bg-white/80 backdrop-blur-sm border border-gray-300 rounded-xl hover:bg-gradient-to-r hover:from-primary hover:to-primary-hover hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105 hover:shadow-lg btn-ripple">
+          <span class="flex items-center gap-1">ถัดไป <i class="fas fa-chevron-right"></i></span>
         </button>
       `;
       
@@ -700,7 +848,7 @@
             ${paginationHTML}
           </div>
           <div class="text-xs text-gray-500 text-center">
-            💡 ใช้ลูกศร ← → หรือ ↑ ↓ เพื่อเปลี่ยนหน้า
+            <i class="fas fa-lightbulb text-yellow-500 mr-1"></i> ใช้ลูกศร ← → หรือ ↑ ↓ เพื่อเปลี่ยนหน้า
           </div>
         </div>
       `;
@@ -861,14 +1009,14 @@
       if (!isDarkTheme) {
         // Switch to dark theme
         body.classList.add('dark-theme');
-        themeBtn.innerHTML = '☀️';
-        toast('🌙 เปลี่ยนเป็นธีมกลางคืนแล้ว!', 'info');
+        themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+        toast('<i class="fas fa-moon mr-1"></i> เปลี่ยนเป็นธีมกลางคืนแล้ว!', 'info');
         isDarkTheme = true;
       } else {
         // Switch to light theme
         body.classList.remove('dark-theme');
-        themeBtn.innerHTML = '🌙';
-        toast('☀️ เปลี่ยนเป็นธีมกลางวันแล้ว!', 'info');
+        themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
+        toast('<i class="fas fa-sun mr-1"></i> เปลี่ยนเป็นธีมกลางวันแล้ว!', 'info');
         isDarkTheme = false;
       }
     };
@@ -1078,7 +1226,7 @@
         const favoriteClass = isFavorite 
           ? 'absolute top-2 right-2 w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center transition-all duration-300 hover:scale-110 z-10 shadow-md text-xs'
           : 'absolute top-2 right-2 w-6 h-6 rounded-full bg-white/80 backdrop-blur-sm text-gray-400 hover:text-red-500 flex items-center justify-center transition-all duration-300 hover:scale-110 z-10 shadow-md text-xs';
-        const favoriteIcon = isFavorite ? '❤️' : '🤍';
+        const favoriteIcon = isFavorite ? '<i class="fas fa-heart text-red-500"></i>' : '<i class="far fa-heart"></i>';
         
         const slideDiv = document.createElement('div');
         slideDiv.className = 'w-full flex-shrink-0';

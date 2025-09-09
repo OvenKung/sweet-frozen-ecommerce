@@ -1,6 +1,107 @@
 import { Cart } from './cart.js';
 import { currentUser, logout } from './auth.js';
 
+// Initialize global styles and theme
+export function initializeGlobalStyles() {
+  // Add fonts and Font Awesome to head if not already present
+  if (!document.head.querySelector('link[href*="font-awesome"]')) {
+    const fontAwesome = document.createElement('link');
+    fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+    fontAwesome.rel = 'stylesheet';
+    document.head.appendChild(fontAwesome);
+  }
+  
+  if (!document.head.querySelector('link[href*="fonts.googleapis"]')) {
+    const fonts = document.createElement('link');
+    fonts.href = 'https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700;800;900&display=swap';
+    fonts.rel = 'stylesheet';
+    document.head.appendChild(fonts);
+  }
+  
+  // Add bubble font class to body
+  if (!document.body.classList.contains('font-bubble')) {
+    document.body.className = 'font-bubble bg-gradient-to-br from-pastel-pink via-pastel-lavender to-pastel-mint min-h-screen';
+  }
+  
+  // Initialize theme
+  initializeDarkMode();
+}
+
+// Dark Mode functionality
+let isDarkTheme = localStorage.getItem('darkMode') === 'true';
+
+export function initializeDarkMode() {
+  const body = document.body;
+  
+  if (isDarkTheme) {
+    body.classList.add('dark-theme');
+  }
+  
+  // Add dark mode styles to head if not present
+  if (!document.head.querySelector('#dark-mode-styles')) {
+    const darkStyles = document.createElement('style');
+    darkStyles.id = 'dark-mode-styles';
+    darkStyles.textContent = `
+      .dark-theme {
+        background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460) !important;
+        color: #ffffff !important;
+      }
+      
+      .dark-theme .bg-white {
+        background-color: rgba(30, 41, 59, 0.9) !important;
+        color: #ffffff !important;
+      }
+      
+      .dark-theme .bg-white\\/90 {
+        background-color: rgba(30, 41, 59, 0.9) !important;
+        color: #ffffff !important;
+      }
+      
+      .dark-theme .bg-white\\/50 {
+        background-color: rgba(30, 41, 59, 0.7) !important;
+        color: #ffffff !important;
+      }
+      
+      .dark-theme .text-gray-800,
+      .dark-theme .text-gray-700,
+      .dark-theme .text-gray-600,
+      .dark-theme .text-gray-500 {
+        color: #e2e8f0 !important;
+      }
+      
+      .dark-theme .border-gray-300 {
+        border-color: rgba(71, 85, 105, 0.5) !important;
+      }
+      
+      .dark-theme .bg-gradient-to-br {
+        background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460) !important;
+      }
+    `;
+    document.head.appendChild(darkStyles);
+  }
+}
+
+export function toggleTheme() {
+  const body = document.body;
+  const themeBtn = document.querySelector('[onclick="toggleTheme()"]');
+  
+  if (!isDarkTheme) {
+    // Switch to dark theme
+    body.classList.add('dark-theme');
+    if (themeBtn) themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+    toast('<i class="fas fa-moon mr-1"></i> เปลี่ยนเป็นธีมกลางคืนแล้ว!', 'info');
+    isDarkTheme = true;
+  } else {
+    // Switch to light theme
+    body.classList.remove('dark-theme');
+    if (themeBtn) themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
+    toast('<i class="fas fa-sun mr-1"></i> เปลี่ยนเป็นธีมกลางวันแล้ว!', 'info');
+    isDarkTheme = false;
+  }
+  
+  localStorage.setItem('darkMode', isDarkTheme.toString());
+}
+
 export function renderHeader(forceRender = false){
   const el = document.getElementById('app-header');
   if(!el) return;
@@ -49,8 +150,11 @@ export function renderHeader(forceRender = false){
             </div>
           </div>
         ` : `
-          <a class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-2 lg:px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 text-xs lg:text-sm" href="./login.html"><span class="lg:hidden">👤</span><span class="hidden lg:inline">เข้าสู่ระบบ</span></a>
-          <a class="bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-2 px-2 lg:px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-2 border-primary text-xs lg:text-sm" href="./register.html"><span class="lg:hidden">✍️</span><span class="hidden lg:inline">สมัครสมาชิก</span></a>
+          <button onclick="toggleTheme()" class="w-8 h-8 lg:w-10 lg:h-10 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 mr-2" title="เปลี่ยนธีม">
+            <i class="fas fa-moon text-xs lg:text-sm"></i>
+          </button>
+          <a class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-2 px-2 lg:px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 text-xs lg:text-sm" href="./login.html"><span class="lg:hidden"><i class="fas fa-user"></i></span><span class="hidden lg:inline">เข้าสู่ระบบ</span></a>
+          <a class="bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-2 px-2 lg:px-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-2 border-primary text-xs lg:text-sm" href="./register.html"><span class="lg:hidden"><i class="fas fa-user-plus"></i></span><span class="hidden lg:inline">สมัครสมาชิก</span></a>
         `}
       </nav>
       
@@ -243,6 +347,111 @@ export function renderFooter(){
     </div>
   </footer>`;
 }
+
+// Quick Cart functionality
+export function initializeQuickCart() {
+  // Make sure floating cart count is updated
+  updateFloatingCartCount();
+  
+  // Add global event listener for cart updates
+  window.addEventListener('cartUpdated', updateFloatingCartCount);
+}
+
+export function updateFloatingCartCount() {
+  const floatingCount = document.getElementById('floatingCartCount');
+  if (floatingCount) {
+    floatingCount.textContent = Cart.count();
+  }
+}
+
+export function toggleQuickCart() {
+  const popup = document.getElementById('quickCartPopup');
+  if (!popup) return;
+  
+  const isVisible = !popup.classList.contains('invisible');
+  
+  if (isVisible) {
+    // Hide
+    popup.classList.add('invisible', 'opacity-0', 'translate-y-4');
+  } else {
+    // Show and update content
+    updateQuickCartContent();
+    popup.classList.remove('invisible', 'opacity-0', 'translate-y-4');
+  }
+}
+
+export function updateQuickCartContent() {
+  const itemsContainer = document.getElementById('quickCartItems');
+  const totalElement = document.getElementById('quickCartTotal');
+  
+  if (!itemsContainer) return;
+  
+  const cartItems = Cart.items();
+  
+  if (cartItems.length === 0) {
+    itemsContainer.innerHTML = `
+      <div class="text-center py-4 text-gray-500">
+        <i class="fas fa-shopping-cart text-2xl mb-2"></i>
+        <p>ตะกร้าว่างเปล่า</p>
+      </div>
+    `;
+    if (totalElement) totalElement.textContent = '฿0';
+    return;
+  }
+  
+  // Load products data
+  let PRODUCTS = [];
+  try {
+    const productsScript = document.querySelector('script[src*="products.js"]');
+    if (productsScript) {
+      // Products should be available globally
+      PRODUCTS = window.PRODUCTS || [];
+    }
+  } catch (e) {
+    console.error('Could not load products:', e);
+  }
+  
+  itemsContainer.innerHTML = cartItems.map(item => {
+    const product = PRODUCTS.find(p => p.id === item.id);
+    if (!product) return '';
+    
+    return `
+      <div class="flex items-center gap-3 py-2 border-b border-gray-100">
+        <img src="${product.image}" alt="${product.name}" class="w-12 h-12 object-cover rounded-lg">
+        <div class="flex-1 min-w-0">
+          <h4 class="font-medium text-sm truncate">${product.name}</h4>
+          <p class="text-xs text-gray-500">฿${product.price.toLocaleString()} × ${item.quantity}</p>
+        </div>
+        <div class="text-right">
+          <p class="font-bold text-primary">฿${(product.price * item.quantity).toLocaleString()}</p>
+          <button onclick="removeFromQuickCart('${item.id}')" class="text-red-500 hover:text-red-700 text-xs">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+  
+  // Update total
+  const total = Cart.total();
+  if (totalElement) totalElement.textContent = `฿${total.toLocaleString()}`;
+}
+
+export function removeFromQuickCart(productId) {
+  Cart.remove(productId);
+  updateQuickCartContent();
+  updateFloatingCartCount();
+  
+  // Trigger cart update event
+  window.dispatchEvent(new CustomEvent('cartUpdated'));
+  
+  toast('ลบสินค้าออกจากตะกร้าแล้ว', 'info');
+}
+
+// Make functions available globally
+window.toggleTheme = toggleTheme;
+window.toggleQuickCart = toggleQuickCart;
+window.removeFromQuickCart = removeFromQuickCart;
 
 export function toast(message, type = 'success') {
   const toast = document.createElement('div');
