@@ -36,7 +36,13 @@
             'slide-in-left': 'slideInLeft 0.8s ease-out',
             'bounce-in': 'bounceIn 0.8s ease-out',
             'sparkle': 'sparkle 2s ease-in-out infinite',
-            'wobble': 'wobble 0.5s ease-in-out'
+            'wobble': 'wobble 0.5s ease-in-out',
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'bounce-slow': 'bounce 2s infinite',
+            'wiggle': 'wiggle 1s ease-in-out infinite',
+            'heartbeat': 'heartbeat 1.5s ease-in-out infinite',
+            'shimmer': 'shimmer 2s linear infinite',
+            'typing': 'typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite'
           },
           keyframes: {
             float: {
@@ -64,6 +70,27 @@
               '0%, 100%': { transform: 'rotate(0deg)' },
               '25%': { transform: 'rotate(-3deg)' },
               '75%': { transform: 'rotate(3deg)' }
+            },
+            wiggle: {
+              '0%, 100%': { transform: 'rotate(-3deg)' },
+              '50%': { transform: 'rotate(3deg)' }
+            },
+            heartbeat: {
+              '0%, 50%, 100%': { transform: 'scale(1)' },
+              '25%': { transform: 'scale(1.1)' },
+              '75%': { transform: 'scale(1.05)' }
+            },
+            shimmer: {
+              '0%': { transform: 'translateX(-100%)' },
+              '100%': { transform: 'translateX(100%)' }
+            },
+            typing: {
+              'from': { width: '0' },
+              'to': { width: '100%' }
+            },
+            'blink-caret': {
+              'from, to': { 'border-color': 'transparent' },
+              '50%': { 'border-color': '#ff8fab' }
             }
           }
         }
@@ -75,6 +102,77 @@
   <script src="./assets/js/responsive-enhancer.js"></script>
   <script src="./assets/js/hero-fix.js"></script>
   <script type="module" src="./assets/js/app.js"></script>
+  <style>
+    /* Dark Theme Styles */
+    .dark-theme {
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    }
+    
+    .dark-theme .bg-white\/30 {
+      background: rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    .dark-theme .text-gray-800 {
+      color: #f3f4f6 !important;
+    }
+    
+    .dark-theme .text-gray-600 {
+      color: #d1d5db !important;
+    }
+    
+    .dark-theme .text-gray-500 {
+      color: #9ca3af !important;
+    }
+    
+    .dark-theme .border-white\/20 {
+      border-color: rgba(255, 255, 255, 0.3) !important;
+    }
+    
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(45deg, #ff8fab, #e1baff);
+      border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(45deg, #ff6b9d, #d8a7ff);
+    }
+    
+    /* Glowing effect for cards */
+    .card-glow:hover {
+      box-shadow: 0 0 20px rgba(255, 139, 171, 0.5);
+    }
+    
+    /* Floating animation for emojis */
+    .float-emoji {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    /* Text gradient animation */
+    .gradient-text {
+      background: linear-gradient(-45deg, #ff8fab, #e1baff, #ff8fab, #e1baff);
+      background-size: 400% 400%;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient-shift 3s ease infinite;
+    }
+    
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
 </head>
 <body>
   <div id="app-header"></div>
@@ -107,6 +205,11 @@
             <p class="text-base sm:text-xl text-purple-700 mb-4 sm:mb-6 leading-relaxed">
               ✨ ร้านไอศกรีมออนไลน์ที่มีไอศกรีมหลากหลายรสชาติ สดใหม่ อร่อย เย็นชื่นใจ ส่งถึงบ้านคุณ! ✨
             </p>
+            
+            <!-- Typing Effect Subtitle -->
+            <div class="text-sm sm:text-lg text-purple-600 mb-4 font-medium">
+              <span id="typingText" class="border-r-2 border-primary animate-pulse"></span>
+            </div>
             
             <!-- Feature Badges -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
@@ -211,14 +314,58 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-6" id="productGrid"></div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-6 transition-all duration-300" id="productGrid"></div>
+    
+    <!-- Pagination Controls -->
+    <div id="pagination" class="flex justify-center items-center mt-8 space-x-2">
+      <!-- Pagination buttons will be inserted here -->
+    </div>
+    
+    <!-- Back to Top Button -->
+    <button class="back-to-top fixed bottom-6 right-6 w-12 h-12 bg-primary text-white rounded-full shadow-lg hover:bg-primary-hover transition-all duration-300 opacity-0 invisible hover:scale-110" onclick="scrollToTop()" title="กลับขึ้นบน">
+      ⬆️
+    </button>
+    
+    <!-- Floating Action Buttons -->
+    <div class="fixed bottom-6 right-6 flex flex-col space-y-3 z-50">
+      <!-- Quick Cart -->
+      <button onclick="toggleQuickCart()" class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 animate-bounce-slow" title="ตะกร้าด่วน">
+        🛒
+        <span id="floatingCartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold">0</span>
+      </button>
+      
+      <!-- Random Product -->
+      <button onclick="showRandomProduct()" class="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 animate-pulse-slow" title="สินค้าแนะนำ">
+        🎲
+      </button>
+      
+      <!-- Theme Toggle -->
+      <button onclick="toggleTheme()" class="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 animate-wiggle" title="เปลี่ยนธีม">
+        🌙
+      </button>
+    </div>
+    
+    <!-- Quick Cart Popup -->
+    <div id="quickCartPopup" class="fixed bottom-24 right-6 w-80 bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl border border-white/30 p-4 transform translate-y-4 opacity-0 invisible transition-all duration-300 z-40">
+      <h3 class="font-bold text-primary mb-3 flex items-center justify-between">
+        🛒 ตะกร้าด่วน
+        <button onclick="toggleQuickCart()" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+      </h3>
+      <div id="quickCartItems" class="space-y-2 max-h-60 overflow-y-auto">
+        <!-- Cart items will be inserted here -->
+      </div>
+      <div class="mt-3 pt-3 border-t border-gray-200">
+        <div class="flex justify-between items-center mb-2">
+          <span class="font-bold">รวม:</span>
+          <span id="quickCartTotal" class="font-bold text-primary">฿0</span>
+        </div>
+        <button onclick="goToCart()" class="w-full bg-primary text-white py-2 rounded-xl hover:bg-primary-hover transition-all">
+          ไปที่ตะกร้า
+        </button>
+      </div>
+    </div>
   </main>
   <div id="app-footer"></div>
-  
-  <!-- Back to Top Button -->
-  <button class="back-to-top" onclick="scrollToTop()" title="กลับขึ้นบน">
-    ⬆️
-  </button>
   
   <!-- Reading Progress Bar -->
   <div id="progress-bar" style="position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, #ff8fab, #e1baff); z-index: 9999; transition: width 0.3s ease;"></div>
@@ -252,7 +399,7 @@
       const isFavorite = user && user.favoriteProducts && user.favoriteProducts.includes(p.id);
       
       const el = document.createElement('div'); 
-      el.className='product-card bg-white border-2 border-pastel-blue rounded-xl sm:rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:border-primary shadow-lg relative';
+      el.className='product-card bg-white/90 backdrop-blur-lg border-2 border-pastel-blue rounded-xl sm:rounded-2xl overflow-hidden flex flex-col transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 hover:border-primary shadow-xl relative card-glow animate-slide-in-up hover:scale-105';
       el.style.animationDelay = Math.random() * 0.5 + 's';
       
       // Get rating data
@@ -316,8 +463,16 @@
     let currentSearchTerm = '';
     let currentCategory = '';
     let currentPriceRange = '';
+    
+    // Pagination state
+    let currentPage = 1;
+    const productsPerPage = 10;
+    let totalPages = 1;
 
     function filterProducts() {
+      // Reset to first page when filtering
+      currentPage = 1;
+      
       const searchTerm = document.getElementById('searchInput')?.value.toLowerCase().trim() || '';
       const category = document.getElementById('categoryFilter')?.value || '';
       const priceRange = document.getElementById('priceFilter')?.value || '';
@@ -352,16 +507,22 @@
       renderProducts();
       
       // Show results count
-      const resultText = filteredProducts.length === PRODUCTS.length 
-        ? `แสดงสินค้าทั้งหมด ${filteredProducts.length} รายการ`
-        : `พบ ${filteredProducts.length} รายการจาก ${PRODUCTS.length} รายการ`;
+      const startItem = (currentPage - 1) * productsPerPage + 1;
+      const endItem = Math.min(currentPage * productsPerPage, list.length);
+      
+      let resultText;
+      if (list.length === PRODUCTS.length) {
+        resultText = `แสดงสินค้า ${startItem}-${endItem} จากทั้งหมด ${list.length} รายการ`;
+      } else {
+        resultText = `แสดงสินค้า ${startItem}-${endItem} จาก ${list.length} รายการที่พบ (ทั้งหมด ${PRODUCTS.length} รายการ)`;
+      }
       
       // Update results count display
       let countDisplay = document.getElementById('resultsCount');
       if (!countDisplay) {
         countDisplay = document.createElement('div');
         countDisplay.id = 'resultsCount';
-        countDisplay.className = 'text-center text-gray-600 mb-4 text-sm font-medium';
+        countDisplay.className = 'text-center text-gray-600 mb-6 text-sm font-medium bg-white/50 backdrop-blur-sm rounded-full px-6 py-3 border border-white/30 shadow-lg';
         document.getElementById('productGrid').parentNode.insertBefore(countDisplay, document.getElementById('productGrid'));
       }
       countDisplay.textContent = resultText;
@@ -370,6 +531,13 @@
     // Render products immediately with fallback data, then update when JSON loads
     function renderProducts() {
       const grid = document.getElementById('productGrid');
+      
+      // Show skeleton loading first
+      if (PRODUCTS.length === 0) {
+        renderSkeletonLoading();
+        return;
+      }
+      
       grid.innerHTML = ''; // Clear existing products
       
       // Use filtered products if filters are active
@@ -396,14 +564,474 @@
             </button>
           </div>
         `;
+        document.getElementById('pagination').innerHTML = '';
         return;
       }
       
-      list.forEach(p=>grid.appendChild(card(p)));
+      // Calculate pagination
+      totalPages = Math.ceil(list.length / productsPerPage);
+      
+      // Ensure current page is within bounds
+      if (currentPage > totalPages) currentPage = totalPages;
+      if (currentPage < 1) currentPage = 1;
+      
+      // Get products for current page
+      const startIndex = (currentPage - 1) * productsPerPage;
+      const endIndex = startIndex + productsPerPage;
+      const productsForCurrentPage = list.slice(startIndex, endIndex);
+      
+      // Render products for current page
+      productsForCurrentPage.forEach(p => grid.appendChild(card(p)));
+      
+      // Render pagination controls
+      renderPagination(list.length);
       
       // Setup Featured Products Carousel
       setupFeaturedCarousel();
     }
+
+    // Skeleton loading for products
+    function renderSkeletonLoading() {
+      const grid = document.getElementById('productGrid');
+      const skeletonCards = Array.from({length: 10}, (_, i) => `
+        <div class="bg-white/30 backdrop-blur-lg rounded-2xl p-4 shadow-xl border border-white/20 animate-pulse">
+          <div class="relative mb-4">
+            <div class="w-full h-48 bg-gradient-to-r from-gray-300 to-gray-400 rounded-xl animate-shimmer relative overflow-hidden">
+              <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer"></div>
+            </div>
+          </div>
+          <div class="space-y-3">
+            <div class="h-6 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full animate-pulse"></div>
+            <div class="h-4 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full w-3/4 animate-pulse"></div>
+            <div class="flex justify-between items-center">
+              <div class="h-8 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full w-20 animate-pulse"></div>
+              <div class="h-6 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full w-16 animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      
+      grid.innerHTML = skeletonCards;
+    }
+
+    // Render pagination controls
+    function renderPagination(totalProducts) {
+      const paginationContainer = document.getElementById('pagination');
+      
+      if (totalPages <= 1) {
+        paginationContainer.innerHTML = '';
+        return;
+      }
+      
+      let paginationHTML = '';
+      
+      // Previous button
+      paginationHTML += `
+        <button onclick="goToPage(${currentPage - 1})" 
+                ${currentPage === 1 ? 'disabled' : ''}
+                class="px-3 py-2 mx-1 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300">
+          ‹ ก่อนหน้า
+        </button>
+      `;
+      
+      // Page numbers
+      const maxVisiblePages = 5;
+      let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+      let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+      
+      // Adjust start page if we're near the end
+      if (endPage - startPage + 1 < maxVisiblePages) {
+        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+      }
+      
+      // First page and ellipsis if needed
+      if (startPage > 1) {
+        paginationHTML += `
+          <button onclick="goToPage(1)" 
+                  class="px-3 py-2 mx-1 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 transition-all duration-300">
+            1
+          </button>
+        `;
+        if (startPage > 2) {
+          paginationHTML += '<span class="px-2 py-2 text-gray-500">...</span>';
+        }
+      }
+      
+      // Page numbers
+      for (let i = startPage; i <= endPage; i++) {
+        const isActive = i === currentPage;
+        paginationHTML += `
+          <button onclick="goToPage(${i})" 
+                  class="px-3 py-2 mx-1 text-sm font-medium ${
+                    isActive 
+                      ? 'text-white bg-primary border border-primary' 
+                      : 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700'
+                  } rounded-lg transition-all duration-300">
+            ${i}
+          </button>
+        `;
+      }
+      
+      // Last page and ellipsis if needed
+      if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+          paginationHTML += '<span class="px-2 py-2 text-gray-500">...</span>';
+        }
+        paginationHTML += `
+          <button onclick="goToPage(${totalPages})" 
+                  class="px-3 py-2 mx-1 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 transition-all duration-300">
+            ${totalPages}
+          </button>
+        `;
+      }
+      
+      // Next button
+      paginationHTML += `
+        <button onclick="goToPage(${currentPage + 1})" 
+                ${currentPage === totalPages ? 'disabled' : ''}
+                class="px-3 py-2 mx-1 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300">
+          ถัดไป ›
+        </button>
+      `;
+      
+      paginationContainer.innerHTML = `
+        <div class="flex flex-col items-center justify-center gap-4">
+          <div class="flex flex-wrap items-center justify-center gap-1">
+            ${paginationHTML}
+          </div>
+          <div class="text-xs text-gray-500 text-center">
+            💡 ใช้ลูกศร ← → หรือ ↑ ↓ เพื่อเปลี่ยนหน้า
+          </div>
+        </div>
+      `;
+    }
+
+    // Go to specific page
+    window.goToPage = function(page) {
+      if (page < 1 || page > totalPages || page === currentPage) return;
+      
+      // Play sound effect
+      playSound('page-turn');
+      
+      // Add loading effect
+      const grid = document.getElementById('productGrid');
+      grid.style.opacity = '0.5';
+      grid.style.transform = 'scale(0.95)';
+      
+      currentPage = page;
+      
+      setTimeout(() => {
+        renderProducts();
+        
+        // Remove loading effect
+        grid.style.opacity = '1';
+        grid.style.transform = 'scale(1)';
+        
+        // Scroll to top of products section
+        document.getElementById('productGrid').scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start' 
+        });
+      }, 150);
+    };
+
+    // Scroll to top function
+    window.scrollToTop = function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    };
+
+    // Show/hide back to top button based on scroll position
+    window.addEventListener('scroll', function() {
+      const backToTopBtn = document.querySelector('.back-to-top');
+      if (window.pageYOffset > 300) {
+        backToTopBtn.classList.remove('opacity-0', 'invisible');
+        backToTopBtn.classList.add('opacity-100', 'visible');
+      } else {
+        backToTopBtn.classList.remove('opacity-100', 'visible');
+        backToTopBtn.classList.add('opacity-0', 'invisible');
+      }
+      
+      // Update progress bar
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progress-bar').style.width = scrolled + '%';
+    });
+
+    // Quick Cart Functions
+    window.toggleQuickCart = function() {
+      const popup = document.getElementById('quickCartPopup');
+      const isVisible = !popup.classList.contains('invisible');
+      
+      if (isVisible) {
+        popup.classList.add('translate-y-4', 'opacity-0', 'invisible');
+      } else {
+        updateQuickCart();
+        popup.classList.remove('translate-y-4', 'opacity-0', 'invisible');
+      }
+    };
+
+    function updateQuickCart() {
+      import('./assets/js/cart.js').then(({ Cart }) => {
+        const items = Cart.items();
+        const popup = document.getElementById('quickCartItems');
+        const total = document.getElementById('quickCartTotal');
+        const floatingCount = document.getElementById('floatingCartCount');
+        
+        floatingCount.textContent = Cart.count();
+        
+        if (items.length === 0) {
+          popup.innerHTML = '<div class="text-center text-gray-500 py-4">ตะกร้าว่าง</div>';
+          total.textContent = '฿0';
+          return;
+        }
+        
+        popup.innerHTML = items.map(item => {
+          const product = PRODUCTS.find(p => p.id === item.productId);
+          return `
+            <div class="flex items-center gap-2 p-2 bg-white/50 rounded-lg">
+              <img src="${product?.image || ''}" alt="${product?.name || ''}" class="w-10 h-10 object-cover rounded-full">
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium truncate">${product?.name || 'สินค้า'}</p>
+                <p class="text-xs text-gray-600">${item.quantity} × ฿${product?.price || 0}</p>
+              </div>
+              <span class="text-sm font-bold text-primary">฿${(item.quantity * (product?.price || 0)).toLocaleString()}</span>
+            </div>
+          `;
+        }).join('');
+        
+        total.textContent = `฿${Cart.total().toLocaleString()}`;
+      });
+    }
+
+    window.goToCart = function() {
+      window.location.href = './cart.html';
+    };
+
+    // Random Product Function
+    window.showRandomProduct = function() {
+      if (PRODUCTS.length === 0) return;
+      
+      const randomProduct = PRODUCTS[Math.floor(Math.random() * PRODUCTS.length)];
+      const modal = document.createElement('div');
+      modal.className = 'fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 animate-bounce-in';
+      
+      modal.innerHTML = `
+        <div class="bg-white/90 backdrop-blur-lg rounded-2xl p-6 max-w-md mx-auto shadow-2xl border border-white/30 animate-slide-in-up">
+          <div class="text-center">
+            <h3 class="text-xl font-bold text-primary mb-4 animate-typing overflow-hidden whitespace-nowrap border-r-4 border-primary">🎲 สินค้าแนะนำ!</h3>
+            <img src="${randomProduct.image}" alt="${randomProduct.name}" class="w-32 h-32 mx-auto object-cover rounded-full border-4 border-primary mb-4 animate-heartbeat">
+            <h4 class="text-lg font-bold text-gray-800 mb-2">${randomProduct.name}</h4>
+            <p class="text-gray-600 text-sm mb-4">${randomProduct.description.substring(0, 100)}...</p>
+            <div class="text-2xl font-bold text-primary mb-4">฿${randomProduct.price.toLocaleString()}</div>
+            <div class="flex gap-2">
+              <button onclick="this.closest('.fixed').remove()" class="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-xl hover:bg-gray-400 transition-all">
+                ปิด
+              </button>
+              <button onclick="window.location.href='./product.html?id=${randomProduct.id}'" class="flex-1 bg-primary text-white py-2 px-4 rounded-xl hover:bg-primary-hover transition-all">
+                ดูสินค้า
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(modal);
+      
+      // Auto remove after 10 seconds
+      setTimeout(() => {
+        if (modal.parentNode) modal.remove();
+      }, 10000);
+      
+      // Click outside to close
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.remove();
+      });
+    };
+
+    // Theme Toggle Function
+    let isDarkTheme = false;
+    window.toggleTheme = function() {
+      const body = document.body;
+      const themeBtn = document.querySelector('button[onclick="toggleTheme()"]');
+      
+      if (!isDarkTheme) {
+        // Switch to dark theme
+        body.classList.add('dark-theme');
+        themeBtn.innerHTML = '☀️';
+        toast('🌙 เปลี่ยนเป็นธีมกลางคืนแล้ว!', 'info');
+        isDarkTheme = true;
+      } else {
+        // Switch to light theme
+        body.classList.remove('dark-theme');
+        themeBtn.innerHTML = '🌙';
+        toast('☀️ เปลี่ยนเป็นธีมกลางวันแล้ว!', 'info');
+        isDarkTheme = false;
+      }
+    };
+
+    // Parallax Effect
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const parallaxElements = document.querySelectorAll('.parallax');
+      parallaxElements.forEach(el => {
+        const speed = el.dataset.speed || 0.5;
+        el.style.transform = `translateY(${scrolled * speed}px)`;
+      });
+    });
+
+    // Interactive Background Particles
+    function createFloatingEmojis() {
+      const emojis = ['🍦', '🍨', '🧁', '🍰', '🎂', '🍭', '🍬', '🌟', '✨', '💫'];
+      
+      for (let i = 0; i < 15; i++) {
+        const emoji = document.createElement('div');
+        emoji.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+        emoji.className = 'fixed text-2xl opacity-20 pointer-events-none float-emoji';
+        emoji.style.left = Math.random() * 100 + '%';
+        emoji.style.top = Math.random() * 100 + '%';
+        emoji.style.animationDelay = Math.random() * 3 + 's';
+        emoji.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        emoji.style.zIndex = '-1';
+        document.body.appendChild(emoji);
+        
+        // Remove and recreate after animation
+        setTimeout(() => {
+          if (emoji.parentNode) emoji.remove();
+        }, 10000);
+      }
+    }
+
+    // Create floating emojis on load and periodically
+    createFloatingEmojis();
+    setInterval(createFloatingEmojis, 8000);
+
+    // Update cart count on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      updateQuickCart();
+      startTypingEffect();
+    });
+
+    // Typing Effect for Hero Section
+    function startTypingEffect() {
+      const texts = [
+        'ไอศกรีมพรีเมียม คุณภาพสูง 🍦',
+        'ส่งฟรีถึงบ้านคุณ 🚚',
+        'รสชาติหลากหลาย อร่อยทุกคำ 😋',
+        'ทำจากวัตถุดิบธรรมชาติ 🌿',
+        'สดใหม่ ปลอดภัย มีมาตรฐาน ✨'
+      ];
+      
+      let textIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+      
+      function typeText() {
+        const typingElement = document.getElementById('typingText');
+        if (!typingElement) return;
+        
+        const currentText = texts[textIndex];
+        
+        if (isDeleting) {
+          typingElement.textContent = currentText.substring(0, charIndex - 1);
+          charIndex--;
+        } else {
+          typingElement.textContent = currentText.substring(0, charIndex + 1);
+          charIndex++;
+        }
+        
+        let typeSpeed = isDeleting ? 50 : 100;
+        
+        if (!isDeleting && charIndex === currentText.length) {
+          typeSpeed = 2000; // Pause at end
+          isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+          isDeleting = false;
+          textIndex = (textIndex + 1) % texts.length;
+          typeSpeed = 500;
+        }
+        
+        setTimeout(typeText, typeSpeed);
+      }
+      
+      // Start typing effect after a short delay
+      setTimeout(typeText, 1000);
+    }
+
+    // Sound Effects
+    const soundEnabled = true; // You can make this a toggle
+
+    function playSound(type) {
+      if (!soundEnabled) return;
+      
+      // Create audio context for web audio
+      try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
+        switch (type) {
+          case 'add-to-cart':
+            createTone(audioContext, 800, 0.1, 'sine');
+            setTimeout(() => createTone(audioContext, 1000, 0.1, 'sine'), 100);
+            break;
+          case 'favorite':
+            createTone(audioContext, 600, 0.15, 'sine');
+            setTimeout(() => createTone(audioContext, 900, 0.15, 'sine'), 80);
+            setTimeout(() => createTone(audioContext, 1200, 0.15, 'sine'), 160);
+            break;
+          case 'page-turn':
+            createTone(audioContext, 400, 0.1, 'square');
+            break;
+        }
+      } catch (e) {
+        console.log('Audio not supported');
+      }
+    }
+
+    function createTone(audioContext, frequency, duration, type = 'sine') {
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.frequency.value = frequency;
+      oscillator.type = type;
+      
+      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
+      
+      oscillator.start();
+      oscillator.stop(audioContext.currentTime + duration);
+    }
+
+    // Keyboard navigation for pagination
+    window.addEventListener('keydown', function(e) {
+      // Only handle keyboard navigation if not typing in input fields
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
+        return;
+      }
+      
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (currentPage > 1) {
+          goToPage(currentPage - 1);
+        }
+      } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (currentPage < totalPages) {
+          goToPage(currentPage + 1);
+        }
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        goToPage(1);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        goToPage(totalPages);
+      }
+    });
     
     // Setup Featured Products Carousel
     let currentFeaturedIndex = 0;
@@ -585,6 +1213,9 @@
 
     // Global functions for buttons
     window.clearFilters = function() {
+      // Reset to first page
+      currentPage = 1;
+      
       document.getElementById('searchInput').value = '';
       document.getElementById('categoryFilter').value = '';
       document.getElementById('priceFilter').value = '';
@@ -600,8 +1231,20 @@
     };
     
     window.quickAdd = function(productId) {
+      // Play sound effect
+      playSound('add-to-cart');
+      
       Cart.add(productId, 1);
       document.getElementById('cartCount').textContent = Cart.count();
+      updateQuickCart();
+      
+      // Add visual feedback
+      const button = event?.target;
+      if (button) {
+        button.classList.add('animate-bounce');
+        setTimeout(() => button.classList.remove('animate-bounce'), 600);
+      }
+      
       toast('✨ เพิ่มสินค้าลงตะกร้าแล้ว!');
     };
 
@@ -618,6 +1261,9 @@
         }, 1500);
         return;
       }
+
+      // Play sound effect
+      playSound('favorite');
 
       // Initialize favorites array if it doesn't exist
       if (!user.favoriteProducts) {
@@ -652,9 +1298,13 @@
         return;
       }
 
-      // Update the button UI
+      // Update the button UI with animation
       const button = event.target.closest('button');
       if (button) {
+        // Add heartbeat animation
+        button.classList.add('animate-heartbeat');
+        setTimeout(() => button.classList.remove('animate-heartbeat'), 1500);
+        
         if (isFavorite) {
           button.className = 'absolute top-2 right-2 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm text-gray-400 hover:text-red-500 flex items-center justify-center transition-all duration-300 hover:scale-110 z-10 shadow-md';
           button.innerHTML = '🤍';
