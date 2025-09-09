@@ -159,10 +159,21 @@
               <div class="text-5xl font-black text-center text-primary mb-8 drop-shadow-lg">
                 ฿${p.price.toLocaleString()}
               </div>
-              <div class="flex gap-3 items-center bg-pastel-yellow p-4 rounded-2xl">
-                <label class="font-bold text-purple-700">จำนวน:</label>
-                <input id="qty" type="number" min="1" max="${p.stock}" value="1" class="w-20 text-center font-bold py-2 px-3 border-2 border-pastel-blue rounded-xl"/>
-                <button id="addBtn" class="flex-1 bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1">🛒 เพิ่มในตะกร้า</button>
+              
+              <!-- Action Buttons -->
+              <div class="space-y-4">
+                <!-- Add to Cart Section -->
+                <div class="flex gap-3 items-center bg-pastel-yellow p-4 rounded-2xl">
+                  <label class="font-bold text-purple-700">จำนวน:</label>
+                  <input id="qty" type="number" min="1" max="${p.stock}" value="1" class="w-20 text-center font-bold py-2 px-3 border-2 border-pastel-blue rounded-xl"/>
+                  <button id="addBtn" class="flex-1 bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1">🛒 เพิ่มในตะกร้า</button>
+                </div>
+                
+                <!-- Favorite Button -->
+                <button id="favoriteBtn" class="w-full bg-gradient-to-r from-red-400 to-pink-500 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex items-center justify-center space-x-2">
+                  <span id="favoriteIcon">❤️</span>
+                  <span id="favoriteText">เพิ่มในรายการโปรด</span>
+                </button>
               </div>
             </div>
           </div>
@@ -293,6 +304,80 @@
             document.getElementById('cartCount').textContent = Cart.count();
             toast(`เพิ่ม ${p.name} ลงตะกร้าแล้ว! 🍦`);
           });
+        }
+
+        // Favorite button handler
+        const favoriteBtn = document.getElementById('favoriteBtn');
+        const favoriteIcon = document.getElementById('favoriteIcon');
+        const favoriteText = document.getElementById('favoriteText');
+        
+        if (favoriteBtn && favoriteIcon && favoriteText) {
+          // Initialize favorite button state
+          const user = currentUser();
+          updateFavoriteButton(user, p.id);
+          
+          favoriteBtn.addEventListener('click', () => {
+            const user = currentUser();
+            if (!user) {
+              toast('กรุณาเข้าสู่ระบบก่อนใช้งานรายการโปรด', 'error');
+              setTimeout(() => {
+                window.location.href = './login.html';
+              }, 1500);
+              return;
+            }
+
+            // Initialize favorites array if it doesn't exist
+            if (!user.favoriteProducts) {
+              user.favoriteProducts = [];
+            }
+
+            const isFavorite = user.favoriteProducts.includes(p.id);
+            
+            if (isFavorite) {
+              // Remove from favorites
+              user.favoriteProducts = user.favoriteProducts.filter(id => id !== p.id);
+              toast(`💔 ลบ "${p.name}" ออกจากรายการโปรดแล้ว`, 'info');
+            } else {
+              // Add to favorites
+              user.favoriteProducts.push(p.id);
+              toast(`❤️ เพิ่ม "${p.name}" ลงรายการโปรดแล้ว!`, 'success');
+            }
+
+            // Save to localStorage
+            try {
+              const users = JSON.parse(localStorage.getItem('app.users') || '[]');
+              const userIndex = users.findIndex(u => u.email === user.email);
+              if (userIndex !== -1) {
+                users[userIndex] = user;
+                localStorage.setItem('app.users', JSON.stringify(users));
+                localStorage.setItem('app.auth.current.v1', JSON.stringify(user));
+              }
+            } catch (error) {
+              console.error('Error saving favorites:', error);
+              toast('เกิดข้อผิดพลาดในการบันทึก', 'error');
+              return;
+            }
+
+            // Update button appearance
+            updateFavoriteButton(user, p.id);
+          });
+        }
+
+        // Function to update favorite button appearance
+        function updateFavoriteButton(user, productId) {
+          if (!user || !favoriteBtn || !favoriteIcon || !favoriteText) return;
+          
+          const isFavorite = user.favoriteProducts && user.favoriteProducts.includes(productId);
+          
+          if (isFavorite) {
+            favoriteBtn.className = 'w-full bg-gradient-to-r from-gray-400 to-gray-500 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex items-center justify-center space-x-2';
+            favoriteIcon.textContent = '💔';
+            favoriteText.textContent = 'ลบจากรายการโปรด';
+          } else {
+            favoriteBtn.className = 'w-full bg-gradient-to-r from-red-400 to-pink-500 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex items-center justify-center space-x-2';
+            favoriteIcon.textContent = '❤️';
+            favoriteText.textContent = 'เพิ่มในรายการโปรด';
+          }
         }
 
         // Review form handler

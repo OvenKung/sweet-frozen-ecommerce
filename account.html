@@ -382,32 +382,65 @@
         const favoriteProducts = PRODUCTS.filter(p => favoriteIds.includes(p.id));
         
         document.getElementById('favorites').innerHTML = `
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="space-y-4">
             ${favoriteProducts.length === 0 ? 
-              '<div class="col-span-full text-center py-8 text-purple-600">❤️ ยังไม่มีไอศกรีมโปรด</div>' :
-              favoriteProducts.map(product => `
-                <div class="bg-white border-2 border-pastel-pink rounded-2xl p-4 shadow-md hover:shadow-lg transition-all duration-300">
-                  <div class="flex items-center gap-4">
-                    <img src="${product.image}" alt="${product.name}" class="w-16 h-16 object-cover rounded-full border-2 border-primary">
-                    <div class="flex-1">
-                      <h4 class="font-bold text-primary">${product.name}</h4>
-                      <p class="text-sm text-purple-600 mb-2">${product.category}</p>
-                      <p class="text-lg font-black text-primary">฿${product.price.toLocaleString()}</p>
+              '<div class="col-span-full text-center py-12 bg-white/50 rounded-2xl border-2 border-dashed border-pastel-pink"><div class="text-6xl mb-4">💔</div><h3 class="text-xl font-bold text-gray-700 mb-2">ยังไม่มีไอศกรีมโปรด</h3><p class="text-gray-500 mb-4">เริ่มเพิ่มไอศกรีมที่คุณชื่นชอบกันเถอะ!</p><a href="./index.html" class="inline-block bg-primary text-white px-6 py-2 rounded-full hover:bg-opacity-90 transition-all">🍦 ไปเลือกไอศกรีม</a></div>' :
+              `<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                ${favoriteProducts.map(product => `
+                  <div class="bg-white/80 backdrop-blur-sm border-2 border-pastel-pink rounded-2xl p-4 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                    <div class="flex items-center gap-4">
+                      <div class="relative">
+                        <img src="${product.image}" alt="${product.name}" class="w-16 h-16 object-cover rounded-full border-2 border-primary">
+                        <div class="absolute -top-1 -right-1 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs">
+                          ❤️
+                        </div>
+                      </div>
+                      <div class="flex-1">
+                        <h4 class="font-bold text-primary hover:text-primary-hover transition-colors">
+                          <a href="./product.html?id=${product.id}">${product.name}</a>
+                        </h4>
+                        <p class="text-sm text-purple-600 mb-1">🏷️ ${product.category}</p>
+                        <div class="flex items-center gap-2 mb-2">
+                          <span class="text-lg font-black text-primary">฿${product.price.toLocaleString()}</span>
+                          ${product.originalPrice && product.originalPrice > product.price ? 
+                            `<span class="text-sm text-gray-500 line-through">฿${product.originalPrice.toLocaleString()}</span>` : ''}
+                        </div>
+                        <p class="text-xs text-gray-600 leading-tight">${product.description.substring(0, 80)}...</p>
+                      </div>
                     </div>
-                    <div class="flex flex-col gap-2">
-                      <button class="bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-2 px-4 rounded-xl text-sm transition-all duration-300 hover:shadow-md">
-                        🛒 สั่งซื้อ
+                    <div class="mt-4 flex gap-2">
+                      <button onclick="addToCartFromFavorites('${product.id}')" class="flex-1 bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-2 px-4 rounded-xl text-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1">
+                        🛒 เพิ่มลงตะกร้า
                       </button>
-                      <button class="bg-white border-2 border-red-300 text-red-600 font-bold py-2 px-4 rounded-xl text-sm transition-all duration-300 hover:shadow-md">
-                        💔 ลบ
+                      <button onclick="removeFromFavorites('${product.id}')" class="bg-white border-2 border-red-300 text-red-600 font-bold py-2 px-4 rounded-xl text-sm transition-all duration-300 hover:shadow-md hover:bg-red-50">
+                        💔 ลบออก
                       </button>
+                    </div>
+                    <div class="mt-2 text-center">
+                      <a href="./product.html?id=${product.id}" class="text-xs text-purple-600 hover:text-primary transition-colors">
+                        👁️ ดูรายละเอียดเพิ่มเติม
+                      </a>
                     </div>
                   </div>
-                </div>
-              `).join('')
+                `).join('')}
+              </div>`
             }
+            
+            <!-- Quick Add Favorites Section -->
+            <div class="mt-8 p-6 bg-gradient-to-r from-pastel-yellow/50 to-pastel-peach/50 rounded-2xl border-2 border-yellow-200">
+              <h4 class="text-lg font-bold text-purple-700 mb-4 flex items-center gap-2">
+                <span>⭐</span>
+                <span>ไอศกรีมแนะนำให้เพิ่มโปรด</span>
+              </h4>
+              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3" id="suggestedFavorites">
+                <!-- Suggested products will be inserted here -->
+              </div>
+            </div>
           </div>
         `;
+        
+        // Render suggested favorites
+        renderSuggestedFavorites();
       }
 
       // Tab functionality
@@ -444,6 +477,31 @@
           });
         });
       }
+
+      // Suggested favorites for users
+      function renderSuggestedFavorites() {
+        const favoriteIds = u.favoriteProducts || [];
+        const suggestedProducts = PRODUCTS
+          .filter(p => !favoriteIds.includes(p.id))
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 6);
+          
+        const container = document.getElementById('suggestedFavorites');
+        if (!container || suggestedProducts.length === 0) return;
+        
+        container.innerHTML = suggestedProducts.map(product => `
+          <div class="bg-white/80 backdrop-blur-sm rounded-xl p-3 border border-pastel-pink/50 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+            <div class="text-center">
+              <img src="${product.image}" alt="${product.name}" class="w-12 h-12 mx-auto object-cover rounded-full border-2 border-primary mb-2">
+              <h5 class="text-sm font-bold text-primary leading-tight">${product.name}</h5>
+              <p class="text-xs text-purple-600 mb-2">฿${product.price.toLocaleString()}</p>
+              <button onclick="addToFavorites('${product.id}')" class="w-full bg-gradient-to-r from-pastel-pink to-primary text-white text-xs font-bold py-1 px-2 rounded-full hover:shadow-md transition-all duration-300">
+                ❤️ เพิ่มโปรด
+              </button>
+            </div>
+          </div>
+        `).join('');
+      }
     }
 
     // Start the application
@@ -451,6 +509,111 @@
       console.error('❌ Page initialization failed:', error);
       window.location.href = './login.html';
     });
+
+    // Favorites Management Functions
+    window.addToFavorites = function(productId) {
+      const product = PRODUCTS.find(p => p.id === productId);
+      if (!product) return;
+      
+      // Get current user
+      let currentU = currentUser();
+      if (!currentU) {
+        toast('กรุณาเข้าสู่ระบบก่อน', 'error');
+        return;
+      }
+      
+      // Initialize favorites array if it doesn't exist
+      if (!currentU.favoriteProducts) {
+        currentU.favoriteProducts = [];
+      }
+      
+      // Check if already in favorites
+      if (currentU.favoriteProducts.includes(productId)) {
+        toast('สินค้านี้อยู่ในรายการโปรดแล้ว', 'info');
+        return;
+      }
+      
+      // Add to favorites
+      currentU.favoriteProducts.push(productId);
+      
+      // Save to localStorage
+      try {
+        const users = JSON.parse(localStorage.getItem('app.users') || '[]');
+        const userIndex = users.findIndex(user => user.email === currentU.email);
+        if (userIndex !== -1) {
+          users[userIndex] = currentU;
+          localStorage.setItem('app.users', JSON.stringify(users));
+          localStorage.setItem('app.auth.current.v1', JSON.stringify(currentU));
+          
+          // Update global variable
+          u = currentU;
+          
+          toast(`❤️ เพิ่ม "${product.name}" ลงรายการโปรดแล้ว!`, 'success');
+          
+          // Re-render favorites if on favorites tab
+          const favTab = document.querySelector('[data-tab="favorites"]');
+          if (favTab && favTab.classList.contains('active')) {
+            renderFavorites();
+          }
+        }
+      } catch (error) {
+        console.error('Error saving favorites:', error);
+        toast('เกิดข้อผิดพลาดในการบันทึก', 'error');
+      }
+    };
+
+    window.removeFromFavorites = function(productId) {
+      const product = PRODUCTS.find(p => p.id === productId);
+      if (!product) return;
+      
+      if (!confirm(`คุณต้องการลบ "${product.name}" ออกจากรายการโปรดหรือไม่?`)) return;
+      
+      // Get current user
+      let currentU = currentUser();
+      if (!currentU || !currentU.favoriteProducts) return;
+      
+      // Remove from favorites
+      currentU.favoriteProducts = currentU.favoriteProducts.filter(id => id !== productId);
+      
+      // Save to localStorage
+      try {
+        const users = JSON.parse(localStorage.getItem('app.users') || '[]');
+        const userIndex = users.findIndex(user => user.email === currentU.email);
+        if (userIndex !== -1) {
+          users[userIndex] = currentU;
+          localStorage.setItem('app.users', JSON.stringify(users));
+          localStorage.setItem('app.auth.current.v1', JSON.stringify(currentU));
+          
+          // Update global variable
+          u = currentU;
+          
+          toast(`💔 ลบ "${product.name}" ออกจากรายการโปรดแล้ว`, 'success');
+          
+          // Re-render favorites
+          renderFavorites();
+        }
+      } catch (error) {
+        console.error('Error removing favorites:', error);
+        toast('เกิดข้อผิดพลาดในการบันทึก', 'error');
+      }
+    };
+
+    window.addToCartFromFavorites = function(productId) {
+      const product = PRODUCTS.find(p => p.id === productId);
+      if (!product) return;
+      
+      // Import cart functionality
+      import('./assets/js/cart.js').then(({ Cart }) => {
+        Cart.add(productId, 1);
+        toast(`🛒 เพิ่ม "${product.name}" ลงตะกร้าแล้ว!`, 'success');
+        
+        // Update cart count in header
+        updateHeader();
+      }).catch(error => {
+        console.error('Error loading cart:', error);
+        toast('เกิดข้อผิดพลาดในการเพิ่มสินค้า', 'error');
+      });
+    };
 
     // Address Modal Functions
     window.addNewAddress = function() {

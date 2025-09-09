@@ -82,47 +82,90 @@
     <!-- Hero Section -->
     <section class="mb-6 sm:mb-10">
       <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4 sm:gap-6">
-        <!-- Main Welcome Section -->
-        <div class="md:col-span-1 xl:col-span-3 bg-gradient-to-br from-white to-purple-50 border-2 border-pastel-peach rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-xl">
-          <h1 class="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-4 sm:mb-6 animate-bounce leading-tight">
-            🍦 ยินดีต้อนรับสู่<br class="hidden sm:block">Sweet Frozen
-          </h1>
-          <p class="text-base sm:text-xl text-purple-700 mb-4 sm:mb-6 leading-relaxed">
-            ✨ ร้านไอศกรีมออนไลน์ที่มีไอศกรีมหลากหลายรสชาติ สดใหม่ อร่อย เย็นชื่นใจ ส่งถึงบ้านคุณ! ✨
-          </p>
-          
-          <!-- Feature Badges -->
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
-            <div class="bg-pastel-pink px-4 py-3 rounded-2xl text-center border-2 border-pink-200 shadow-md">
-              <div class="text-2xl mb-1">🚚</div>
-              <div class="text-sm font-bold">ฟรีค่าส่ง</div>
-              <div class="text-xs text-purple-600">เมื่อซื้อครบ ฿1,500</div>
-            </div>
-            <div class="bg-pastel-blue px-4 py-3 rounded-2xl text-center border-2 border-blue-200 shadow-md">
-              <div class="text-2xl mb-1">💳</div>
-              <div class="text-sm font-bold">รับบัตรเครดิต</div>
-              <div class="text-xs text-purple-600">ชำระง่าย ปลอดภัย</div>
-            </div>
-            <div class="bg-pastel-green px-4 py-3 rounded-2xl text-center border-2 border-green-200 shadow-md">
-              <div class="text-2xl mb-1">❄️</div>
-              <div class="text-sm font-bold">เก็บความเย็น</div>
-              <div class="text-xs text-purple-600">4-6 ชั่วโมง</div>
+        <!-- Main Welcome Section with Image Slider -->
+        <div class="md:col-span-1 xl:col-span-3 bg-gradient-to-br from-white to-purple-50 border-2 border-pastel-peach rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-xl relative overflow-hidden">
+          <!-- Image Slider Background -->
+          <div class="absolute inset-0 opacity-10 overflow-hidden">
+            <div id="heroSlider" class="relative w-full h-full">
+              <div class="hero-slide absolute inset-0 transition-opacity duration-1000 opacity-100">
+                <img src="https://images.unsplash.com/photo-1567206563064-6f60f40a2b57?w=800&h=600&fit=crop" alt="Ice cream background" class="w-full h-full object-cover"/>
+              </div>
+              <div class="hero-slide absolute inset-0 transition-opacity duration-1000 opacity-0">
+                <img src="https://images.unsplash.com/photo-1576506295286-5cda18df43e7?w=800&h=600&fit=crop" alt="Ice cream shop" class="w-full h-full object-cover"/>
+              </div>
+              <div class="hero-slide absolute inset-0 transition-opacity duration-1000 opacity-0">
+                <img src="https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=800&h=600&fit=crop" alt="Ice cream variety" class="w-full h-full object-cover"/>
+              </div>
             </div>
           </div>
-          
-          <p class="text-center text-purple-600 text-sm">
-            🎮 กด <kbd class="bg-pastel-yellow border-2 border-pastel-peach rounded px-2 py-1 font-bold">Alt</kbd>+<kbd class="bg-pastel-yellow border-2 border-pastel-peach rounded px-2 py-1 font-bold">Shift</kbd>+<kbd class="bg-pastel-yellow border-2 border-pastel-peach rounded px-2 py-1 font-bold">R</kbd> เพื่อรีเซ็ตระบบ
-          </p>
+
+          <!-- Content (positioned above slider) -->
+          <div class="relative z-10">
+            <h1 class="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-4 sm:mb-6 animate-bounce leading-tight">
+              🍦 ยินดีต้อนรับสู่<br class="hidden sm:block">Sweet Frozen
+            </h1>
+            <p class="text-base sm:text-xl text-purple-700 mb-4 sm:mb-6 leading-relaxed">
+              ✨ ร้านไอศกรีมออนไลน์ที่มีไอศกรีมหลากหลายรสชาติ สดใหม่ อร่อย เย็นชื่นใจ ส่งถึงบ้านคุณ! ✨
+            </p>
+            
+            <!-- Feature Badges -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+              <div class="bg-pastel-pink/90 backdrop-blur-sm px-4 py-3 rounded-2xl text-center border-2 border-pink-200 shadow-md">
+                <div class="text-2xl mb-1">🚚</div>
+                <div class="text-sm font-bold">ฟรีค่าส่ง</div>
+                <div class="text-xs text-purple-600">เมื่อซื้อครบ ฿1,500</div>
+              </div>
+              <div class="bg-pastel-blue/90 backdrop-blur-sm px-4 py-3 rounded-2xl text-center border-2 border-blue-200 shadow-md">
+                <div class="text-2xl mb-1">💳</div>
+                <div class="text-sm font-bold">รับบัตรเครดิต</div>
+                <div class="text-xs text-purple-600">ชำระง่าย ปลอดภัย</div>
+              </div>
+              <div class="bg-pastel-green/90 backdrop-blur-sm px-4 py-3 rounded-2xl text-center border-2 border-green-200 shadow-md">
+                <div class="text-2xl mb-1">❄️</div>
+                <div class="text-sm font-bold">เก็บความเย็น</div>
+                <div class="text-xs text-purple-600">4-6 ชั่วโมง</div>
+              </div>
+            </div>
+            
+            <p class="text-center text-purple-600 text-sm">
+              🎮 กด <kbd class="bg-pastel-yellow/90 backdrop-blur-sm border-2 border-pastel-peach rounded px-2 py-1 font-bold">Alt</kbd>+<kbd class="bg-pastel-yellow/90 backdrop-blur-sm border-2 border-pastel-peach rounded px-2 py-1 font-bold">Shift</kbd>+<kbd class="bg-pastel-yellow/90 backdrop-blur-sm border-2 border-pastel-peach rounded px-2 py-1 font-bold">R</kbd> เพื่อรีเซ็ตระบบ
+            </p>
+          </div>
         </div>
         
-        <!-- Featured Product Section -->
+        <!-- Featured Products Carousel -->
         <div class="md:col-span-1 xl:col-span-2 bg-gradient-to-br from-white to-purple-50 border-2 border-pastel-peach rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl">
           <div class="text-center mb-3 sm:mb-4">
             <div class="inline-block bg-pastel-yellow px-3 sm:px-4 py-2 rounded-full text-base sm:text-lg font-black text-primary border-2 border-yellow-300 animate-bounce">
               ⭐ ไอศกรีมแนะนำวันนี้
             </div>
           </div>
-          <div id="featured"></div>
+          
+          <!-- Featured Products Slider -->
+          <div class="relative" id="featuredContainer">
+            <div class="overflow-hidden rounded-2xl">
+              <div id="featuredSlider" class="flex transition-transform duration-300 ease-in-out">
+                <!-- Featured products will be inserted here -->
+              </div>
+            </div>
+            
+            <!-- Navigation Buttons -->
+            <button id="featuredPrev" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm hover:bg-white/90 text-primary p-2 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-10">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+              </svg>
+            </button>
+            <button id="featuredNext" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm hover:bg-white/90 text-primary p-2 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-10">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </button>
+            
+            <!-- Dots Indicator -->
+            <div class="flex justify-center mt-3 gap-2" id="featuredDots">
+              <!-- Dots will be inserted here -->
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -205,8 +248,11 @@
     });
     
     function card(p){
+      const user = currentUser();
+      const isFavorite = user && user.favoriteProducts && user.favoriteProducts.includes(p.id);
+      
       const el = document.createElement('div'); 
-      el.className='product-card bg-white border-2 border-pastel-blue rounded-xl sm:rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:border-primary shadow-lg';
+      el.className='product-card bg-white border-2 border-pastel-blue rounded-xl sm:rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:border-primary shadow-lg relative';
       el.style.animationDelay = Math.random() * 0.5 + 's';
       
       // Get rating data
@@ -214,6 +260,12 @@
       const reviewStats = getProductReviewStats(p.id);
       
       el.innerHTML = `
+        <!-- Favorite Button -->
+        <button class="absolute top-2 right-2 w-8 h-8 rounded-full ${isFavorite ? 'bg-red-500 text-white' : 'bg-white/80 backdrop-blur-sm text-gray-400 hover:text-red-500'} flex items-center justify-center transition-all duration-300 hover:scale-110 z-10 shadow-md" 
+                onclick="toggleFavorite('${p.id}', event)">
+          ${isFavorite ? '❤️' : '🤍'}
+        </button>
+        
         <a href="./product.html?id=${p.id}" class="block">
           <img src="${p.image}" alt="${p.name}" class="w-full h-36 sm:h-40 lg:h-48 object-cover transition-all duration-300 hover:scale-110"/>
         </a>
@@ -244,7 +296,7 @@
           </button>
         </div>`;
       
-      const button = el.querySelector('button');
+      const button = el.querySelector('button[data-id]');
       button.addEventListener('click', ()=>{
         // Add click animation
         button.style.transform = 'scale(0.95)';
@@ -349,34 +401,188 @@
       
       list.forEach(p=>grid.appendChild(card(p)));
       
-      // featured ice cream
-      const feat = document.getElementById('featured');
-      const featuredProduct = PRODUCTS[0];
-      if (featuredProduct) {
-        feat.innerHTML = `
-          <div class="text-center">
+      // Setup Featured Products Carousel
+      setupFeaturedCarousel();
+    }
+    
+    // Setup Featured Products Carousel
+    let currentFeaturedIndex = 0;
+    const featuredProducts = [];
+
+    function setupFeaturedCarousel() {
+      if (PRODUCTS.length === 0) return;
+      
+      // Select top 3 products (you can customize this logic)
+      featuredProducts.length = 0;
+      featuredProducts.push(
+        PRODUCTS[0] || null,
+        PRODUCTS[1] || null,
+        PRODUCTS[2] || null
+      );
+      
+      // Filter out null values
+      const validProducts = featuredProducts.filter(p => p !== null);
+      if (validProducts.length === 0) return;
+      
+      renderFeaturedProducts();
+      setupFeaturedNavigation();
+    }
+
+    function renderFeaturedProducts() {
+      const slider = document.getElementById('featuredSlider');
+      const dotsContainer = document.getElementById('featuredDots');
+      const user = currentUser();
+      const userFavorites = user?.favoriteProducts || [];
+      
+      if (!slider || featuredProducts.length === 0) return;
+      
+      // Clear existing content
+      slider.innerHTML = '';
+      dotsContainer.innerHTML = '';
+      
+      // Render each featured product
+      featuredProducts.forEach((product, index) => {
+        if (!product) return;
+        
+        const rating = getProductRating(product.id);
+        const reviewStats = getProductReviewStats(product.id);
+        const isFavorite = userFavorites.includes(product.id);
+        const favoriteClass = isFavorite 
+          ? 'absolute top-2 right-2 w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center transition-all duration-300 hover:scale-110 z-10 shadow-md text-xs'
+          : 'absolute top-2 right-2 w-6 h-6 rounded-full bg-white/80 backdrop-blur-sm text-gray-400 hover:text-red-500 flex items-center justify-center transition-all duration-300 hover:scale-110 z-10 shadow-md text-xs';
+        const favoriteIcon = isFavorite ? '❤️' : '🤍';
+        
+        const slideDiv = document.createElement('div');
+        slideDiv.className = 'w-full flex-shrink-0';
+        slideDiv.innerHTML = `
+          <div class="text-center p-2 relative">
+            <!-- Favorite Button -->
+            <button onclick="toggleFavorite('${product.id}', event)" class="${favoriteClass}">
+              ${favoriteIcon}
+            </button>
+            
             <!-- Image -->
-            <div class="mb-4">
-              <img src="${featuredProduct.image}" alt="${featuredProduct.name}" 
-                   class="w-24 h-24 mx-auto object-cover rounded-full border-4 border-primary shadow-lg transition-transform duration-300 hover:scale-110"/>
+            <div class="mb-3">
+              <img src="${product.image}" alt="${product.name}" 
+                   class="w-20 h-20 sm:w-24 sm:h-24 mx-auto object-cover rounded-full border-4 border-primary shadow-lg transition-transform duration-300 hover:scale-110"/>
             </div>
             
             <!-- Product Info -->
-            <h3 class="text-primary font-black text-lg mb-2 leading-tight">${featuredProduct.name}</h3>
-            <p class="text-purple-600 text-sm mb-3 leading-relaxed">${featuredProduct.description.substring(0, 60)}...</p>
+            <h3 class="text-primary font-black text-base sm:text-lg mb-2 leading-tight">${product.name}</h3>
+            
+            <!-- Rating -->
+            ${rating > 0 ? `
+              <div class="flex justify-center items-center gap-1 mb-2">
+                ${generateStarRating(rating, 'text-xs')}
+                <span class="text-xs text-gray-600">${rating}</span>
+                <span class="text-xs text-gray-500">(${reviewStats.totalReviews})</span>
+              </div>
+            ` : '<div class="text-xs text-gray-400 mb-2">ยังไม่มีรีวิว</div>'}
+            
+            <p class="text-purple-600 text-xs sm:text-sm mb-3 leading-relaxed px-2">${product.description.substring(0, 50)}...</p>
             
             <!-- Price & Action -->
-            <div class="mb-4">
-              <div class="text-2xl font-black text-primary mb-3">฿${featuredProduct.price.toLocaleString()}</div>
-              <a href="./product.html?id=${featuredProduct.id}" 
-                 class="inline-block bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-2 px-6 rounded-full text-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:scale-105">
-                🍦 ลองชิมเลย!
-              </a>
+            <div class="mb-2">
+              <div class="text-xl sm:text-2xl font-black text-primary mb-3">฿${product.price.toLocaleString()}</div>
+              <div class="flex flex-col gap-2">
+                <a href="./product.html?id=${product.id}" 
+                   class="inline-block bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-2 px-4 rounded-full text-xs sm:text-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:scale-105">
+                  🍦 ดูรายละเอียด
+                </a>
+                <button onclick="quickAdd('${product.id}')" 
+                        class="bg-gradient-to-r from-pastel-blue to-accent text-white font-bold py-2 px-4 rounded-full text-xs sm:text-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                  🛒 เพิ่มเลย
+                </button>
+              </div>
             </div>
           </div>`;
+        
+        slider.appendChild(slideDiv);
+        
+        // Create dot indicator
+        const dot = document.createElement('button');
+        dot.className = `w-2 h-2 rounded-full transition-all duration-300 ${index === currentFeaturedIndex ? 'bg-primary w-6' : 'bg-gray-300 hover:bg-gray-400'}`;
+        dot.addEventListener('click', () => goToFeaturedSlide(index));
+        dotsContainer.appendChild(dot);
+      });
+      
+      updateFeaturedSlider();
+    }
+
+    function setupFeaturedNavigation() {
+      const prevBtn = document.getElementById('featuredPrev');
+      const nextBtn = document.getElementById('featuredNext');
+      
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+          currentFeaturedIndex = currentFeaturedIndex > 0 ? currentFeaturedIndex - 1 : featuredProducts.length - 1;
+          updateFeaturedSlider();
+        });
+      }
+      
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          currentFeaturedIndex = currentFeaturedIndex < featuredProducts.length - 1 ? currentFeaturedIndex + 1 : 0;
+          updateFeaturedSlider();
+        });
       }
     }
-    
+
+    function goToFeaturedSlide(index) {
+      currentFeaturedIndex = index;
+      updateFeaturedSlider();
+    }
+
+    function updateFeaturedSlider() {
+      const slider = document.getElementById('featuredSlider');
+      const dots = document.querySelectorAll('#featuredDots button');
+      
+      if (slider) {
+        slider.style.transform = `translateX(-${currentFeaturedIndex * 100}%)`;
+      }
+      
+      // Update dots
+      dots.forEach((dot, index) => {
+        if (index === currentFeaturedIndex) {
+          dot.className = 'w-6 h-2 rounded-full bg-primary transition-all duration-300';
+        } else {
+          dot.className = 'w-2 h-2 rounded-full bg-gray-300 hover:bg-gray-400 transition-all duration-300';
+        }
+      });
+    }
+
+    // Auto-rotate featured products every 5 seconds
+    let featuredAutoRotate;
+    function startFeaturedAutoRotate() {
+      featuredAutoRotate = setInterval(() => {
+        if (featuredProducts.length > 1) {
+          currentFeaturedIndex = currentFeaturedIndex < featuredProducts.length - 1 ? currentFeaturedIndex + 1 : 0;
+          updateFeaturedSlider();
+        }
+      }, 5000);
+    }
+
+    function stopFeaturedAutoRotate() {
+      if (featuredAutoRotate) {
+        clearInterval(featuredAutoRotate);
+      }
+    }
+
+    // Hero Image Slider
+    let currentHeroSlide = 0;
+    const heroSlides = document.querySelectorAll('.hero-slide');
+
+    function nextHeroSlide() {
+      if (heroSlides.length === 0) return;
+      
+      heroSlides[currentHeroSlide].style.opacity = '0';
+      currentHeroSlide = (currentHeroSlide + 1) % heroSlides.length;
+      heroSlides[currentHeroSlide].style.opacity = '1';
+    }
+
+    // Auto-rotate hero images every 4 seconds
+    setInterval(nextHeroSlide, 4000);
+
     // Global functions for buttons
     window.clearFilters = function() {
       document.getElementById('searchInput').value = '';
@@ -395,7 +601,68 @@
     
     window.quickAdd = function(productId) {
       Cart.add(productId, 1);
+      document.getElementById('cartCount').textContent = Cart.count();
       toast('✨ เพิ่มสินค้าลงตะกร้าแล้ว!');
+    };
+
+    // Favorites functionality
+    window.toggleFavorite = function(productId, event) {
+      event.preventDefault();
+      event.stopPropagation();
+      
+      const user = currentUser();
+      if (!user) {
+        toast('กรุณาเข้าสู่ระบบก่อนใช้งานรายการโปรด', 'error');
+        setTimeout(() => {
+          window.location.href = './login.html';
+        }, 1500);
+        return;
+      }
+
+      // Initialize favorites array if it doesn't exist
+      if (!user.favoriteProducts) {
+        user.favoriteProducts = [];
+      }
+
+      const isFavorite = user.favoriteProducts.includes(productId);
+      const product = PRODUCTS.find(p => p.id === productId);
+      
+      if (isFavorite) {
+        // Remove from favorites
+        user.favoriteProducts = user.favoriteProducts.filter(id => id !== productId);
+        toast(`💔 ลบ "${product?.name || 'สินค้า'}" ออกจากรายการโปรดแล้ว`, 'info');
+      } else {
+        // Add to favorites
+        user.favoriteProducts.push(productId);
+        toast(`❤️ เพิ่ม "${product?.name || 'สินค้า'}" ลงรายการโปรดแล้ว!`, 'success');
+      }
+
+      // Save to localStorage
+      try {
+        const users = JSON.parse(localStorage.getItem('app.users') || '[]');
+        const userIndex = users.findIndex(u => u.email === user.email);
+        if (userIndex !== -1) {
+          users[userIndex] = user;
+          localStorage.setItem('app.users', JSON.stringify(users));
+          localStorage.setItem('app.auth.current.v1', JSON.stringify(user));
+        }
+      } catch (error) {
+        console.error('Error saving favorites:', error);
+        toast('เกิดข้อผิดพลาดในการบันทึก', 'error');
+        return;
+      }
+
+      // Update the button UI
+      const button = event.target.closest('button');
+      if (button) {
+        if (isFavorite) {
+          button.className = 'absolute top-2 right-2 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm text-gray-400 hover:text-red-500 flex items-center justify-center transition-all duration-300 hover:scale-110 z-10 shadow-md';
+          button.innerHTML = '🤍';
+        } else {
+          button.className = 'absolute top-2 right-2 w-8 h-8 rounded-full bg-red-500 text-white flex items-center justify-center transition-all duration-300 hover:scale-110 z-10 shadow-md';
+          button.innerHTML = '❤️';
+        }
+      }
     };
     
     // Scroll functions
@@ -452,6 +719,24 @@
       
       if (priceFilter) {
         priceFilter.addEventListener('change', filterProducts);
+      }
+
+      // Start featured carousel auto-rotation
+      setTimeout(() => {
+        startFeaturedAutoRotate();
+      }, 1000);
+    });
+    
+    // Stop auto-rotation when user interacts with carousel
+    document.addEventListener('mouseenter', (e) => {
+      if (e.target.closest('#featuredContainer')) {
+        stopFeaturedAutoRotate();
+      }
+    });
+    
+    document.addEventListener('mouseleave', (e) => {
+      if (e.target.closest('#featuredContainer')) {
+        startFeaturedAutoRotate();
       }
     });
     
