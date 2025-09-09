@@ -4,11 +4,19 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>รีวิวจากลูกค้า — Sweet Frozen</title>
+  <!-- Font Awesome for Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <!-- Bubble Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
+          fontFamily: {
+            'bubble': ['Fredoka', 'sans-serif'],
+            'round': ['Nunito', 'sans-serif'],
+          },
           colors: {
             'pastel-pink': '#ffb3ba',
             'pastel-peach': '#ffdfba',
@@ -65,7 +73,7 @@
   <link rel="stylesheet" href="./assets/css/styles.css"/>
   <script type="module" src="./assets/js/app.js"></script>
 </head>
-<body>
+<body class="font-bubble bg-gradient-to-br from-pastel-pink via-pastel-lavender to-pastel-mint min-h-screen">
   <div id="app-header"></div>
   
   <!-- Breadcrumb -->
@@ -144,7 +152,7 @@
 
   <script type="module">
     import { PRODUCTS, loadIceCreamProducts, getProduct } from './assets/js/products.js';
-    import { updateHeader } from './assets/js/ui.js';
+    import { updateHeader, initializeGlobalStyles, initializeQuickCart } from './assets/js/ui.js';
     import { 
       loadReviews, 
       getAllReviews,
@@ -160,6 +168,8 @@
 
     document.addEventListener('DOMContentLoaded', function() {
       setTimeout(() => {
+        initializeGlobalStyles();
+        initializeQuickCart();
         updateHeader();
       }, 100);
     });
@@ -337,5 +347,45 @@
 
     init();
   </script>
+
+  <!-- Floating Action Buttons -->
+  <div class="fixed right-6 bottom-6 flex flex-col gap-3 z-50">
+      <!-- Dark Mode Toggle -->
+      <button id="darkModeToggle" class="w-12 h-12 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg transition-all duration-300 hover:scale-110 flex items-center justify-center">
+          <i class="fas fa-moon text-lg"></i>
+      </button>
+      
+      <!-- Quick Cart Button -->
+      <button id="quickCartBtn" class="w-12 h-12 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg transition-all duration-300 hover:scale-110 flex items-center justify-center relative">
+          <i class="fas fa-shopping-cart text-lg"></i>
+          <span id="quickCartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center hidden">0</span>
+      </button>
+  </div>
+
+  <!-- Quick Cart Popup -->
+  <div id="quickCartPopup" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+      <div class="fixed right-0 top-0 h-full w-96 bg-white dark:bg-gray-800 shadow-lg transform translate-x-full transition-transform duration-300">
+          <div class="p-6 border-b dark:border-gray-700">
+              <div class="flex justify-between items-center">
+                  <h3 class="text-lg font-bold text-gray-800 dark:text-white">ตะกร้าสินค้า</h3>
+                  <button id="closeQuickCart" class="text-gray-600 dark:text-gray-400 hover:text-red-500">
+                      <i class="fas fa-times text-xl"></i>
+                  </button>
+              </div>
+          </div>
+          <div id="quickCartContent" class="p-6 max-h-96 overflow-y-auto">
+              <!-- Cart items will be rendered here -->
+          </div>
+          <div class="p-6 border-t dark:border-gray-700">
+              <div class="flex justify-between items-center mb-4">
+                  <span class="font-bold text-gray-800 dark:text-white">รวมทั้งหมด:</span>
+                  <span id="quickCartTotal" class="font-bold text-blue-600 dark:text-blue-400">฿0</span>
+              </div>
+              <button class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg transition-colors duration-300" onclick="window.location.href='cart.html'">
+                  ดูตะกร้าสินค้า
+              </button>
+          </div>
+      </div>
+  </div>
 </body>
 </html>

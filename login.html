@@ -1,14 +1,22 @@
 <!doctype html>
-<html lang="en">
+<html lang="th">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>🍨 เข้าสู่ระบบ — Sweet Frozen</title>
+  <!-- Font Awesome for Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <!-- Bubble Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
+          fontFamily: {
+            'bubble': ['Fredoka', 'sans-serif'],
+            'round': ['Nunito', 'sans-serif'],
+          },
           colors: {
             'pastel-pink': '#ffb3ba',
             'pastel-peach': '#ffdfba',
@@ -64,7 +72,7 @@
   </script>
   <script type="module" src="./assets/js/app.js"></script>
 </head>
-<body class="bg-gradient-to-br from-pastel-blue via-pastel-purple to-pastel-pink min-h-screen">
+<body class="font-bubble bg-gradient-to-br from-pastel-blue via-pastel-purple to-pastel-pink min-h-screen">
   <div id="app-header"></div>
   
   <main class="container mx-auto px-2 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8">
@@ -168,9 +176,11 @@
   <div id="app-footer"></div>
   <script type="module">
     import { login, demoLogin, loadUsers } from './assets/js/auth.js';
-    import { updateHeader, renderHeader, renderFooter } from './assets/js/ui.js';
+    import { updateHeader, renderHeader, renderFooter, initializeGlobalStyles, initializeQuickCart } from './assets/js/ui.js';
     
     // Initialize page
+    initializeGlobalStyles();
+    initializeQuickCart();
     renderHeader();
     renderFooter();
     
@@ -343,5 +353,40 @@
       }
     });
   </script>
+
+  <!-- Floating Action Buttons -->
+  <div class="fixed bottom-6 right-6 flex flex-col space-y-3 z-50">
+    <!-- Quick Cart -->
+    <button onclick="toggleQuickCart()" class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 animate-bounce-slow" title="ตะกร้าด่วน">
+      <i class="fas fa-shopping-cart"></i>
+      <span id="floatingCartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold">0</span>
+    </button>
+    
+    <!-- Theme Toggle -->
+    <button onclick="toggleTheme()" class="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 animate-wiggle" title="เปลี่ยนธีม">
+      <i class="fas fa-moon"></i>
+    </button>
+  </div>
+
+  <!-- Quick Cart Popup -->
+  <div id="quickCartPopup" class="fixed bottom-24 right-6 w-80 bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl border border-white/30 p-4 transform translate-y-4 opacity-0 invisible transition-all duration-300 z-40">
+    <h3 class="font-bold text-primary mb-3 flex items-center justify-between">
+      <i class="fas fa-shopping-cart mr-2"></i> ตะกร้าด่วน
+      <button onclick="toggleQuickCart()" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+    </h3>
+    <div id="quickCartItems" class="space-y-2 max-h-60 overflow-y-auto">
+      <!-- Cart items will be inserted here -->
+    </div>
+    <div class="mt-3 pt-3 border-t border-gray-200">
+      <div class="flex justify-between items-center mb-2">
+        <span class="font-bold">รวม:</span>
+        <span id="quickCartTotal" class="font-bold text-primary">฿0</span>
+      </div>
+      <a href="./cart.html" class="block w-full bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-2 px-4 rounded-xl text-center hover:scale-105 transition-all duration-300">
+        ไปที่ตะกร้า
+      </a>
+    </div>
+  </div>
+
 </body>
 </html>
