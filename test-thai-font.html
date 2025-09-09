@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ทดสอบฟอนต์ไทย - บับเบิล สไตล์</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700;800;900&family=Prompt:wght@300;400;500;600;700&family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'bubble': ['Fredoka', 'Prompt', 'Kanit', 'sans-serif'],
+            'round': ['Nunito', 'Prompt', 'sans-serif'],
+            'thai': ['Prompt', 'Kanit', 'sans-serif'],
+            'thai-bubble': ['Kanit', 'Prompt', 'Fredoka', 'sans-serif'],
+          },
+          colors: {
+            'pastel-pink': '#ffb3ba',
+            'pastel-peach': '#ffdfba',
+            'pastel-yellow': '#ffffba',
+            'pastel-green': '#baffc9',
+            'pastel-blue': '#bae1ff',
+            'pastel-purple': '#e1baff',
+            'pastel-lavender': '#f0baff',
+            'pastel-mint': '#baffef'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-bubble bg-gradient-to-br from-pastel-pink via-pastel-lavender to-pastel-mint min-h-screen p-8">
+  <div class="max-w-4xl mx-auto">
+    <!-- Header -->
+    <header class="text-center mb-12">
+      <h1 class="text-5xl font-bold text-purple-800 mb-4">
+        🎨 ทดสอบฟอนต์บับเบิล ภาษาไทย
+      </h1>
+      <p class="text-xl text-purple-600">
+        รองรับภาษาไทยแล้วด้วยฟอนต์ Prompt และ Kanit
+      </p>
+    </header>
+
+    <!-- Font Examples -->
+    <div class="grid md:grid-cols-2 gap-8 mb-12">
+      <!-- Bubble Font -->
+      <div class="bg-white/70 backdrop-blur-sm rounded-3xl p-8 shadow-lg">
+        <h2 class="font-bubble text-3xl font-bold text-pink-600 mb-6 flex items-center">
+          <i class="fas fa-palette mr-3"></i>
+          ฟอนต์บับเบิล (Bubble)
+        </h2>
+        <div class="space-y-4">
+          <p class="font-bubble text-lg">ยินดีต้อนรับสู่ร้านไอศกรีมแสนอร่อย</p>
+          <p class="font-bubble text-2xl font-semibold text-purple-700">
+            เราขายไอศกรีมรสชาติต่างๆ มากมาย
+          </p>
+          <p class="font-bubble text-xl text-blue-600">
+            🍦 สตรอเบอร์รี่ 🍦 วานิลลา 🍦 ช็อกโกแลต
+          </p>
+        </div>
+      </div>
+
+      <!-- Thai Bubble Font -->
+      <div class="bg-white/70 backdrop-blur-sm rounded-3xl p-8 shadow-lg">
+        <h2 class="font-thai-bubble text-3xl font-bold text-green-600 mb-6 flex items-center">
+          <i class="fas fa-language mr-3"></i>
+          ฟอนต์ไทย-บับเบิล
+        </h2>
+        <div class="space-y-4">
+          <p class="font-thai-bubble text-lg">สวัสดีครับ ยินดีต้อนรับทุกท่าน</p>
+          <p class="font-thai-bubble text-2xl font-semibold text-purple-700">
+            ขายไอศกรีมแสนอร่อย หวานเย็นใจ
+          </p>
+          <p class="font-thai-bubble text-xl text-orange-600">
+            🧡 รสมะม่วง 💜 รสเทโร่ 💚 รสชาเขียว
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison Table -->
+    <div class="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg mb-12">
+      <h2 class="font-bubble text-3xl font-bold text-center text-indigo-600 mb-8 flex items-center justify-center">
+        <i class="fas fa-table mr-3"></i>
+        เปรียบเทียบฟอนต์
+      </h2>
+      
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead>
+            <tr class="border-b-2 border-purple-300">
+              <th class="font-bubble text-lg font-semibold text-purple-700 py-4 text-left">ชนิดฟอนต์</th>
+              <th class="font-bubble text-lg font-semibold text-purple-700 py-4 text-left">ตัวอย่าง</th>
+              <th class="font-bubble text-lg font-semibold text-purple-700 py-4 text-left">ข้อดี</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-purple-200">
+              <td class="font-bubble py-4 font-medium text-pink-600">
+                font-bubble<br>
+                <small class="text-gray-500">(Fredoka + Thai)</small>
+              </td>
+              <td class="font-bubble py-4 text-xl">
+                ไอศกรีมแสนอร่อย Sweet Dreams
+              </td>
+              <td class="font-bubble py-4 text-green-600">
+                ✨ รองรับภาษาไทย + อังกฤษ
+              </td>
+            </tr>
+            <tr class="border-b border-purple-200">
+              <td class="font-thai py-4 font-medium text-blue-600">
+                font-thai<br>
+                <small class="text-gray-500">(Prompt + Kanit)</small>
+              </td>
+              <td class="font-thai py-4 text-xl">
+                เมนูไอศกรีมพิเศษ สำหรับคุณ
+              </td>
+              <td class="font-thai py-4 text-green-600">
+                ✨ อ่านง่าย เหมาะกับเนื้อหาไทย
+              </td>
+            </tr>
+            <tr class="border-b border-purple-200">
+              <td class="font-thai-bubble py-4 font-medium text-purple-600">
+                font-thai-bubble<br>
+                <small class="text-gray-500">(Kanit + Fredoka)</small>
+              </td>
+              <td class="font-thai-bubble py-4 text-xl">
+                ร้านขายไอศกรีม หวานใจ 💕
+              </td>
+              <td class="font-thai-bubble py-4 text-green-600">
+                ✨ ผสมผสานที่ลงตัว cute & readable
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Sample Content -->
+    <div class="bg-gradient-to-r from-pink-100 to-purple-100 rounded-3xl p-8 shadow-lg">
+      <h2 class="font-thai-bubble text-4xl font-bold text-center text-purple-800 mb-8">
+        🍦 เมนูไอศกรีมแนะนำ 🍦
+      </h2>
+      
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white/90 rounded-2xl p-6 text-center shadow-md hover:shadow-lg transition-shadow">
+          <div class="text-6xl mb-4">🍓</div>
+          <h3 class="font-thai-bubble text-2xl font-bold text-pink-600 mb-2">
+            สตรอเบอร์รี่ คลาสสิก
+          </h3>
+          <p class="font-thai text-gray-600 mb-4">
+            รสชาติหวานซ่า เปรียวสดชื่น ด้วยสตรอเบอร์รี่แท้
+          </p>
+          <div class="font-bubble text-2xl font-bold text-green-600">
+            ฿45
+          </div>
+        </div>
+
+        <div class="bg-white/90 rounded-2xl p-6 text-center shadow-md hover:shadow-lg transition-shadow">
+          <div class="text-6xl mb-4">🍫</div>
+          <h3 class="font-thai-bubble text-2xl font-bold text-amber-600 mb-2">
+            ช็อกโกแลต ริช
+          </h3>
+          <p class="font-thai text-gray-600 mb-4">
+            เข้มข้น หวานมัน กับช็อกโกแลตเบลเยี่ยม
+          </p>
+          <div class="font-bubble text-2xl font-bold text-green-600">
+            ฿50
+          </div>
+        </div>
+
+        <div class="bg-white/90 rounded-2xl p-6 text-center shadow-md hover:shadow-lg transition-shadow">
+          <div class="text-6xl mb-4">🥭</div>
+          <h3 class="font-thai-bubble text-2xl font-bold text-orange-600 mb-2">
+            มะม่วงสุก หวานหอม
+          </h3>
+          <p class="font-thai text-gray-600 mb-4">
+            รสชาติมะม่วงไทยแท้ หวานหอม เนื้อเนียนนุ่ม
+          </p>
+          <div class="font-bubble text-2xl font-bold text-green-600">
+            ฿55
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center mt-12 py-8">
+      <p class="font-thai-bubble text-xl text-purple-600">
+        <i class="fas fa-heart text-pink-500 mr-2"></i>
+        ฟอนต์บับเบิลรองรับภาษาไทยแล้ว สวยงามและอ่านง่าย
+        <i class="fas fa-heart text-pink-500 ml-2"></i>
+      </p>
+      <p class="font-thai text-gray-500 mt-4">
+        Font Stack: Fredoka, Prompt, Kanit สำหรับประสบการณ์การอ่านที่ดีที่สุด
+      </p>
+    </footer>
+  </div>
+</body>
+</html>

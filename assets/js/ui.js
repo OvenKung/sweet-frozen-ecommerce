@@ -13,7 +13,7 @@ export function initializeGlobalStyles() {
   
   if (!document.head.querySelector('link[href*="fonts.googleapis"]')) {
     const fonts = document.createElement('link');
-    fonts.href = 'https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700;800;900&display=swap';
+    fonts.href = 'https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700;800;900&family=Prompt:wght@300;400;500;600;700&family=Kanit:wght@300;400;500;600;700&display=swap';
     fonts.rel = 'stylesheet';
     document.head.appendChild(fonts);
   }
