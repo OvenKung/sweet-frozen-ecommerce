@@ -7,18 +7,16 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
+      // JIT is default in CDN; keep explicit for clarity
       mode: 'jit',
       theme: {
         screens: {
-          'sm': '640px',
-          'md': '768px', 
-          'lg': '1024px',
-          'xl': '1280px',
-          '2xl': '1536px',
+          sm: '640px',
+          md: '768px',
+          lg: '1024px',
+          xl: '1280px',
+          '2xl': '1536px'
         },
-  <script>
-    tailwind.config = {
-      theme: {
         extend: {
           colors: {
             'pastel-pink': '#ffb3ba',
@@ -31,15 +29,15 @@
             'primary': '#ff8fab',
             'primary-hover': '#ff6b9d',
             'secondary': '#c8e6c9',
-            'accent': '#b39ddb',
+            'accent': '#b39ddb'
           },
           animation: {
-            'float': 'float 3s ease-in-out infinite',
+            float: 'float 3s ease-in-out infinite',
             'slide-in-up': 'slideInUp 0.8s ease-out',
             'slide-in-left': 'slideInLeft 0.8s ease-out',
             'bounce-in': 'bounceIn 0.8s ease-out',
-            'sparkle': 'sparkle 2s ease-in-out infinite',
-            'wobble': 'wobble 0.5s ease-in-out'
+            sparkle: 'sparkle 2s ease-in-out infinite',
+            wobble: 'wobble 0.5s ease-in-out'
           },
           keyframes: {
             float: {
@@ -101,7 +99,7 @@
               <td colspan="3" class="sm:hidden p-2 text-right text-sm font-bold">💝 รวมทั้งหมด</td>
               <td colspan="3" class="hidden sm:table-cell p-2 sm:p-3 lg:p-4 text-right text-base sm:text-lg font-bold">💝 รวมทั้งหมด</td>
               <td id="subtotal" class="p-2 sm:p-3 lg:p-4 text-primary text-lg sm:text-xl font-black">฿0</td>
-              <td class="p-2 sm:p-3 lg:p-4"></td>
+              <td class="hidden sm:table-cell p-2 sm:p-3 lg:p-4"></td>
             </tr>
           </tfoot>
         </table>
@@ -128,11 +126,11 @@
         }
 
         // Load users data
-        try {
-            const { loadUsers } = await import('/assets/js/auth.js');
-            await loadUsers();
-        } catch (error) {
-        }
+    try {
+      const { loadUsers } = await import('./assets/js/auth.js');
+      await loadUsers();
+    } catch (error) {
+    }
 
         // Update navbar
         setTimeout(() => {
@@ -159,11 +157,11 @@
                 }
                 
                 // รอให้ users โหลดเสร็จก่อนตรวจสอบ user
-                try {
-                    const { loadUsers } = await import('/assets/js/auth.js');
-                    await loadUsers();
-                } catch (error) {
-                }
+        try {
+          const { loadUsers } = await import('./assets/js/auth.js');
+          await loadUsers();
+        } catch (error) {
+        }
                 
                 const user = currentUser();
                 
@@ -283,14 +281,15 @@
         });
         
         // Setup remove button listeners
-        tbody.querySelectorAll('[data-rm]').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const id = e.target.getAttribute('data-rm');
-                Cart.remove(id);
-                toast('ลบสินค้าออกจากตะกร้าแล้ว');
-                render();
-            });
-        });
+    tbody.querySelectorAll('[data-rm]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const target = e.target.closest('[data-rm]') || e.currentTarget;
+        const id = target.getAttribute('data-rm');
+        Cart.remove(id);
+        toast('ลบสินค้าออกจากตะกร้าแล้ว');
+        render();
+      });
+    });
     }
   </script>
 </body>
