@@ -115,6 +115,7 @@
         </table>
       </div>
     </div>
+    
     <div class="flex flex-col sm:flex-row gap-3 justify-center sm:justify-end">
       <a class="bg-white border-2 border-pastel-pink text-purple-700 font-bold py-3 px-4 sm:px-6 rounded-xl sm:rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1 text-center text-sm sm:text-base" href="./index.html">🍦 เลือกไอศกรีมต่อ</a>
       <button id="checkoutBtn" class="bg-gradient-to-r from-primary to-primary-hover text-white font-bold py-3 px-4 sm:px-6 rounded-xl sm:rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-2 border-primary text-sm sm:text-base min-h-[44px]">💳 สั่งซื้อเลย!</button>
@@ -128,6 +129,9 @@
     import { toast, updateHeader, renderHeader, renderFooter, initializeGlobalStyles, initializeQuickCart } from './assets/js/ui.js';
     import { currentUser, logout } from './assets/js/auth.js';
 
+    // Create global cart instance
+    const cart = Cart;
+
     document.addEventListener('DOMContentLoaded', async function() {
         // Initialize global styles and theme
         initializeGlobalStyles();
@@ -135,18 +139,57 @@
         renderHeader();
         renderFooter();
         
-        // Load products first
+        // Load products first - รอให้โหลดเสร็จก่อน render
+        let productsLoaded = false;
         try {
             await loadIceCreamProducts();
+            productsLoaded = true;
+            console.log('✅ Products loaded from JSON:', PRODUCTS.length);
         } catch (error) {
+            console.error('❌ Error loading products from JSON:', error);
+            // ใช้ fallback products ที่มีอยู่ใน products.js
+            console.log('📦 Using fallback products:', PRODUCTS.length);
         }
+        
+        // ตรวจสอบว่า PRODUCTS มีข้อมูลหรือไม่
+        console.log('🔍 PRODUCTS check:', {
+            hasProducts: !!PRODUCTS,
+            length: PRODUCTS ? PRODUCTS.length : 0,
+            sample: PRODUCTS ? PRODUCTS.slice(0, 2) : 'none',
+            hasWindow: !!window.PRODUCTS,
+            windowLength: window.PRODUCTS ? window.PRODUCTS.length : 0
+        });
+        
+        if (!PRODUCTS || PRODUCTS.length === 0) {
+            console.error('❌ No products available, even fallback failed!');
+            // สร้าง fallback products แบบ hard-coded
+            window.PRODUCTS = [
+                {id:"ic-001", name:"วานิลลาคลาสสิก", price:45, image:"https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&h=400&fit=crop"},
+                {id:"ic-002", name:"ช็อกโกแลตดาร์ก", price:55, image:"https://images.unsplash.com/photo-1551024506-0bccd828d307?w=600&h=400&fit=crop"},
+                {id:"ic-003", name:"สตรอเบอร์รี่เฟรช", price:50, image:"https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=600&h=400&fit=crop"}
+            ];
+            console.log('🔧 Created emergency fallback products:', window.PRODUCTS.length);
+        }
+        
+        // เรียก render หลังจาก products พร้อมแล้ว
+        render();
+        
+        // ถ้ายังไม่มีสินค้าแสดง ลอง render อีกครั้งหลัง DOM พร้อม
+        setTimeout(() => {
+            const tbody = document.querySelector('#cartTable tbody');
+            if (tbody && tbody.children.length <= 1) {
+                console.log('🔄 Retrying render...');
+                render();
+            }
+        }, 500);
 
         // Load users data
-    try {
-      const { loadUsers } = await import('./assets/js/auth.js');
-      await loadUsers();
-    } catch (error) {
-    }
+        try {
+            const { loadUsers } = await import('./assets/js/auth.js');
+            await loadUsers();
+        } catch (error) {
+            console.error('Error loading users:', error);
+        }
 
         // Update navbar
         setTimeout(() => {
@@ -155,10 +198,21 @@
 
         // Setup event listeners
         setupEventListeners();
-
-        // Initial render
-        render();
     });
+
+    function updateCartSummary() {
+        const subtotalEl = document.getElementById('subtotal');
+        if (!subtotalEl) return;
+        
+        const pricing = Cart.calculatePricing(PRODUCTS || window.PRODUCTS || []);
+        
+        // Update the display to show final total
+        subtotalEl.innerHTML = `
+            <div class="space-y-1">
+                <div class="font-bold">฿${pricing.total.toLocaleString()}</div>
+            </div>
+        `;
+    }
 
     function setupEventListeners() {
         const checkoutBtn = document.getElementById('checkoutBtn');
@@ -212,22 +266,63 @@
     }
 
     function priceOf(id) { 
-        const p = getProduct(id); 
+        const p = getProductLocal(id); 
         return p ? p.price : 0; 
     }
 
+    // ปรับปรุง getProduct ให้ใช้ fallback ที่แน่นอน
+    function getProductLocal(id) {
+        console.log('🔍 getProductLocal called for:', id);
+        
+        // ลองหาจาก PRODUCTS ก่อน
+        let product = PRODUCTS ? PRODUCTS.find(p => p.id === id) : null;
+        console.log('📦 Found in PRODUCTS:', product ? product.name : 'not found');
+        
+        // ถ้าไม่เจอ ใช้ fallback
+        if (!product && window.PRODUCTS) {
+            product = window.PRODUCTS.find(p => p.id === id);
+            console.log('📦 Found in window.PRODUCTS:', product ? product.name : 'not found');
+        }
+        
+        // ถ้ายังไม่เจอ สร้าง placeholder
+        if (!product) {
+            console.log('🔧 Using emergency fallback products');
+            const fallbackProducts = [
+                {id:"ic-001", name:"วานิลลาคลาสสิก", price:45, image:"https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&h=400&fit=crop"},
+                {id:"ic-002", name:"ช็อกโกแลตดาร์ก", price:55, image:"https://images.unsplash.com/photo-1551024506-0bccd828d307?w=600&h=400&fit=crop"},
+                {id:"ic-003", name:"สตรอเบอร์รี่เฟรช", price:50, image:"https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=600&h=400&fit=crop"},
+                {id:"ic-004", name:"มินต์ช็อกชิป", price:60, image:"https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=600&h=400&fit=crop"},
+                {id:"ic-005", name:"คุกกี้แอนด์ครีม", price:65, image:"https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=600&h=400&fit=crop"}
+            ];
+            product = fallbackProducts.find(p => p.id === id);
+            console.log('📦 Found in emergency fallback:', product ? product.name : 'still not found');
+        }
+        
+        return product || {
+            id: id,
+            name: `สินค้า ${id}`,
+            price: 50,
+            image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&h=400&fit=crop"
+        };
+    }
+
     function render() {
+        console.log('🔄 Render called');
         const tbody = document.querySelector('#cartTable tbody');
         if (!tbody) {
+            console.error('❌ tbody not found');
             return;
         }
         
         tbody.innerHTML = '';
         const c = Cart.get();
+        console.log('📦 Cart data:', c);
+        console.log('🍦 PRODUCTS array:', PRODUCTS.length, PRODUCTS.slice(0, 3));
         
         const checkoutBtn = document.getElementById('checkoutBtn');
         
-        if (!c.items.length) {
+        if (!c.items || !c.items.length) {
+            console.log('📭 Cart is empty or no items');
             tbody.innerHTML = '<tr><td colspan="5" class="p-2 sm:p-3 lg:p-4 text-center text-gray-500 text-sm sm:text-base">ตะกร้าของคุณว่างเปล่า 🛒</td></tr>';
             
             if (checkoutBtn) {
@@ -235,50 +330,62 @@
                 checkoutBtn.className = checkoutBtn.className.replace('from-primary to-primary-hover', 'from-gray-300 to-gray-400');
                 checkoutBtn.style.cursor = 'not-allowed';
             }
-        } else {
-            if (checkoutBtn) {
-                checkoutBtn.disabled = false;
-                checkoutBtn.className = checkoutBtn.className.replace('from-gray-300 to-gray-400', 'from-primary to-primary-hover');
-                checkoutBtn.style.cursor = 'pointer';
-                checkoutBtn.innerHTML = '💳 สั่งซื้อเลย!';
-            }
+            return;
+        }
+
+        console.log('🛒 Processing cart items:', c.items.length);
+        
+        if (checkoutBtn) {
+            checkoutBtn.disabled = false;
+            checkoutBtn.className = checkoutBtn.className.replace('from-gray-300 to-gray-400', 'from-primary to-primary-hover');
+            checkoutBtn.style.cursor = 'pointer';
+            checkoutBtn.innerHTML = '💳 สั่งซื้อเลย!';
+        }
+        
+        for (const it of c.items) {
+            console.log(`🔍 Processing item: ${it.productId}, qty: ${it.qty}`);
+            const p = getProductLocal(it.productId);  // ใช้ getProductLocal
+            console.log(`📦 Product found:`, p);
             
-            for (const it of c.items) {
-                const p = PRODUCTS.find(x => x.id === it.productId);
-                
-                if (!p) {
-                    continue;
-                }
-                
+            if (!p) {
+                console.warn(`❌ Product ${it.productId} not found`);
+                // ถ้าหาสินค้าไม่เจอ แสดง placeholder
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td class="p-2 sm:p-3 lg:p-4">
-                        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3">
-                            <img src="${p.image}" alt="" class="w-12 h-9 sm:w-16 sm:h-12 object-cover rounded border border-gray-200"/>
-                            <div class="flex-1 min-w-0">
-                                <a href="./product.html?id=${p.id}" class="text-blue-600 hover:underline text-xs sm:text-sm lg:text-base font-medium leading-tight block">${p.name}</a>
-                                <div class="sm:hidden text-xs text-gray-600 mt-1">฿${p.price.toLocaleString()}</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="hidden sm:table-cell p-2 sm:p-3 lg:p-4 text-sm sm:text-base">฿${p.price.toLocaleString()}</td>
-                    <td class="p-2 sm:p-3 lg:p-4">
-                        <input data-id="${p.id}" class="qty w-14 sm:w-20 px-2 py-1 border rounded text-xs sm:text-sm text-center" type="number" min="1" value="${it.qty}"/>
-                    </td>
-                    <td class="p-2 sm:p-3 lg:p-4 font-bold text-sm sm:text-base">฿${(p.price * it.qty).toLocaleString()}</td>
-                    <td class="p-2 sm:p-3 lg:p-4">
-                        <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-xs sm:text-sm min-h-[32px] w-full sm:w-auto" data-rm="${p.id}">🗑️<span class="hidden sm:inline"> ลบ</span></button>
+                    <td colspan="5" class="p-2 sm:p-3 lg:p-4 text-center text-red-500 text-sm">
+                        ❌ สินค้า ID: ${it.productId} ไม่พบ (อาจถูกลบออกแล้ว)
                     </td>
                 `;
                 tbody.appendChild(tr);
+                continue;
             }
+            
+            console.log(`✅ Creating row for: ${p.name}`);
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="p-2 sm:p-3 lg:p-4">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3">
+                        <img src="${p.image}" alt="" class="w-12 h-9 sm:w-16 sm:h-12 object-cover rounded border border-gray-200"/>
+                        <div class="flex-1 min-w-0">
+                            <a href="./product.html?id=${p.id}" class="text-blue-600 hover:underline text-xs sm:text-sm lg:text-base font-medium leading-tight block">${p.name}</a>
+                            <div class="sm:hidden text-xs text-gray-600 mt-1">฿${p.price.toLocaleString()}</div>
+                        </div>
+                    </div>
+                </td>
+                <td class="hidden sm:table-cell p-2 sm:p-3 lg:p-4 text-sm sm:text-base">฿${p.price.toLocaleString()}</td>
+                <td class="p-2 sm:p-3 lg:p-4">
+                    <input data-id="${p.id}" class="qty w-14 sm:w-20 px-2 py-1 border rounded text-xs sm:text-sm text-center" type="number" min="1" value="${it.qty}"/>
+                </td>
+                <td class="p-2 sm:p-3 lg:p-4 font-bold text-sm sm:text-base">฿${(p.price * it.qty).toLocaleString()}</td>
+                <td class="p-2 sm:p-3 lg:p-4">
+                    <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-xs sm:text-sm min-h-[32px] w-full sm:w-auto" data-rm="${p.id}">🗑️<span class="hidden sm:inline"> ลบ</span></button>
+                </td>
+            `;
+            tbody.appendChild(tr);
         }
         
-        // Update subtotal
-        const subtotalEl = document.getElementById('subtotal');
-        if (subtotalEl) {
-            subtotalEl.textContent = '฿' + Cart.subtotal(priceOf).toLocaleString();
-        }
+        // Update subtotal using cart pricing with coupon support
+        updateCartSummary();
         
         // Update cart count in navbar
         const cartCountEl = document.getElementById('cartCount');
@@ -297,15 +404,17 @@
         });
         
         // Setup remove button listeners
-    tbody.querySelectorAll('[data-rm]').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const target = e.target.closest('[data-rm]') || e.currentTarget;
-        const id = target.getAttribute('data-rm');
-        Cart.remove(id);
-        toast('ลบสินค้าออกจากตะกร้าแล้ว');
-        render();
-      });
-    });
+        tbody.querySelectorAll('[data-rm]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const target = e.target.closest('[data-rm]') || e.currentTarget;
+                const id = target.getAttribute('data-rm');
+                Cart.remove(id);
+                toast('ลบสินค้าออกจากตะกร้าแล้ว');
+                render();
+            });
+        });
+        
+        console.log('🎯 Render completed, rows added:', tbody.children.length);
     }
   </script>
 

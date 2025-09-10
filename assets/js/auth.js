@@ -40,7 +40,36 @@ export async function loadUsers() {
       "password": "demo123",
       "memberSince": "2024-01-15",
       "addresses": [],
-      "paymentMethods": []
+      "paymentMethods": [],
+      "favoriteProducts": ["ic-001", "ic-002", "ic-003", "ic-005", "ic-008"],
+      "points": 450,
+      "level": "Gold",
+      "orderHistory": [
+        {
+          "id": "ord-001",
+          "date": "2024-08-15T10:30:00Z",
+          "items": [
+            {"productId": "ic-001", "quantity": 2, "price": 45},
+            {"productId": "ic-002", "quantity": 1, "price": 55}
+          ],
+          "total": 145,
+          "status": "delivered"
+        },
+        {
+          "id": "ord-002", 
+          "date": "2024-08-20T14:15:00Z",
+          "items": [
+            {"productId": "ic-004", "quantity": 1, "price": 60},
+            {"productId": "ic-005", "quantity": 3, "price": 65}
+          ],
+          "total": 210,
+          "status": "delivered"
+        }
+      ],
+      "preferences": {
+        "notifications": true,
+        "newsletter": true
+      }
     },
     {
       "id": "u-demo002",
@@ -49,7 +78,21 @@ export async function loadUsers() {
       "password": "demo123",
       "memberSince": "2024-02-20",
       "addresses": [],
-      "paymentMethods": []
+      "paymentMethods": [],
+      "favoriteProducts": ["ic-003", "ic-006", "ic-007"],
+      "points": 220,
+      "level": "Silver",
+      "orderHistory": [
+        {
+          "id": "ord-003",
+          "date": "2024-08-25T16:45:00Z",
+          "items": [
+            {"productId": "ic-003", "quantity": 2, "price": 50}
+          ],
+          "total": 100,
+          "status": "processing"
+        }
+      ]
     },
     {
       "id": "u-demo003",
@@ -58,7 +101,11 @@ export async function loadUsers() {
       "password": "demo123", 
       "memberSince": "2024-03-10",
       "addresses": [],
-      "paymentMethods": []
+      "paymentMethods": [],
+      "favoriteProducts": ["ic-001", "ic-004", "ic-006", "ic-007", "ic-008"],
+      "points": 680,
+      "level": "Platinum",
+      "orderHistory": []
     }
   ];
   

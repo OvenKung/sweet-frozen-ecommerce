@@ -253,6 +253,28 @@
             สรุปคำสั่งซื้อ
           </h2>
           
+          <!-- Coupon Section -->
+          <div class="mb-6 p-4 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-xl border border-yellow-200">
+            <h3 class="text-sm font-bold text-gray-700 mb-3 flex items-center">
+              <span class="mr-2">🎟️</span>
+              ใช้คูปองส่วนลด
+            </h3>
+            
+            <div class="flex gap-2 mb-3">
+              <input type="text" id="couponInput" placeholder="กรอกรหัสคูปอง" 
+                     class="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary focus:border-primary">
+              <button type="button" id="applyCouponBtn" 
+                      class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary-hover transition-colors">
+                ใช้
+              </button>
+            </div>
+            
+            <div id="couponStatus" class="text-xs"></div>
+            
+            <!-- Available Coupons -->
+            <div id="availableCoupons" class="mt-3 space-y-2"></div>
+          </div>
+          
           <div id="summary" class="space-y-3"></div>
         </div>
       </div>
@@ -265,6 +287,12 @@
     import { PRODUCTS, getProduct } from './assets/js/products.js';
     import { toast, updateHeader, initializeGlobalStyles, initializeQuickCart } from './assets/js/ui.js';
     import { processPayment } from './assets/js/payment.js';
+    import { 
+      loadCoupons,
+      getAvailableCoupons,
+      applyCoupon,
+      getCouponDescription 
+    } from './assets/js/coupon.js';
 
     // รอให้ users data โหลดเสร็จก่อนตรวจสอบ login
     async function initCheckoutPage() {
@@ -291,16 +319,125 @@
         
         // โหลด products ก่อน
         try {
-            const { loadIceCreamProducts } = await import('/assets/js/products.js');
+            const { loadIceCreamProducts } = await import('./assets/js/products.js');
             await loadIceCreamProducts();
+            
+            // เริ่มต้นระบบคูปอง
+            await loadCoupons();
+            initCouponSystem();
         } catch (error) {
-            // Handle error silently
+            console.error('Error loading products/coupons:', error);
         }
         
         // เรียก render functions
         renderAddresses();
         renderSummary();
     });
+
+    function initCouponSystem() {
+        // Event listeners สำหรับระบบคูปอง
+        const couponInput = document.getElementById('couponInput');
+        const applyCouponBtn = document.getElementById('applyCouponBtn');
+        const couponStatus = document.getElementById('couponStatus');
+        const availableCouponsDiv = document.getElementById('availableCoupons');
+
+        if (applyCouponBtn) {
+            applyCouponBtn.addEventListener('click', async () => {
+                const couponCode = couponInput.value.trim();
+                if (!couponCode) {
+                    showCouponStatus('กรุณาใส่รหัสคูปอง', 'error');
+                    return;
+                }
+
+                try {
+                    // Calculate current order amount for coupon validation
+                    const pricing = Cart.calculatePricing(PRODUCTS || []);
+                    const result = applyCoupon(couponCode, pricing.subtotal);
+                    
+                    if (result.success) {
+                        // Apply coupon to cart
+                        Cart.applyCoupon(result.coupon);
+                        showCouponStatus(result.message, 'success');
+                        couponInput.value = '';
+                        renderSummary(); // Re-render summary with updated pricing
+                    } else {
+                        showCouponStatus(result.message, 'error');
+                    }
+                } catch (error) {
+                    console.error('Error applying coupon:', error);
+                    showCouponStatus('เกิดข้อผิดพลาดในการใช้คูปอง', 'error');
+                }
+            });
+        }
+
+        // กด Enter ในช่องคูปอง
+        if (couponInput) {
+            couponInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    applyCouponBtn.click();
+                }
+            });
+        }
+
+        // โหลดและแสดงคูปองที่ใช้ได้
+        loadAvailableCoupons();
+    }
+
+    function showCouponStatus(message, type) {
+        const couponStatus = document.getElementById('couponStatus');
+        if (!couponStatus) return;
+
+        couponStatus.innerHTML = `
+            <div class="p-3 rounded-xl text-sm font-medium ${
+                type === 'success' 
+                    ? 'bg-green-100 border border-green-300 text-green-700' 
+                    : 'bg-red-100 border border-red-300 text-red-700'
+            }">
+                ${type === 'success' ? '✅' : '❌'} ${message}
+            </div>
+        `;
+
+        // ซ่อนข้อความหลัง 5 วินาที
+        setTimeout(() => {
+            if (couponStatus) {
+                couponStatus.innerHTML = '';
+            }
+        }, 5000);
+    }
+
+    async function loadAvailableCoupons() {
+        try {
+            const availableCoupons = await getAvailableCoupons();
+            const availableCouponsDiv = document.getElementById('availableCoupons');
+            
+            if (!availableCouponsDiv || availableCoupons.length === 0) return;
+
+            availableCouponsDiv.innerHTML = `
+                <div class="mt-4">
+                    <div class="text-sm font-medium text-gray-700 mb-3">คูปองที่ใช้ได้:</div>
+                    <div class="grid gap-2">
+                        ${availableCoupons.map(coupon => `
+                            <div class="bg-gradient-to-r from-primary/10 to-primary-hover/10 border border-primary/20 rounded-xl p-3 cursor-pointer hover:shadow-md transition-all duration-300"
+                                 onclick="document.getElementById('couponInput').value='${coupon.code}'">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <div class="font-semibold text-primary text-sm">${coupon.code}</div>
+                                        <div class="text-xs text-gray-600">${coupon.description}</div>
+                                    </div>
+                                    <div class="text-xs text-primary font-medium">
+                                        ${coupon.type === 'percentage' ? `${coupon.value}%` : 
+                                          coupon.type === 'fixed' ? `${coupon.value} บาท` : 'ฟรีค่าส่ง'}
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        } catch (error) {
+            console.error('Error loading available coupons:', error);
+        }
+    }
 
     document.addEventListener('DOMContentLoaded', function() {
         // Update navbar to show current user state
@@ -553,7 +690,7 @@
       
       if (!c.items || !c.items.length) {
         sum.innerHTML = '<div class="text-center text-gray-500 p-4">ไม่มีสินค้าในตะกร้า</div>';
-        return {sub: 0, shipping: 0, total: 0};
+        return {sub: 0, shipping: 0, total: 0, discount: 0};
       }
       
       let foundProducts = 0;
@@ -590,9 +727,8 @@
         sum.appendChild(itemDiv);
       }
       
-      const sub = subtotal(); 
-      const shipping = sub>1500? 0 : 80; 
-      const total = sub+shipping;
+      // ใช้ Cart pricing calculation ที่รวมคูปองแล้ว
+      const pricing = Cart.calculatePricing(PRODUCTS || []);
       
       // Add separator
       const separator = document.createElement('div');
@@ -602,30 +738,74 @@
       // Add totals
       const totalsDiv = document.createElement('div');
       totalsDiv.className = 'space-y-2';
-      totalsDiv.innerHTML = `
+      
+      let totalsHTML = `
         <div class="flex justify-between text-gray-700">
           <span>ยอดรวมสินค้า</span>
-          <span>฿${sub.toLocaleString()}</span>
-        </div>
+          <span>฿${pricing.subtotal.toLocaleString()}</span>
+        </div>`;
+      
+      // แสดงส่วนลดคูปองถ้ามี
+      if (pricing.discount > 0 && pricing.appliedCoupon) {
+        totalsHTML += `
+          <div class="flex justify-between text-green-600">
+            <span>ส่วนลด (${pricing.appliedCoupon.code})</span>
+            <span>-฿${pricing.discount.toLocaleString()}</span>
+          </div>`;
+      }
+      
+      totalsHTML += `
         <div class="flex justify-between text-gray-700">
           <span>ค่าจัดส่ง</span>
-          <span>${shipping ? '฿'+shipping : 'ฟรี!'}</span>
+          <span>${pricing.shipping ? '฿'+pricing.shipping : 'ฟรี!'}</span>
         </div>
         <div class="border-t border-white/30 pt-2 flex justify-between text-lg font-bold text-gray-800">
           <span>รวมทั้งหมด</span>
-          <span class="text-primary">฿${total.toLocaleString()}</span>
-        </div>
-      `;
+          <span class="text-primary">฿${pricing.total.toLocaleString()}</span>
+        </div>`;
+      
+      totalsDiv.innerHTML = totalsHTML;
       sum.appendChild(totalsDiv);
       
-      if(shipping === 0 && sub > 1500) {
+        // แสดงข้อความคูปองที่ใช้
+        if (pricing.appliedCoupon) {
+          const couponDiv = document.createElement('div');
+          couponDiv.className = 'mt-3 p-3 bg-green-100 border border-green-300 text-green-700 rounded-lg text-sm';
+          
+          const couponContent = document.createElement('div');
+          couponContent.className = 'flex items-center justify-between';
+          
+          const couponText = document.createElement('span');
+          couponText.textContent = `🎟️ ใช้คูปอง: ${pricing.appliedCoupon.code}`;
+          
+          const cancelBtn = document.createElement('button');
+          cancelBtn.className = 'text-red-500 hover:text-red-700 text-xs';
+          cancelBtn.textContent = '✕ ยกเลิก';
+          cancelBtn.addEventListener('click', () => {
+            Cart.removeCoupon();
+            renderSummary();
+            // แสดงข้อความยืนยัน
+            showCouponStatus('ยกเลิกคูปองแล้ว', 'success');
+          });
+          
+          couponContent.appendChild(couponText);
+          couponContent.appendChild(cancelBtn);
+          couponDiv.appendChild(couponContent);
+          sum.appendChild(couponDiv);
+        }      // แสดงข้อความจัดส่งฟรี
+      if(pricing.shipping === 0 && pricing.subtotal > 1500) {
         const freeShippingDiv = document.createElement('div');
         freeShippingDiv.className = 'mt-3 p-2 bg-green-100 border border-green-300 text-green-700 rounded-lg text-sm text-center';
         freeShippingDiv.innerHTML = '🎉 ได้รับการจัดส่งฟรี!';
         sum.appendChild(freeShippingDiv);
       }
       
-      return {sub, shipping, total};
+      return pricing;
+    }
+
+    // ฟังก์ชันอัปเดต order summary
+    async function updateOrderSummary() {
+        return renderSummary();
     }
 
     // Remove this line since we call renderSummary() after products are loaded

@@ -103,6 +103,16 @@ body {
   75% { transform: rotate(3deg); }
 }
 
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes heartbeatSlow {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
 /* Apply animations */
 .animate-float {
   animation: float 3s ease-in-out infinite;
@@ -126,6 +136,14 @@ body {
 
 .animate-wobble {
   animation: wobble 0.5s ease-in-out;
+}
+
+.animate-heartbeat {
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+.animate-heartbeat-slow {
+  animation: heartbeatSlow 2s ease-in-out infinite;
 }
 
 /* Background gradients for body */

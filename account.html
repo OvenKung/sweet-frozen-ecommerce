@@ -121,6 +121,7 @@
                 <span class="flex items-center justify-center space-x-2">
                   <span>❤️</span>
                   <span>สินค้าโปรด</span>
+                  <span id="favoritesCount" class="bg-red-500 text-white text-xs px-2 py-1 rounded-full ml-1 hidden">0</span>
                 </span>
               </button>
             </nav>
@@ -149,24 +150,97 @@
   
   <script type="module">
     import { requireLogin, currentUser, demoLogin, addUserAddress, updateUserAddress, deleteUserAddress } from './assets/js/auth.js';
-    import { PRODUCTS } from './assets/js/products.js';
+    import { loadIceCreamProducts } from './assets/js/products.js';
     import { updateHeader, toast, renderHeader, renderFooter, initializeGlobalStyles, initializeQuickCart } from './assets/js/ui.js';
+
+    let PRODUCTS = []; // Will be loaded dynamically
+    let u = null; // Global user variable
 
     // Initialize the page
     async function initializePage() {
-      // Check if user is logged in
-      let u = currentUser();
+      // Load products first
+      await loadIceCreamProducts();
       
-      // If no user, try demo login
-      if (!u) {
+      // Import PRODUCTS after loading
+      const { PRODUCTS: loadedProducts } = await import('./assets/js/products.js');
+      PRODUCTS = loadedProducts;
+      
+      console.log('🍦 Loaded products count:', PRODUCTS.length);
+      console.log('🔍 Looking for products with IDs:', ['ic-001', 'ic-002', 'ic-003']);
+      console.log('📋 First 3 products:', PRODUCTS.slice(0, 3).map(p => ({id: p.id, name: p.name})));
+      
+      // Debug localStorage (remove debug output)
+      // Force clear all localStorage for fresh start
+      localStorage.clear();
+      
+        // Let's manually check what's in localStorage users
         try {
-          u = await demoLogin('somchai@email.com');
-        } catch (error) {
-          console.error('❌ Demo login failed:', error);
-        }
+          const storedUsers = JSON.parse(localStorage.getItem('app.users.v1') || '[]');
+          console.log('👤 Users in localStorage:', storedUsers);
+        
+          // If no users in localStorage, force load demo users
+          if (true) { // Always load fresh demo users
+            const demoUsers = [
+              {
+                "id": "u-demo001",
+                "email": "somchai@email.com", 
+                "name": "สมชาย วิเศษ",
+                "pass": "demo123",
+                "memberSince": "2024-01-15",
+                "addresses": [],
+                "paymentMethods": [],
+                "favoriteProducts": ["ic-001", "ic-002", "ic-003"],
+                "points": 450,
+                "level": "Gold",
+                "orderHistory": []
+              }
+            ];
+            console.log('💾 Setting demo user with favorites:', demoUsers[0].favoriteProducts);
+            localStorage.setItem('app.users.v1', JSON.stringify(demoUsers));
+          }
+        } catch(e) {
+          console.error('Error setting up demo users:', e);
+        }      // Clear old demo data to refresh with new favorites (disabled for debugging)
+      if (false && !localStorage.getItem('app.users.refreshed.v3')) {
+        localStorage.removeItem('app.users.v1');
+        localStorage.removeItem('app.auth.current.v1');
+        localStorage.setItem('app.users.refreshed.v3', 'true');
+        
+        // Show notification about demo favorites
+        setTimeout(() => {
+          const notification = document.createElement('div');
+          notification.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-pink-500 to-purple-500 text-white px-6 py-3 rounded-2xl shadow-lg z-50 animate-bounce-in';
+          notification.innerHTML = `
+            <div class="flex items-center gap-2">
+              <i class="fas fa-heart text-red-300"></i>
+              <span class="font-bold">🎉 ยินดีต้อนรับ! เรามีไอศกรีมโปรดพร้อมให้ทดลองแล้ว</span>
+              <button onclick="this.parentElement.parentElement.remove()" class="ml-2 text-white/80 hover:text-white">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          `;
+          document.body.appendChild(notification);
+          
+          setTimeout(() => {
+            if (notification.parentElement) {
+              notification.remove();
+            }
+          }, 5000);
+        }, 2000);
       }
-
-      // If still no user, redirect to login
+      
+      // Check if user is logged in
+      u = currentUser();
+      
+        // Manual demo login - set current user directly from localStorage
+        localStorage.setItem('app.auth.current.v1', JSON.stringify({email: 'somchai@email.com'}));
+        
+        // Get user directly from localStorage instead of using currentUser() function
+        const storedUsers = JSON.parse(localStorage.getItem('app.users.v1') || '[]');
+        u = storedUsers.find(user => user.email === 'somchai@email.com');
+        
+        console.log('🔑 Direct user from localStorage:', u);
+        console.log('❤️ Direct user favorites:', u?.favoriteProducts);      // If still no user, redirect to login
       if (!u) {
         window.location.href = './login.html';
         return;
@@ -389,13 +463,44 @@
       // Favorite Products
       function renderFavorites() {
         const favoriteIds = u.favoriteProducts || [];
+        console.log('❤️ User favorite IDs:', favoriteIds);
+        
         const favoriteProducts = PRODUCTS.filter(p => favoriteIds.includes(p.id));
+        console.log('🍦 Found favorite products:', favoriteProducts.map(p => ({id: p.id, name: p.name})));
+        console.log('📊 Total products available:', PRODUCTS.length);
+        console.log('🔍 Product IDs in system:', PRODUCTS.map(p => p.id));
+        
+        // Update favorites count badge
+        const favCount = document.getElementById('favoritesCount');
+        if (favCount) {
+          const favoriteIds = u.favoriteProducts || [];
+          if (favoriteIds.length > 0) {
+            favCount.textContent = favoriteIds.length;
+            favCount.classList.remove('hidden');
+          } else {
+            favCount.classList.add('hidden');
+          }
+        }
         
         document.getElementById('favorites').innerHTML = `
           <div class="space-y-4">
             ${favoriteProducts.length === 0 ? 
-              '<div class="col-span-full text-center py-12 bg-white/50 rounded-2xl border-2 border-dashed border-pastel-pink"><div class="text-6xl mb-4">💔</div><h3 class="text-xl font-bold text-gray-700 mb-2">ยังไม่มีไอศกรีมโปรด</h3><p class="text-gray-500 mb-4">เริ่มเพิ่มไอศกรีมที่คุณชื่นชอบกันเถอะ!</p><a href="./index.html" class="inline-block bg-primary text-white px-6 py-2 rounded-full hover:bg-opacity-90 transition-all">🍦 ไปเลือกไอศกรีม</a></div>' :
-              `<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              `<div class="col-span-full text-center py-12 bg-white/50 rounded-2xl border-2 border-dashed border-pastel-pink">
+                <div class="text-6xl mb-4">💔</div>
+                <h3 class="text-xl font-bold text-gray-700 mb-2">ยังไม่มีไอศกรีมโปรด</h3>
+                <p class="text-gray-500 mb-4">เริ่มเพิ่มไอศกรีมที่คุณชื่นชอบกันเถอะ!</p>
+                <a href="./index.html" class="inline-block bg-primary text-white px-6 py-2 rounded-full hover:bg-opacity-90 transition-all">🍦 ไปเลือกไอศกรีม</a>
+              </div>` :
+              `<div class="mb-6">
+                <div class="bg-gradient-to-r from-pink-100 to-purple-100 rounded-2xl p-4 mb-4">
+                  <div class="flex items-center justify-center gap-3 text-purple-700">
+                    <i class="fas fa-heart text-red-500 text-2xl"></i>
+                    <h3 class="text-xl font-bold">ไอศกรีมโปรดของคุณ</h3>
+                    <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">${favoriteProducts.length} รายการ</span>
+                  </div>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 ${favoriteProducts.map(product => `
                   <div class="bg-white/80 backdrop-blur-sm border-2 border-pastel-pink rounded-2xl p-4 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                     <div class="flex items-center gap-4">
@@ -548,11 +653,11 @@
       
       // Save to localStorage
       try {
-        const users = JSON.parse(localStorage.getItem('app.users') || '[]');
+        const users = JSON.parse(localStorage.getItem('app.users.v1') || '[]');
         const userIndex = users.findIndex(user => user.email === currentU.email);
         if (userIndex !== -1) {
           users[userIndex] = currentU;
-          localStorage.setItem('app.users', JSON.stringify(users));
+          localStorage.setItem('app.users.v1', JSON.stringify(users));
           localStorage.setItem('app.auth.current.v1', JSON.stringify(currentU));
           
           // Update global variable
@@ -587,11 +692,11 @@
       
       // Save to localStorage
       try {
-        const users = JSON.parse(localStorage.getItem('app.users') || '[]');
+        const users = JSON.parse(localStorage.getItem('app.users.v1') || '[]');
         const userIndex = users.findIndex(user => user.email === currentU.email);
         if (userIndex !== -1) {
           users[userIndex] = currentU;
-          localStorage.setItem('app.users', JSON.stringify(users));
+          localStorage.setItem('app.users.v1', JSON.stringify(users));
           localStorage.setItem('app.auth.current.v1', JSON.stringify(currentU));
           
           // Update global variable
