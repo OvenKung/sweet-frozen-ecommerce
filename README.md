@@ -2,8 +2,8 @@
 
 > ร้านไอศกรีมออนไลน์ชั้นนำ ส่งไอศกรีมคุณภาพสูง สดใหม่ อร่อย ถึงบ้านคุณทุกวัน
 
-[![Deploy Status](https://github.com/OvenKung/sweet-frozen-ecommerce/workflows/🚀%20Deploy%20Sweet%20Frozen%20E-commerce/badge.svg)](https://github.com/OvenKung/sweet-frozen-ecommerce/actions)
-[![Live Demo](https://img.shields.io/badge/Live-Demo-blue.svg)](https://OvenKung.github.io/sweet-frozen-ecommerce)
+[![Deploy Status](https://github.com/OvenKung/sweet-frozen-ecommerce_1650700865_1650705294_1670704632_CS319_427D.git/workflows/🚀%20Deploy%20Sweet%20Frozen%20E-commerce/badge.svg)](https://github.com/OvenKung/sweet-frozen-ecommerce_1650700865_1650705294_1670704632_CS319_427D.git/actions)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue.svg)]([https://OvenKung.github.io/sweet-frozen-ecommerce](https://github.com/OvenKung/sweet-frozen-ecommerce_1650700865_1650705294_1670704632_CS319_427D.git))
 [![Made with Love](https://img.shields.io/badge/Made%20with-❤️%20%26%20🍦-ff69b4.svg)](https://github.com/OvenKung)
 
 <div align="center">
@@ -689,3 +689,4 @@ If you find this project helpful, please consider giving it a ⭐ on GitHub!
 *"Delivering happiness, one scoop at a time"* 🍦
 
 </div>
+
