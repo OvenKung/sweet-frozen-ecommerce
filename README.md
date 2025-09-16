@@ -2,7 +2,7 @@
 
 > ร้านไอศกรีมออนไลน์ชั้นนำ ส่งไอศกรีมคุณภาพสูง สดใหม่ อร่อย ถึงบ้านคุณทุกวัน
 
-[![Deploy Status](https://github.com/OvenKung/sweet-frozen-ecommerce_1650700865_1650705294_1670704632_CS319_427D.git/workflows/🚀%20Deploy%20Sweet%20Frozen%20E-commerce/badge.svg)](https://github.com/OvenKung/sweet-frozen-ecommerce_1650700865_1650705294_1670704632_CS319_427D/actions)
+[![Deploy Status](https://github.com/OvenKung/sweet-frozen-ecommerce_1650700865_1650705294_1670704632_CS319_427D/workflows/🚀%20Deploy%20Sweet%20Frozen%20E-commerce/badge.svg)](https://github.com/OvenKung/sweet-frozen-ecommerce_1650700865_1650705294_1670704632_CS319_427D/actions)
 [![Live Demo](https://img.shields.io/badge/Live-Demo-blue.svg)](https://ovenkung.github.io/sweet-frozen-ecommerce_1650700865_1650705294_1670704632_CS319_427D/)
 [![Made with Love](https://img.shields.io/badge/Made%20with-❤️%20%26%20🍦-ff69b4.svg)](https://github.com/OvenKung)
 
@@ -174,7 +174,7 @@ $breakpoints: (
 ## 🚀 Live Demo & Quick Start
 
 ### 🌐 **Live Website**
-เยี่ยมชมเว็บไซต์ได้ที่: **[Sweet Frozen E-commerce](https://OvenKung.github.io/sweet-frozen-ecommerce)**
+เยี่ยมชมเว็บไซต์ได้ที่: **[Sweet Frozen E-commerce](https://OvenKung.github.io/sweet-frozen-ecommerce_1650700865_1650705294_1670704632_CS319_427D)**
 
 ### ⚡ **Quick Test Responsive**
 1. **เปิดเว็บไซต์** บน Desktop Browser
@@ -228,8 +228,8 @@ Version Control: Git
 
 ```bash
 # 1. Clone Repository
-git clone https://github.com/OvenKung/sweet-frozen-ecommerce.git
-cd sweet-frozen-ecommerce
+git clone https://github.com/OvenKung/sweet-frozen-ecommerce_1650700865_1650705294_1670704632_CS319_427D.git
+cd sweet-frozen-ecommerce_1650700865_1650705294_1670704632_CS319_427D
 
 # 2. Install Dependencies (Optional)
 npm install
@@ -533,7 +533,7 @@ npm run test:performance # Performance Tests
 ### **🔀 Development Workflow**
 ```bash
 # 1. Fork Repository
-git fork https://github.com/OvenKung/sweet-frozen-ecommerce
+git fork https://github.com/OvenKung/sweet-frozen-ecommerce_1650700865_1650705294_1670704632_CS319_427D
 
 # 2. Create Feature Branch  
 git checkout -b feature/awesome-feature
@@ -607,7 +607,7 @@ chore: 🔧 maintenance
 2. GitHub Actions runs tests
 3. Builds project automatically  
 4. Deploys to GitHub Pages
-5. Live site updated at: https://OvenKung.github.io/sweet-frozen-ecommerce
+5. Live site updated at: https://OvenKung.github.io/sweet-frozen-ecommerce_1650700865_1650705294_1670704632_CS319_427D
 ```
 
 ### **🔧 Custom Domain (Optional)**
@@ -677,8 +677,8 @@ copies or substantial portions of the Software.
 
 If you find this project helpful, please consider giving it a ⭐ on GitHub!
 
-[![GitHub stars](https://img.shields.io/github/stars/OvenKung/sweet-frozen-ecommerce?style=social)](https://github.com/OvenKung/sweet-frozen-ecommerce/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/OvenKung/sweet-frozen-ecommerce?style=social)](https://github.com/OvenKung/sweet-frozen-ecommerce/network/members)
+[![GitHub stars](https://img.shields.io/github/stars/OvenKung/sweet-frozen-ecommerce_1650700865_1650705294_1670704632_CS319_427D?style=social)](https://github.com/OvenKung/sweet-frozen-ecommerce_1650700865_1650705294_1670704632_CS319_427D/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/OvenKung/sweet-frozen-ecommerce_1650700865_1650705294_1670704632_CS319_427D?style=social)](https://github.com/OvenKung/sweet-frozen-ecommerce_1650700865_1650705294_1670704632_CS319_427D/network/members)
 
 ---
 
