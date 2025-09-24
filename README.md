@@ -3,7 +3,7 @@
 > ร้านไอศกรีมออนไลน์ชั้นนำ ส่งไอศกรีมคุณภาพสูง สดใหม่ อร่อย ถึงบ้านคุณทุกวัน
 
 [![Deploy Status](https://github.com/OvenKung/sweet-frozen-ecommerce_1650700865_1650705294_1670704632_CS319_427D/workflows/🚀%20Deploy%20Sweet%20Frozen%20E-commerce/badge.svg)](https://github.com/OvenKung/sweet-frozen-ecommerce_1650700865_1650705294_1670704632_CS319_427D/actions)
-[![Live Demo](https://img.shields.io/badge/Live-Demo-blue.svg)](https://ovenkung.github.io/sweet-frozen-ecommerce/)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue.svg)](https://ovenkung.github.io/sweet-frozen-ecommerce_1650700865_1650705294_1670704632_CS319_427D/)
 [![Made with Love](https://img.shields.io/badge/Made%20with-❤️%20%26%20🍦-ff69b4.svg)](https://github.com/OvenKung)
 
 <div align="center">
@@ -630,23 +630,6 @@ A record: @ -> 185.199.108.153
 
 ---
 
-## 📄 License & Legal
-
-### **⚖️ MIT License**
-```
-Copyright (c) 2025 OvenKung
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-```
-
 ### **🏷️ Attribution**
 - **Icons**: Heroicons, Feather Icons
 - **Fonts**: System Font Stack
@@ -689,7 +672,6 @@ If you find this project helpful, please consider giving it a ⭐ on GitHub!
 *"Delivering happiness, one scoop at a time"* 🍦
 
 </div>
-
 
 
 
